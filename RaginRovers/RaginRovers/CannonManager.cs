@@ -16,6 +16,7 @@ using FarseerPhysics.Factories;
 using FarseerPhysics.Collision;
 using FarseerPhysics.Dynamics.Contacts;
 using System.IO;
+using RaginRovers;
 
 namespace RaginRoversLibrary
 {
@@ -36,7 +37,7 @@ namespace RaginRoversLibrary
 
 
         public CannonManager()
-        { 
+        {
         }
 
         public void ChangeCannonState()
@@ -49,120 +50,69 @@ namespace RaginRoversLibrary
                 cannonState = CannonState.POWER;
         }
 
-        public GameObjectFactory ManipulateCannons(GameObjectFactory factory, ref int groupNumber)
+        public GameObjectFactory ManipulateCannons(GameObjectFactory factory, CannonGroups cannonGroup)
         {
-            if (cannonState == CannonState.ROTATE)
-            {
-                foreach (int key in factory.Objects.Keys)
+                if (cannonState == CannonState.ROTATE)
                 {
-                    if (factory.Objects[key].typeid == (int)RaginRovers.GameObjectTypes.CANNON)
-                    {
-                        //decide whether to rotate one way or back
-                        if (factory.Objects[key].sprite.Rotation >= factory.Objects[key].sprite.LowerRotationBounds)
-                            factory.Objects[key].sprite.rotationDirection = -1;
-                        if (factory.Objects[key].sprite.Rotation <= factory.Objects[key].sprite.UpperRotationBounds)
-                            factory.Objects[key].sprite.rotationDirection = 1;
+                            //decide whether to rotate one way or back
+                    if (factory.Objects[cannonGroup.cannonKey].sprite.Rotation >= factory.Objects[cannonGroup.cannonKey].sprite.LowerRotationBounds)
+                        factory.Objects[cannonGroup.cannonKey].sprite.rotationDirection = -1;
+                    if (factory.Objects[cannonGroup.cannonKey].sprite.Rotation <= factory.Objects[cannonGroup.cannonKey].sprite.UpperRotationBounds)
+                        factory.Objects[cannonGroup.cannonKey].sprite.rotationDirection = 1;
 
 
 
-                        factory.Objects[key].sprite.Rotation += ((MathHelper.PiOver4 / 16) * factory.Objects[key].sprite.rotationDirection);
-                    }
+                    factory.Objects[cannonGroup.cannonKey].sprite.Rotation += ((MathHelper.PiOver4 / 16) * factory.Objects[cannonGroup.cannonKey].sprite.rotationDirection);
+                        
+
                 }
-
-            }
-            if (cannonState == CannonState.POWER)
-            {
-
-                //go through all objects to find the tab and cannon in same group
-                for (int i = 1; i < groupNumber; i++)
+                if (cannonState == CannonState.POWER)
                 {
-                    foreach (int key in factory.Objects.Keys)
-                    {
-                        if (factory.Objects[key].typeid == (int)RaginRovers.GameObjectTypes.POWERMETERBAR)
-                        {
-                            foreach (int key2 in factory.Objects.Keys)
-                            {
-                                if (factory.Objects[key2].typeid == (int)RaginRovers.GameObjectTypes.POWERMETERTAB)
-                                {
-                                    if (factory.Objects[key].sprite.groupNumber == i && factory.Objects[key2].sprite.groupNumber == i)
-                                    {
-                                        //determine direction
-                                        if (factory.Objects[key].sprite.Location.X > factory.Objects[key2].sprite.Location.X)
-                                        {
-                                            Direction = 1;
-                                        }
-                                        else if (factory.Objects[key].sprite.Location.X + factory.Objects[key].sprite.BoundingBoxRect.Width - factory.Objects[key2].sprite.BoundingBoxRect.Width < factory.Objects[key2].sprite.Location.X)
-                                        {
-                                            Direction = -1;
-                                        }
-                                        factory.Objects[key2].sprite.Location += new Vector2(10 * Direction, 0);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            if (cannonState == CannonState.SHOOT)
-            {
-                ShootDoggy(factory, groupNumber);
-                cannonState = CannonState.ROTATE;
-            }
 
+                    if (factory.Objects[cannonGroup.barKey].sprite.Location.X > factory.Objects[cannonGroup.tabKey].sprite.Location.X)
+                    {
+                        Direction = 1;
+                    }
+                    else if (factory.Objects[cannonGroup.barKey].sprite.Location.X + factory.Objects[cannonGroup.barKey].sprite.BoundingBoxRect.Width - factory.Objects[cannonGroup.tabKey].sprite.BoundingBoxRect.Width < factory.Objects[cannonGroup.tabKey].sprite.Location.X)
+                    {
+                        Direction = -1;
+                    }
+                    factory.Objects[cannonGroup.tabKey].sprite.Location += new Vector2(10 * Direction, 0);
+                        
+                }
+                if (cannonState == CannonState.SHOOT)
+                {
+                    ShootDoggy(factory, cannonGroup);
+                    cannonState = CannonState.ROTATE;
+                }
             return factory;
         }
 
-        public GameObjectFactory ShootDoggy(GameObjectFactory factory, int groupNumber)
+        public GameObjectFactory ShootDoggy(GameObjectFactory factory, CannonGroups cannonGroup)
         {
             List<int> temp = new List<int>();
             //figure out which cannon to shoot from
             //replace once just pass which cannon
-            foreach (int key in factory.Objects.Keys)
-            {
-                if (factory.Objects[key].typeid == (int)RaginRovers.GameObjectTypes.CANNON)
-                {
-                    temp.Add(key);
-                }
-            }
             //endreplace
-            for (int i = 0; i < temp.Count ; i++ )
-            {
 
                 //dog
                 int dog = factory.Create(
                     (int)RaginRovers.GameObjectTypes.DOG,
-                    factory.Objects[temp[i]].sprite.Location,
+                    factory.Objects[cannonGroup.cannonKey].sprite.Location,
                     "spritesheet",
                     Vector2.Zero,
-                    factory.Objects[temp[i]].sprite.Rotation,
+                    factory.Objects[cannonGroup.cannonKey].sprite.Rotation,
                     0,
                     0);
 
 
                 factory.Objects[dog].sprite.PhysicsBody.LinearVelocity = new Vector2(
-                        10 *  (float)Math.Cos((double)factory.Objects[temp[i]].sprite.Rotation),
-                        10 * (float)Math.Sin((double)factory.Objects[temp[i]].sprite.Rotation));
+                        10 * (float)Math.Cos((double)factory.Objects[cannonGroup.cannonKey].sprite.Rotation),
+                        10 * (float)Math.Sin((double)factory.Objects[cannonGroup.cannonKey].sprite.Rotation));
 
                 //chaning magnitude depending on power bar
-                for (int j = 1; j < groupNumber; j++)
-                {
-                    foreach (int key in factory.Objects.Keys)
-                    {
-                        if (factory.Objects[key].typeid == (int)RaginRovers.GameObjectTypes.POWERMETERBAR)
-                        {
-                            foreach (int key2 in factory.Objects.Keys)
-                            {
-                                if (factory.Objects[key2].typeid == (int)RaginRovers.GameObjectTypes.POWERMETERTAB)
-                                {
-                                    if (factory.Objects[key].sprite.groupNumber == j && factory.Objects[key2].sprite.groupNumber == j)
-                                    {
-                                        factory.Objects[dog].sprite.PhysicsBody.LinearVelocity *= ((factory.Objects[key2].sprite.Location.X - factory.Objects[key].sprite.Location.X) / factory.Objects[key].sprite.BoundingBoxRect.Width) + 1; 
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+                factory.Objects[dog].sprite.PhysicsBody.LinearVelocity *= ((factory.Objects[cannonGroup.tabKey].sprite.Location.X - factory.Objects[cannonGroup.barKey].sprite.Location.X) / factory.Objects[cannonGroup.barKey].sprite.BoundingBoxRect.Width) + 1;
+                                  
 
 
                 factory.Objects[dog].sprite.PhysicsBody.Mass = 30;
@@ -171,30 +121,28 @@ namespace RaginRoversLibrary
                 //boom
                 int boom = factory.Create(
                     (int)RaginRovers.GameObjectTypes.BOOM,
-                    factory.Objects[temp[i]].sprite.Location,
+                    factory.Objects[cannonGroup.cannonKey].sprite.Location,
                     "boom",
                     Vector2.Zero,
-                    factory.Objects[temp[i]].sprite.Rotation,
+                    factory.Objects[cannonGroup.cannonKey].sprite.Rotation,
                     0,
                     0);
                 //changing location so that origins equal
-                factory.Objects[boom].sprite.Location += factory.Objects[temp[i]].sprite.Origin - factory.Objects[boom].sprite.Origin;
+                factory.Objects[boom].sprite.Location += factory.Objects[cannonGroup.cannonKey].sprite.Origin - factory.Objects[boom].sprite.Origin;
 
                 factory.Objects[boom].sprite.Scale = 0.5f;
 
-                
-            }
             return factory;
         }
 
-        public GameObjectFactory CreateCannonStuff(GameObjectFactory factory, MouseState ms, Camera camera, bool isReversed, ref int groupNumber)
+        public GameObjectFactory CreateCannonStuff(GameObjectFactory factory, Vector2 location, Camera camera, bool isReversed, ref List<CannonGroups> cannonGroups)
         {
             int icannon;
             if (!isReversed)
             {
                 icannon = factory.Create(
                                         (int)RaginRovers.GameObjectTypes.CANNON,
-                                        new Vector2((int)ms.X + camera.Position.X - 95, (int)ms.Y - 80),
+                                        new Vector2((int)location.X + camera.Position.X - 95, (int)location.Y - 80),
                                         "spritesheet",
                                         new Vector2(0, 0),
                                         0,
@@ -203,11 +151,11 @@ namespace RaginRoversLibrary
             }
             else
             {
-                icannon = factory.Create((int)RaginRovers.GameObjectTypes.CANNON, new Vector2((int)ms.X + camera.Position.X - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), -MathHelper.Pi, -MathHelper.Pi, -MathHelper.PiOver2);
+                icannon = factory.Create((int)RaginRovers.GameObjectTypes.CANNON, new Vector2(location.X + camera.Position.X - 95, location.Y - 80), "spritesheet", new Vector2(0, 0), -MathHelper.Pi, -MathHelper.Pi, -MathHelper.PiOver2);
             }
             int iwheel = factory.Create(
                 (int)RaginRovers.GameObjectTypes.CANNONWHEEL,
-                new Vector2((int)ms.X + camera.Position.X - 30, (int)ms.Y - 120),
+                new Vector2((int)location.X + camera.Position.X - 30, (int)location.Y - 120),
                 "spritesheet",
                 new Vector2(0, 0),
                 0,
@@ -236,20 +184,22 @@ namespace RaginRoversLibrary
             //had to put after because cant access origin before sprite is created
             factory.Objects[itab].sprite.Location -= new Vector2(0, factory.Objects[itab].sprite.Origin.Y);
 
+            cannonGroups.Add(new CannonGroups(icannon, iwheel, ibar, itab));
+
             //putting them all in a group
-            factory.Objects[icannon].sprite.groupNumber = groupNumber;
-            factory.Objects[iwheel].sprite.groupNumber = groupNumber;
-            factory.Objects[ibar].sprite.groupNumber = groupNumber;
-            factory.Objects[itab].sprite.groupNumber = groupNumber;
+            //factory.Objects[icannon].sprite.groupNumber = groupNumber;
+            //factory.Objects[iwheel].sprite.groupNumber = groupNumber;
+            //factory.Objects[ibar].sprite.groupNumber = groupNumber;
+            //factory.Objects[itab].sprite.groupNumber = groupNumber;
 
-            Sprite cannon = factory.Objects[icannon].sprite;
-            Sprite wheel = factory.Objects[iwheel].sprite;
+            //Sprite cannon = factory.Objects[icannon].sprite;
+            //Sprite wheel = factory.Objects[iwheel].sprite;
 
 
-            cannon.Origin = new Vector2(120, 103);
+            factory.Objects[icannon].sprite.Origin = new Vector2(120, 103);
 
-            wheel.Location = cannon.Location + cannon.Origin - wheel.Origin;
-            groupNumber++;
+            factory.Objects[iwheel].sprite.Location = factory.Objects[icannon].sprite.Location + factory.Objects[icannon].sprite.Origin - factory.Objects[iwheel].sprite.Origin;
+            //groupNumber++;
             return factory;
         }
 

@@ -15,6 +15,7 @@ using FarseerPhysics.Factories;
 using FarseerPhysics.Collision;
 using FarseerPhysics.Dynamics.Contacts;
 using System.IO;
+using RaginRovers;
 
 namespace RaginRovers
 {
@@ -33,11 +34,9 @@ namespace RaginRovers
         }
 
         public CannonState cannonState = CannonState.ROTATE;
-        bool canStartRotation = false;
-        int rotationDirection = 1;
 
-        int groupNumber = 1;
-         
+        List<CannonGroups> cannonGroups;
+
 
         // test
         GraphicsDeviceManager graphics;
@@ -52,6 +51,8 @@ namespace RaginRovers
         bool EditMode = false;
         bool KeyDown = false, MouseDown = false;
         Keys Key = Keys.None;
+
+        int groupofinterest = 2;
 
         int DragSprite = -1; // Which sprite are we dragging around
         Vector2 DragOffset = Vector2.Zero;
@@ -75,7 +76,7 @@ namespace RaginRovers
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            GameWorld.Initialize(0, 5700, this.Window.ClientBounds.Width, this.Window.ClientBounds.Height, new Vector2(0, 5f));
+            GameWorld.Initialize(0, 5700, this.Window.ClientBounds.Width, this.Window.ClientBounds.Height, new Vector2(0, 9.8f));
             GameWorld.ViewPortXOffset = 0;
 
             SpriteCreators.Load("Content\\spritesheet.txt");
@@ -88,6 +89,7 @@ namespace RaginRovers
             factory.Initialize(textureManager);
 
             cannonManager = new CannonManager();
+            cannonGroups = new List<CannonGroups>();
 
             // Add a few sprite creators
             factory.AddCreator((int)GameObjectTypes.CAT, SpriteCreators.CreateCat);
@@ -104,6 +106,7 @@ namespace RaginRovers
             factory.AddCreator((int)GameObjectTypes.CANNONWHEEL, SpriteCreators.CreateCannonWheel);
             factory.AddCreator((int)GameObjectTypes.POWERMETERBAR, SpriteCreators.CreatePowerMeterBar);
             factory.AddCreator((int)GameObjectTypes.POWERMETERTAB, SpriteCreators.CreatePowerMeterTab);
+
 
 
             base.Initialize();
@@ -145,6 +148,11 @@ namespace RaginRovers
 
             //FixtureFactory.AttachRectangle((float)GameWorld.WorldWidth, 10, 1, new Vector2(0, ConvertUnits.ToDisplayUnits(this.Window.ClientBounds.Height-30)), body);
             FixtureFactory.AttachRectangle(ConvertUnits.ToSimUnits(GameWorld.WorldWidth)*10, ConvertUnits.ToSimUnits(10), 1, Vector2.Zero, body);
+
+
+            //create cannons
+            cannonManager.CreateCannonStuff(factory, new Vector2(0, 500), camera, true, ref cannonGroups); //need how to figure out location
+            cannonManager.CreateCannonStuff(factory, new Vector2(500, 500), camera, false, ref cannonGroups); //need how to figure out location
 
         }
 
@@ -191,12 +199,12 @@ namespace RaginRovers
             if (kb.IsKeyDown(Keys.Right))
             {
                 if (camera.Position.X < GameWorld.WorldWidth - this.Window.ClientBounds.Width)
-                    camera.Position = new Vector2(camera.Position.X + 5, camera.Position.Y);
+                    camera.Position = new Vector2(camera.Position.X + 15, camera.Position.Y);
                     
             }
             if (kb.IsKeyDown(Keys.Left))
             {
-                camera.Position = new Vector2(camera.Position.X - 5, camera.Position.Y);
+                camera.Position = new Vector2(camera.Position.X - 15, camera.Position.Y);
                 if (camera.Position.X < 0)
                     camera.Position = Vector2.Zero;
 
@@ -236,6 +244,7 @@ namespace RaginRovers
             DetectKeyPress(kb, Keys.L);
             DetectKeyPress(kb, Keys.Enter);
             DetectKeyPress(kb, Keys.Space);
+            DetectKeyPress(kb, Keys.N);
 
             if (KeyDown)
             {
@@ -255,12 +264,23 @@ namespace RaginRovers
 ////////////////////////////////////////////////////
                         case Keys.Space:
                             if (!EditMode)
+                            {
                                 cannonManager.ChangeCannonState();
+                                groupofinterest = 0;
+                            }
+                            break;
+
+                        case Keys.N:
+                            if (!EditMode)
+                            {
+                                cannonManager.ChangeCannonState();
+                                groupofinterest = 1;
+                            }
                             break;
 
                         case Keys.OemTilde:
                             EditMode = !EditMode;
-                            camera.Zoom = 1f;
+                            //camera.Zoom = 1f;
                             this.Window.Title = "Ragin Rovers " + (EditMode ? " | EDITING MODE" : "");
                             break;
 
@@ -352,9 +372,8 @@ namespace RaginRovers
 
                             if (EditMode)
                             {
-                                factory = cannonManager.CreateCannonStuff(factory, ms, camera, false, ref groupNumber);
+                                factory = cannonManager.CreateCannonStuff(factory, new Vector2(ms.X, ms.Y), camera, false, ref cannonGroups);
                                 
-                                canStartRotation = true;
                             }
 
                             break;
@@ -363,9 +382,8 @@ namespace RaginRovers
 
                             if (EditMode)
                             {
-                                factory = cannonManager.CreateCannonStuff(factory, ms, camera, true, ref groupNumber);
+                                factory = cannonManager.CreateCannonStuff(factory, new Vector2(ms.X, ms.Y), camera, true, ref cannonGroups);
 
-                                canStartRotation = true;
                             }
 
                             break;
@@ -442,12 +460,13 @@ namespace RaginRovers
                 }
             }
 
-            #region CannonRotation
-            if (!EditMode && canStartRotation) //can get rid of canStartRotation when we stop using edit mode
+            if (!EditMode) 
             {
-                factory = cannonManager.ManipulateCannons(factory, ref groupNumber);
+                for (int i = 0; i < cannonGroups.Count; i++)
+                {
+                    factory = cannonManager.ManipulateCannons(factory, cannonGroups[i]);
+                }
             }
-            #endregion
 
             if (EditMode)
             {
