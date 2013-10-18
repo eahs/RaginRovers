@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using RaginRovers;
 
 namespace RaginRovers
 {
@@ -12,6 +13,9 @@ namespace RaginRovers
         public int barKey;
         public int tabKey;
 
+        public RaginRovers.Game1.CannonState cannonState = new RaginRovers.Game1.CannonState();
+        
+
         public CannonGroups(int cannonKey,
                             int wheelKey,
                             int barKey,
@@ -21,6 +25,7 @@ namespace RaginRovers
             this.wheelKey = wheelKey;
             this.barKey = barKey;
             this.tabKey = tabKey;
+            cannonState = Game1.CannonState.ROTATE;
         }
     }
 }

@@ -33,7 +33,8 @@ namespace RaginRovers
             SHOOT
         }
 
-        public CannonState cannonState = CannonState.ROTATE;
+
+        CannonState cannonState = CannonState.ROTATE;
 
         List<CannonGroups> cannonGroups;
 
@@ -120,6 +121,7 @@ namespace RaginRovers
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
             camera = new Camera(new Viewport(GameWorld.ViewPortXOffset, 0, this.Window.ClientBounds.Width, this.Window.ClientBounds.Height));
             camera.Origin = new Vector2(camera.ViewPort.Width / 2.0f, camera.ViewPort.Height);
 
@@ -265,7 +267,7 @@ namespace RaginRovers
                         case Keys.Space:
                             if (!EditMode)
                             {
-                                cannonManager.ChangeCannonState();
+                                cannonManager.ChangeCannonState(cannonGroups[0]);
                                 groupofinterest = 0;
                             }
                             break;
@@ -273,7 +275,7 @@ namespace RaginRovers
                         case Keys.N:
                             if (!EditMode)
                             {
-                                cannonManager.ChangeCannonState();
+                                cannonManager.ChangeCannonState(cannonGroups[1]);
                                 groupofinterest = 1;
                             }
                             break;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Lidgren.Network;
+using RaginRoversLibrary;
 
 namespace RaginRovers
 {
@@ -21,26 +22,24 @@ namespace RaginRovers
             server = new NetServer(config);
             //recipient = new NetConnection();
             netpeer = new NetPeer(config);
+
+            recipient = new NetConnection();
+
+            recipient.Peer.DiscoverLocalPeers(config.Port);
         }
 
         public void Receive()
         {
             NetIncomingMessage msg;
-            string Stuff;
+            List<string> Stuff = new List<string>();
             while ((msg = server.ReadMessage()) != null)
             {
                 switch (msg.MessageType)
                 {
-                    case NetIncomingMessageType.VerboseDebugMessage:
-                    case NetIncomingMessageType.DebugMessage:
-                    case NetIncomingMessageType.WarningMessage:
-                    case NetIncomingMessageType.ErrorMessage:
-                        Console.WriteLine(msg.ReadString());
-                        break;
                     default:
-                        //Console.WriteLine("Unhandled type: " + msg.MessageType);
                         //Transfer Data from message into string
-                        Stuff = msg.ReadString();
+                        Stuff = DeserializeData(msg.ReadString());
+                        //CannonManager.ShootDoggy();
                         break;
                 }
                 server.Recycle(msg); //what this do
@@ -53,6 +52,11 @@ namespace RaginRovers
             sendMsg.Write(serializedData);
 
             server.SendMessage(sendMsg, recipient, NetDeliveryMethod.ReliableUnordered);
+        }
+        public List<string> DeserializeData(string SerializedData)
+        {
+            List<string> DeserializeData = new List<string>();
+            return DeserializeData;
         }
     }
 }

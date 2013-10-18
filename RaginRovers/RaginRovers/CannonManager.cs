@@ -22,16 +22,8 @@ namespace RaginRoversLibrary
 {
     class CannonManager
     {
-        public enum CannonState
-        {
-            ROTATE,
-            POWER,
-            SHOOT
-        }
 
         public float elapsedTime = 0;
-
-        public CannonState cannonState = CannonState.ROTATE;
 
         public int Direction = 1;
 
@@ -40,50 +32,50 @@ namespace RaginRoversLibrary
         {
         }
 
-        public void ChangeCannonState()
+        public void ChangeCannonState(CannonGroups cannonGroups)
         {
-            if (cannonState == CannonState.POWER)
+            if (cannonGroups.cannonState == RaginRovers.Game1.CannonState.POWER)
             {
-                cannonState = CannonState.SHOOT;
+                cannonGroups.cannonState = RaginRovers.Game1.CannonState.SHOOT;
             }
-            if (cannonState == CannonState.ROTATE)
-                cannonState = CannonState.POWER;
+            if (cannonGroups.cannonState == RaginRovers.Game1.CannonState.ROTATE)
+                cannonGroups.cannonState = RaginRovers.Game1.CannonState.POWER;
         }
 
-        public GameObjectFactory ManipulateCannons(GameObjectFactory factory, CannonGroups cannonGroup)
+        public GameObjectFactory ManipulateCannons(GameObjectFactory factory, CannonGroups cannonGroups)
         {
-                if (cannonState == CannonState.ROTATE)
+            if (cannonGroups.cannonState == RaginRovers.Game1.CannonState.ROTATE)
                 {
                             //decide whether to rotate one way or back
-                    if (factory.Objects[cannonGroup.cannonKey].sprite.Rotation >= factory.Objects[cannonGroup.cannonKey].sprite.LowerRotationBounds)
-                        factory.Objects[cannonGroup.cannonKey].sprite.rotationDirection = -1;
-                    if (factory.Objects[cannonGroup.cannonKey].sprite.Rotation <= factory.Objects[cannonGroup.cannonKey].sprite.UpperRotationBounds)
-                        factory.Objects[cannonGroup.cannonKey].sprite.rotationDirection = 1;
+                    if (factory.Objects[cannonGroups.cannonKey].sprite.Rotation >= factory.Objects[cannonGroups.cannonKey].sprite.LowerRotationBounds)
+                        factory.Objects[cannonGroups.cannonKey].sprite.rotationDirection = -1;
+                    if (factory.Objects[cannonGroups.cannonKey].sprite.Rotation <= factory.Objects[cannonGroups.cannonKey].sprite.UpperRotationBounds)
+                        factory.Objects[cannonGroups.cannonKey].sprite.rotationDirection = 1;
 
 
 
-                    factory.Objects[cannonGroup.cannonKey].sprite.Rotation += ((MathHelper.PiOver4 / 16) * factory.Objects[cannonGroup.cannonKey].sprite.rotationDirection);
+                    factory.Objects[cannonGroups.cannonKey].sprite.Rotation += ((MathHelper.PiOver4 / 16) * factory.Objects[cannonGroups.cannonKey].sprite.rotationDirection);
                         
 
                 }
-                if (cannonState == CannonState.POWER)
+            if (cannonGroups.cannonState == RaginRovers.Game1.CannonState.POWER)
                 {
 
-                    if (factory.Objects[cannonGroup.barKey].sprite.Location.X > factory.Objects[cannonGroup.tabKey].sprite.Location.X)
+                    if (factory.Objects[cannonGroups.barKey].sprite.Location.X > factory.Objects[cannonGroups.tabKey].sprite.Location.X)
                     {
                         Direction = 1;
                     }
-                    else if (factory.Objects[cannonGroup.barKey].sprite.Location.X + factory.Objects[cannonGroup.barKey].sprite.BoundingBoxRect.Width - factory.Objects[cannonGroup.tabKey].sprite.BoundingBoxRect.Width < factory.Objects[cannonGroup.tabKey].sprite.Location.X)
+                    else if (factory.Objects[cannonGroups.barKey].sprite.Location.X + factory.Objects[cannonGroups.barKey].sprite.BoundingBoxRect.Width - factory.Objects[cannonGroups.tabKey].sprite.BoundingBoxRect.Width < factory.Objects[cannonGroups.tabKey].sprite.Location.X)
                     {
                         Direction = -1;
                     }
-                    factory.Objects[cannonGroup.tabKey].sprite.Location += new Vector2(10 * Direction, 0);
+                    factory.Objects[cannonGroups.tabKey].sprite.Location += new Vector2(10 * Direction, 0);
                         
                 }
-                if (cannonState == CannonState.SHOOT)
+            if (cannonGroups.cannonState == RaginRovers.Game1.CannonState.SHOOT)
                 {
-                    ShootDoggy(factory, cannonGroup);
-                    cannonState = CannonState.ROTATE;
+                    ShootDoggy(factory, cannonGroups);
+                    cannonGroups.cannonState = RaginRovers.Game1.CannonState.ROTATE;
                 }
             return factory;
         }
@@ -142,7 +134,7 @@ namespace RaginRoversLibrary
             {
                 icannon = factory.Create(
                                         (int)RaginRovers.GameObjectTypes.CANNON,
-                                        new Vector2((int)location.X + camera.Position.X - 95, (int)location.Y - 80),
+                                        new Vector2((int)location.X  - 95, (int)location.Y - 80),
                                         "spritesheet",
                                         new Vector2(0, 0),
                                         0,
@@ -151,11 +143,11 @@ namespace RaginRoversLibrary
             }
             else
             {
-                icannon = factory.Create((int)RaginRovers.GameObjectTypes.CANNON, new Vector2(location.X + camera.Position.X - 95, location.Y - 80), "spritesheet", new Vector2(0, 0), -MathHelper.Pi, -MathHelper.Pi, -MathHelper.PiOver2);
+                icannon = factory.Create((int)RaginRovers.GameObjectTypes.CANNON, new Vector2(location.X  - 95, location.Y - 80), "spritesheet", new Vector2(0, 0), -MathHelper.Pi, -MathHelper.Pi, -MathHelper.PiOver2);
             }
             int iwheel = factory.Create(
                 (int)RaginRovers.GameObjectTypes.CANNONWHEEL,
-                new Vector2((int)location.X + camera.Position.X - 30, (int)location.Y - 120),
+                new Vector2((int)location.X  - 30, (int)location.Y - 120),
                 "spritesheet",
                 new Vector2(0, 0),
                 0,
