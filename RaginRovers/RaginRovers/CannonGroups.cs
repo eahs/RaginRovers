@@ -12,6 +12,9 @@ namespace RaginRovers
         public int wheelKey;
         public int barKey;
         public int tabKey;
+        public int boomKey;
+        public float boomTime;
+        public bool isFlipped;
 
         public RaginRovers.Game1.CannonState cannonState = new RaginRovers.Game1.CannonState();
         
@@ -19,12 +22,16 @@ namespace RaginRovers
         public CannonGroups(int cannonKey,
                             int wheelKey,
                             int barKey,
-                            int tabKey)
+                            int tabKey,
+                            int boomKey,
+                            bool isFlipped)
         {
             this.cannonKey = cannonKey;
             this.wheelKey = wheelKey;
             this.barKey = barKey;
             this.tabKey = tabKey;
+            this.boomKey = boomKey;
+            this.isFlipped = isFlipped;
             cannonState = Game1.CannonState.ROTATE;
         }
     }

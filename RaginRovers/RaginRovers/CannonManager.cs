@@ -27,6 +27,8 @@ namespace RaginRoversLibrary
 
         public int Direction = 1;
 
+        public float BoomTime = 0f;
+
 
         public CannonManager()
         {
@@ -87,6 +89,8 @@ namespace RaginRoversLibrary
             //replace once just pass which cannon
             //endreplace
 
+            
+
                 //dog
                 int dog = factory.Create(
                     (int)RaginRovers.GameObjectTypes.DOG,
@@ -97,6 +101,10 @@ namespace RaginRoversLibrary
                     0,
                     0);
 
+                if (cannonGroup.isFlipped)
+                {
+                    factory.Objects[dog].sprite.flipType  = Sprite.FlipType.VERTICAL;
+                }
 
                 factory.Objects[dog].sprite.PhysicsBody.LinearVelocity = new Vector2(
                         10 * (float)Math.Cos((double)factory.Objects[cannonGroup.cannonKey].sprite.Rotation),
@@ -104,25 +112,16 @@ namespace RaginRoversLibrary
 
                 //chaning magnitude depending on power bar
                 factory.Objects[dog].sprite.PhysicsBody.LinearVelocity *= ((factory.Objects[cannonGroup.tabKey].sprite.Location.X - factory.Objects[cannonGroup.barKey].sprite.Location.X) / factory.Objects[cannonGroup.barKey].sprite.BoundingBoxRect.Width) + 1;
-                                  
 
+                factory.Objects[cannonGroup.boomKey].sprite.Dead = false;
+                cannonGroup.boomTime = 0f;
 
                 factory.Objects[dog].sprite.PhysicsBody.Mass = 30;
                 factory.Objects[dog].sprite.PhysicsBody.Restitution = 0.4f;
 
-                //boom
-                int boom = factory.Create(
-                    (int)RaginRovers.GameObjectTypes.BOOM,
-                    factory.Objects[cannonGroup.cannonKey].sprite.Location,
-                    "boom",
-                    Vector2.Zero,
-                    factory.Objects[cannonGroup.cannonKey].sprite.Rotation,
-                    0,
-                    0);
-                //changing location so that origins equal
-                factory.Objects[boom].sprite.Location += factory.Objects[cannonGroup.cannonKey].sprite.Origin - factory.Objects[boom].sprite.Origin;
+                factory.Objects[cannonGroup.boomKey].sprite.Rotation = factory.Objects[cannonGroup.cannonKey].sprite.Rotation;
 
-                factory.Objects[boom].sprite.Scale = 0.5f;
+                
 
             return factory;
         }
@@ -145,9 +144,14 @@ namespace RaginRoversLibrary
             {
                 icannon = factory.Create((int)RaginRovers.GameObjectTypes.CANNON, new Vector2(location.X  - 95, location.Y - 80), "spritesheet", new Vector2(0, 0), -MathHelper.Pi, -MathHelper.Pi, -MathHelper.PiOver2);
             }
+
+            //factory.Objects[icannon].sprite.Origin = new Vector2(120, 103);
+            factory.Objects[icannon].sprite.Origin = new Vector2((factory.Objects[icannon].sprite.BoundingBoxRect.Width / 2) - 40, factory.Objects[icannon].sprite.BoundingBoxRect.Height / 2);
+
             int iwheel = factory.Create(
                 (int)RaginRovers.GameObjectTypes.CANNONWHEEL,
-                new Vector2((int)location.X  - 30, (int)location.Y - 120),
+                //new Vector2((int)location.X  - 30, (int)location.Y - 120),
+                factory.Objects[icannon].sprite.Origin,
                 "spritesheet",
                 new Vector2(0, 0),
                 0,
@@ -176,7 +180,6 @@ namespace RaginRoversLibrary
             //had to put after because cant access origin before sprite is created
             factory.Objects[itab].sprite.Location -= new Vector2(0, factory.Objects[itab].sprite.Origin.Y);
 
-            cannonGroups.Add(new CannonGroups(icannon, iwheel, ibar, itab));
 
             //putting them all in a group
             //factory.Objects[icannon].sprite.groupNumber = groupNumber;
@@ -185,39 +188,48 @@ namespace RaginRoversLibrary
             //factory.Objects[itab].sprite.groupNumber = groupNumber;
 
             //Sprite cannon = factory.Objects[icannon].sprite;
-            //Sprite wheel = factory.Objects[iwheel].sprite;
+            //Sprite wheel = factory.Objects[iwheel].sprite;//boom
+
+            int boom = factory.Create(
+                (int)RaginRovers.GameObjectTypes.BOOM,
+                factory.Objects[icannon].sprite.Location,
+                "boom",
+                Vector2.Zero,
+                factory.Objects[icannon].sprite.Rotation,
+                0,
+                0);
+
+            //changing location so that origins equal
+            factory.Objects[boom].sprite.Location += factory.Objects[icannon].sprite.Origin - factory.Objects[boom].sprite.Origin;
+
+            factory.Objects[boom].sprite.Scale = 2.0f;
+            if (isReversed)
+                factory.Objects[boom].sprite.flipType = Sprite.FlipType.BOTH;
+            factory.Objects[boom].sprite.Dead = true;
 
 
-            factory.Objects[icannon].sprite.Origin = new Vector2(120, 103);
+            cannonGroups.Add(new CannonGroups(icannon, iwheel, ibar, itab, boom, isReversed));
+
+
 
             factory.Objects[iwheel].sprite.Location = factory.Objects[icannon].sprite.Location + factory.Objects[icannon].sprite.Origin - factory.Objects[iwheel].sprite.Origin;
             //groupNumber++;
             return factory;
         }
 
-        public void Update(GameTime gameTime)
+        public void Update(GameTime gameTime, GameObjectFactory factory, List<CannonGroups> cannonGroup)
         {
-            //was going to use this to limit boom duration but idk
-        }
-        /*
-        public float ConvertToRealRadians(float Rotation)
-        {
-            for (; ; )
+            for (int i = 0; i < cannonGroup.Count; i++)
             {
-                if (Rotation < 0)
+                if (factory.Objects[cannonGroup[i].boomKey].sprite.Frame == 12)
                 {
-                    Rotation += MathHelper.TwoPi;
+                    factory.Objects[cannonGroup[i].boomKey].sprite.Dead = true;
+                    
+                    factory.Objects[cannonGroup[i].boomKey].sprite.Frame = 0;
                 }
-                if (Rotation > MathHelper.TwoPi)
-                {
-                    Rotation -= MathHelper.TwoPi;
-                }
-                if (Rotation >= 0 && Rotation <= MathHelper.TwoPi) 
-                    break;
             }
-            return Rotation;
         }
-         */
+       
     }
 
 }

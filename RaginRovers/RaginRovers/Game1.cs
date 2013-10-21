@@ -247,6 +247,7 @@ namespace RaginRovers
             DetectKeyPress(kb, Keys.Enter);
             DetectKeyPress(kb, Keys.Space);
             DetectKeyPress(kb, Keys.N);
+            DetectKeyPress(kb, Keys.J);
 
             if (KeyDown)
             {
@@ -374,7 +375,7 @@ namespace RaginRovers
 
                             if (EditMode)
                             {
-                                factory = cannonManager.CreateCannonStuff(factory, new Vector2(ms.X, ms.Y), camera, false, ref cannonGroups);
+                                factory = cannonManager.CreateCannonStuff(factory, new Vector2(ms.X + camera.Position.X - 95, ms.Y - 80), camera, false, ref cannonGroups);
                                 
                             }
 
@@ -388,6 +389,11 @@ namespace RaginRovers
 
                             }
 
+                            break;
+                        case Keys.J:
+
+                            cannonManager.CreateCannonStuff(factory, new Vector2(0, 500), camera, true, ref cannonGroups); //need how to figure out location
+                            cannonManager.CreateCannonStuff(factory, new Vector2(500, 500), camera, false, ref cannonGroups); //need how to figure out location
                             break;
 
                         case Keys.B:
@@ -469,6 +475,8 @@ namespace RaginRovers
                     factory = cannonManager.ManipulateCannons(factory, cannonGroups[i]);
                 }
             }
+
+            cannonManager.Update(gameTime, factory, cannonGroups);
 
             if (EditMode)
             {

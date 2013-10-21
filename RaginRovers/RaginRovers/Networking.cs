@@ -23,9 +23,9 @@ namespace RaginRovers
             //recipient = new NetConnection();
             netpeer = new NetPeer(config);
 
-            recipient = new NetConnection();
+            //recipient = new NetConnection();
 
-            recipient.Peer.DiscoverLocalPeers(config.Port);
+            //recipient.Peer.DiscoverLocalPeers(config.Port);
         }
 
         public void Receive()

@@ -17,6 +17,14 @@ namespace RaginRoversLibrary
 
     public class Sprite
     {
+        public enum FlipType
+        {
+            HORIZONTAL,
+            VERTICAL,
+            BOTH,
+            NONE
+        }
+
         public Texture2D Texture;
 
         protected List<Rectangle> frames = new List<Rectangle>();
@@ -29,6 +37,9 @@ namespace RaginRoversLibrary
 
         protected Color tintColor = Color.White;
         protected float rotation = 0.0f;
+
+        public SpriteEffects spriteEffects;
+        public FlipType flipType;
 
         public int CollisionRadius = 0;
         public int BoundingXPadding = 0;
@@ -60,7 +71,6 @@ namespace RaginRoversLibrary
 
         protected string name;
 
-         public bool flip = false;
 
         public event OnCollisionEventHandler OnCollision;
 
@@ -90,6 +100,10 @@ namespace RaginRoversLibrary
             body = BodyFactory.CreateBody(GameWorld.world);
             body.BodyType = bodytype;
             body.UserData = this;
+
+            spriteEffects = new SpriteEffects();
+            flipType = new FlipType();
+            flipType = FlipType.NONE;
 
             /*
             body.Restitution = 1f;
@@ -303,16 +317,26 @@ namespace RaginRoversLibrary
 
         public virtual void Update(GameTime gameTime)
         {
-            
-            float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-            timeForCurrentFrame += elapsed;
-
-            if (timeForCurrentFrame >= FrameTime)
+            if (!Dead)
             {
-                currentFrame = (currentFrame + 1) % (frames.Count);
-                timeForCurrentFrame = 0.0f;
+                float elapsed = (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                timeForCurrentFrame += elapsed;
+
+                if (timeForCurrentFrame >= FrameTime)
+                {
+                    currentFrame = (currentFrame + 1) % (frames.Count);
+                    timeForCurrentFrame = 0.0f;
+                }
             }
+            if (flipType == FlipType.NONE)
+                spriteEffects = SpriteEffects.None;
+            if (flipType == FlipType.HORIZONTAL)
+                spriteEffects = SpriteEffects.FlipHorizontally;
+            if (flipType == FlipType.VERTICAL)
+                spriteEffects = SpriteEffects.FlipVertically;
+            if (flipType == FlipType.BOTH)
+                spriteEffects = SpriteEffects.FlipHorizontally | SpriteEffects.FlipVertically;
             /*
             location += (velocity * elapsed);
             */
@@ -331,19 +355,19 @@ namespace RaginRoversLibrary
             
 
 //            spriteBatch.Draw(crate, new Rectangle((int)ConvertUnits.ToDisplayUnits(box.Position.X), (int)ConvertUnits.ToDisplayUnits(box.Position.Y), (int)crate.Width, (int)crate.Height), null, Color.White, box.Rotation, Vector2.Zero, SpriteEffects.None, 0f);
-
-            spriteBatch.Draw(
-                Texture,
-                dest,
-                //Destination,
-                Source,
-                tintColor,
-                body.Rotation,
-                origin,
-               // 1.0f,
-              //SpriteEffects.None,
-              flip == false ? SpriteEffects.None : SpriteEffects.FlipHorizontally,
-                0.0f);
+            if (!Dead)
+                spriteBatch.Draw(
+                    Texture,
+                    dest,
+                    //Destination,
+                    Source,
+                    tintColor,
+                    body.Rotation,
+                    origin,
+                    // 1.0f,
+                    //SpriteEffects.None,
+                    spriteEffects,
+                    0.0f);
         }
 
     }
