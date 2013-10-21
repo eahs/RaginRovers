@@ -54,3 +54,4 @@ C:\Users\SlowBen\Documents\GitHub\RaginRovers\DebugView XNA\obj\x86\Debug\DebugV
 C:\Users\SlowBen\Documents\GitHub\RaginRovers\DebugView XNA\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
 C:\Users\SlowBen\Documents\GitHub\RaginRovers\DebugView XNA\obj\x86\Debug\DebugViewXNA.dll
 C:\Users\SlowBen\Documents\GitHub\RaginRovers\DebugView XNA\obj\x86\Debug\DebugViewXNA.pdb
+C:\Users\eahscs\Documents\GitHub\RaginRovers\DebugView XNA\bin\x86\Debug\DebugViewXNA.XML
