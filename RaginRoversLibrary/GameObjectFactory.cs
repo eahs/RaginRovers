@@ -14,13 +14,19 @@ using System.Runtime;
 namespace RaginRoversLibrary
 {
 
-    public class GameObject
+    public class GameObject : IComparable
     {
         public int id;
         public int typeid;
+        public int depth;  // default depth is 64
         public string textureassetname;  // Asset name for the texture this object uses
         public Sprite sprite;  // You may never ever ever ever ever store a reference to this sprite directly
                                // if you want to reference this GameObject do it by id #
+
+        public int CompareTo(Object other)
+        {
+            return ((GameObject)other).depth.CompareTo(this.depth);
+        }
     }
 
     public delegate Sprite CreateSprite (Vector2 location,
@@ -33,6 +39,7 @@ namespace RaginRoversLibrary
         private static GameObjectFactory instance;
         private int lastid;
         private Dictionary<int, GameObject> objects;
+        private List<int> sortedobjects;
         private Dictionary<int, CreateSprite> creators;
         private TextureManager textureManager;
 
@@ -43,7 +50,7 @@ namespace RaginRoversLibrary
             lastid = 0;
             this.objects = new Dictionary<int, GameObject>();
             this.creators = new Dictionary<int, CreateSprite>();
-            
+            this.sortedobjects = new List<int>();
             /*
              *                     // Default creators
             this.creators.Add(int.CAT, SpriteCreators.CreateCat);
@@ -66,7 +73,7 @@ namespace RaginRoversLibrary
             }
         }
 
-        public int Create(  int gotype, 
+        public int Create(int gotype,
                             Vector2 location,
                             string textureassetname,
                             Vector2 velocity,
@@ -74,11 +81,24 @@ namespace RaginRoversLibrary
                             float upperBounds,
                             float lowerBounds)
         {
+            return this.Create(gotype, location, textureassetname, velocity, rotation, upperBounds, lowerBounds, 64);
+        }
+
+        public int Create(  int gotype, 
+                            Vector2 location,
+                            string textureassetname,
+                            Vector2 velocity,
+                            float rotation,
+                            float upperBounds,
+                            float lowerBounds,
+                            int depth)
+        {
             lastid++;
 
             GameObject go = new GameObject();
             
             go.id = lastid;
+            go.depth = depth;
             go.typeid = gotype;
             go.textureassetname = textureassetname;
             go.sprite = null;
@@ -92,7 +112,31 @@ namespace RaginRoversLibrary
             go.sprite.LowerRotationBounds = lowerBounds;
 
             this.objects.Add(lastid, go);
-             
+
+            /*
+            this.sortedobjects = this.objects.ToList();
+
+            this.sortedobjects.Sort(
+                    delegate(KeyValuePair<int, GameObject> firstPair, KeyValuePair<int, GameObject> nextPair)
+                    {
+                        return firstPair.Value.CompareTo(nextPair.Value);
+                    }
+                );
+            */
+            bool inserted = false;
+            for (int i = this.sortedobjects.Count - 1; i >= 0; i--)
+            {
+                if (go.depth <= this.objects[this.sortedobjects[i]].depth)
+                {
+                    this.sortedobjects.Insert(i, lastid);
+                    inserted = true;
+                    break;
+                }
+            }
+
+            if (!inserted)
+                this.sortedobjects.Add(lastid);
+
             return lastid;
         }
 
@@ -108,6 +152,10 @@ namespace RaginRoversLibrary
                 }
 
                 this.objects.Remove(objectid);
+
+                this.sortedobjects.Remove(objectid);
+                
+               
             }
         }
 
@@ -139,6 +187,15 @@ namespace RaginRoversLibrary
             }
         }
 
+        public List<int> SortedObjectsList
+        {
+            get
+            {
+                return this.sortedobjects;
+            }
+        }
+
+        
         // Guarantee only one instance
         public static GameObjectFactory Instance
         {
