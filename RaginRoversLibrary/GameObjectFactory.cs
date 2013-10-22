@@ -70,7 +70,9 @@ namespace RaginRoversLibrary
                             Vector2 location,
                             string textureassetname,
                             Vector2 velocity,
-                            float rotation)
+                            float rotation,
+                            float upperBounds,
+                            float lowerBounds)
         {
             lastid++;
 
@@ -86,8 +88,11 @@ namespace RaginRoversLibrary
                 go.sprite = this.creators[gotype](location, textureManager.Texture(textureassetname), velocity, rotation);
             }
 
-            this.objects.Add(lastid, go);
+            go.sprite.UpperRotationBounds = upperBounds;
+            go.sprite.LowerRotationBounds = lowerBounds;
 
+            this.objects.Add(lastid, go);
+             
             return lastid;
         }
 

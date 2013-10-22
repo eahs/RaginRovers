@@ -15,6 +15,7 @@ using FarseerPhysics.Factories;
 using FarseerPhysics.Collision;
 using FarseerPhysics.Dynamics.Contacts;
 using System.IO;
+using RaginRovers;
 
 namespace RaginRovers
 {
@@ -24,10 +25,26 @@ namespace RaginRovers
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
-        
+
+        public enum CannonState
+        {
+            ROTATE,
+            POWER,
+            SHOOT
+        }
+
+
+        CannonState cannonState = CannonState.ROTATE;
+
+        List<CannonGroups> cannonGroups;
+
+
+        // test
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Camera camera;
+
+        CannonManager cannonManager;
 
         GameObjectFactory factory;
         TextureManager textureManager;
@@ -35,6 +52,8 @@ namespace RaginRovers
         bool EditMode = false;
         bool KeyDown = false, MouseDown = false;
         Keys Key = Keys.None;
+
+        int groupofinterest = 2;
 
         int DragSprite = -1; // Which sprite are we dragging around
         Vector2 DragOffset = Vector2.Zero;
@@ -58,7 +77,7 @@ namespace RaginRovers
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            GameWorld.Initialize(0, 5700, this.Window.ClientBounds.Width, this.Window.ClientBounds.Height, new Vector2(0, 5f));
+            GameWorld.Initialize(0, 5700, this.Window.ClientBounds.Width, this.Window.ClientBounds.Height, new Vector2(0, 9.8f));
             GameWorld.ViewPortXOffset = 0;
 
             SpriteCreators.Load("Content\\spritesheet.txt");
@@ -69,6 +88,9 @@ namespace RaginRovers
             // Now load the sprite creator factory helper
             factory = GameObjectFactory.Instance;
             factory.Initialize(textureManager);
+
+            cannonManager = new CannonManager();
+            cannonGroups = new List<CannonGroups>();
 
             // Add a few sprite creators
             factory.AddCreator((int)GameObjectTypes.CAT, SpriteCreators.CreateCat);
@@ -81,8 +103,11 @@ namespace RaginRovers
             factory.AddCreator((int)GameObjectTypes.PLATFORM_LEFT, SpriteCreators.CreatePlatformLeft);
             factory.AddCreator((int)GameObjectTypes.PLATFORM_MIDDLE, SpriteCreators.CreatePlatformMiddle);
             factory.AddCreator((int)GameObjectTypes.PLATFORM_RIGHT, SpriteCreators.CreatePlatformRight);
+            factory.AddCreator((int)GameObjectTypes.CANNON, SpriteCreators.CreateCannon);
+            factory.AddCreator((int)GameObjectTypes.CANNONWHEEL, SpriteCreators.CreateCannonWheel);
+            factory.AddCreator((int)GameObjectTypes.POWERMETERBAR, SpriteCreators.CreatePowerMeterBar);
+            factory.AddCreator((int)GameObjectTypes.POWERMETERTAB, SpriteCreators.CreatePowerMeterTab);
 
-            //factory.Objects[cat].sprite.Rotation = 3;
 
 
             base.Initialize();
@@ -96,6 +121,7 @@ namespace RaginRovers
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
             camera = new Camera(new Viewport(GameWorld.ViewPortXOffset, 0, this.Window.ClientBounds.Width, this.Window.ClientBounds.Height));
             camera.Origin = new Vector2(camera.ViewPort.Width / 2.0f, camera.ViewPort.Height);
 
@@ -124,6 +150,11 @@ namespace RaginRovers
 
             //FixtureFactory.AttachRectangle((float)GameWorld.WorldWidth, 10, 1, new Vector2(0, ConvertUnits.ToDisplayUnits(this.Window.ClientBounds.Height-30)), body);
             FixtureFactory.AttachRectangle(ConvertUnits.ToSimUnits(GameWorld.WorldWidth)*10, ConvertUnits.ToSimUnits(10), 1, Vector2.Zero, body);
+
+
+            //create cannons
+            cannonManager.CreateCannonStuff(factory, new Vector2(0, 500), camera, true, ref cannonGroups); //need how to figure out location
+            cannonManager.CreateCannonStuff(factory, new Vector2(500, 500), camera, false, ref cannonGroups); //need how to figure out location
 
         }
 
@@ -170,12 +201,12 @@ namespace RaginRovers
             if (kb.IsKeyDown(Keys.Right))
             {
                 if (camera.Position.X < GameWorld.WorldWidth - this.Window.ClientBounds.Width)
-                    camera.Position = new Vector2(camera.Position.X + 5, camera.Position.Y);
+                    camera.Position = new Vector2(camera.Position.X + 15, camera.Position.Y);
                     
             }
             if (kb.IsKeyDown(Keys.Left))
             {
-                camera.Position = new Vector2(camera.Position.X - 5, camera.Position.Y);
+                camera.Position = new Vector2(camera.Position.X - 15, camera.Position.Y);
                 if (camera.Position.X < 0)
                     camera.Position = Vector2.Zero;
 
@@ -194,6 +225,7 @@ namespace RaginRovers
             if (kb.IsKeyDown(Keys.P))
                 camera.Zoom = 1;
 
+
             MouseState ms = Mouse.GetState();
             DetectKeyPress(kb, Keys.OemTilde);
             DetectKeyPress(kb, Keys.D1);  // Record if this key is pressed
@@ -205,11 +237,17 @@ namespace RaginRovers
             DetectKeyPress(kb, Keys.D7);
             DetectKeyPress(kb, Keys.D8);
             DetectKeyPress(kb, Keys.D9);
+            DetectKeyPress(kb, Keys.D0);
+            DetectKeyPress(kb, Keys.P);
             DetectKeyPress(kb, Keys.R);
+            DetectKeyPress(kb, Keys.B);
             DetectKeyPress(kb, Keys.Delete);
             DetectKeyPress(kb, Keys.M);
             DetectKeyPress(kb, Keys.L);
             DetectKeyPress(kb, Keys.Enter);
+            DetectKeyPress(kb, Keys.Space);
+            DetectKeyPress(kb, Keys.N);
+            DetectKeyPress(kb, Keys.J);
 
             if (KeyDown)
             {
@@ -226,10 +264,26 @@ namespace RaginRovers
                             }
 
                             break;
+////////////////////////////////////////////////////
+                        case Keys.Space:
+                            if (!EditMode)
+                            {
+                                cannonManager.ChangeCannonState(cannonGroups[0]);
+                                groupofinterest = 0;
+                            }
+                            break;
+
+                        case Keys.N:
+                            if (!EditMode)
+                            {
+                                cannonManager.ChangeCannonState(cannonGroups[1]);
+                                groupofinterest = 1;
+                            }
+                            break;
 
                         case Keys.OemTilde:
                             EditMode = !EditMode;
-                            camera.Zoom = 1f;
+                            //camera.Zoom = 1f;
                             this.Window.Title = "Ragin Rovers " + (EditMode ? " | EDITING MODE" : "");
                             break;
 
@@ -237,7 +291,7 @@ namespace RaginRovers
 
                             if (EditMode)
                             {
-                                int dog = factory.Create((int)GameObjectTypes.DOG, new Vector2((int)ms.X + camera.Position.X - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0);
+                                int dog = factory.Create((int)GameObjectTypes.DOG, new Vector2((int)ms.X + camera.Position.X - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0, 0f, 0f);
                                 factory.Objects[dog].sprite.PhysicsBody.Mass = 30;
                                 factory.Objects[dog].sprite.PhysicsBody.Restitution = 0.4f;
                             }
@@ -248,7 +302,7 @@ namespace RaginRovers
 
                             if (EditMode)
                             {
-                                int cat = factory.Create((int)GameObjectTypes.CAT, new Vector2((int)ms.X + camera.Position.X - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0);
+                                int cat = factory.Create((int)GameObjectTypes.CAT, new Vector2((int)ms.X + camera.Position.X - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0, 0f, 0f);
                                 factory.Objects[cat].sprite.PhysicsBody.Mass = 30;
                                 factory.Objects[cat].sprite.PhysicsBody.Restitution = 0.8f;
                             }
@@ -259,7 +313,7 @@ namespace RaginRovers
 
                             if (EditMode)
                             {
-                                int board = factory.Create((int)GameObjectTypes.WOOD1, new Vector2((int)ms.X + camera.Position.X - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0);
+                                int board = factory.Create((int)GameObjectTypes.WOOD1, new Vector2((int)ms.X + camera.Position.X - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0, 0f, 0f);
                             }
 
                             break;
@@ -268,7 +322,7 @@ namespace RaginRovers
 
                             if (EditMode)
                             {
-                                int board = factory.Create((int)GameObjectTypes.WOOD2, new Vector2((int)ms.X + camera.Position.X - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0);
+                                int board = factory.Create((int)GameObjectTypes.WOOD2, new Vector2((int)ms.X + camera.Position.X - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0, 0f, 0f);
                             }
 
                             break;
@@ -277,7 +331,7 @@ namespace RaginRovers
 
                             if (EditMode)
                             {
-                                int board = factory.Create((int)GameObjectTypes.WOOD3, new Vector2((int)ms.X + camera.Position.X - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0);
+                                int board = factory.Create((int)GameObjectTypes.WOOD3, new Vector2((int)ms.X + camera.Position.X - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0, 0f, 0f);
                             }
 
                             break;
@@ -286,7 +340,7 @@ namespace RaginRovers
 
                             if (EditMode)
                             {
-                                int board = factory.Create((int)GameObjectTypes.WOOD4, new Vector2((int)ms.X + camera.Position.X - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0);
+                                int board = factory.Create((int)GameObjectTypes.WOOD4, new Vector2((int)ms.X + camera.Position.X - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0, 0f, 0f);
                             }
 
                             break;
@@ -295,7 +349,7 @@ namespace RaginRovers
 
                             if (EditMode)
                             {
-                                factory.Create((int)GameObjectTypes.PLATFORM_LEFT, new Vector2((int)ms.X + camera.Position.X - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0);
+                                factory.Create((int)GameObjectTypes.PLATFORM_LEFT, new Vector2((int)ms.X + camera.Position.X - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0, 0f, 0f);
                             }
 
                             break;
@@ -304,7 +358,7 @@ namespace RaginRovers
 
                             if (EditMode)
                             {
-                                factory.Create((int)GameObjectTypes.PLATFORM_MIDDLE, new Vector2((int)ms.X + camera.Position.X - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0);
+                                factory.Create((int)GameObjectTypes.PLATFORM_MIDDLE, new Vector2((int)ms.X + camera.Position.X - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0, 0f, 0f);
                             }
 
                             break;
@@ -313,9 +367,39 @@ namespace RaginRovers
 
                             if (EditMode)
                             {
-                                factory.Create((int)GameObjectTypes.PLATFORM_RIGHT, new Vector2((int)ms.X + camera.Position.X - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0);
+                                factory.Create((int)GameObjectTypes.PLATFORM_RIGHT, new Vector2((int)ms.X + camera.Position.X - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0, 0f, 0f);
                             }
 
+                            break;
+                        case Keys.D0:
+
+                            if (EditMode)
+                            {
+                                factory = cannonManager.CreateCannonStuff(factory, new Vector2(ms.X + camera.Position.X - 95, ms.Y - 80), camera, false, ref cannonGroups);
+                                
+                            }
+
+                            break;
+
+                        case Keys.P:
+
+                            if (EditMode)
+                            {
+                                factory = cannonManager.CreateCannonStuff(factory, new Vector2(ms.X, ms.Y), camera, true, ref cannonGroups);
+
+                            }
+
+                            break;
+                        case Keys.J:
+
+                            cannonManager.CreateCannonStuff(factory, new Vector2(0, 500), camera, true, ref cannonGroups); //need how to figure out location
+                            cannonManager.CreateCannonStuff(factory, new Vector2(500, 500), camera, false, ref cannonGroups); //need how to figure out location
+                            break;
+
+                        case Keys.B:
+
+                            int boom = factory.Create((int)GameObjectTypes.BOOM, new Vector2((int)ms.X + camera.Position.X - 95, (int)ms.Y - 80), "boom", new Vector2(0, 0), 0, 0f, 0f);
+                            
                             break;
 
                         case Keys.R:
@@ -357,7 +441,9 @@ namespace RaginRovers
                                                        new Vector2((float)Convert.ToDouble(fields[2]), (float)Convert.ToDouble(fields[3])),
                                                        fields[4],
                                                        Vector2.Zero,
-                                                       (float)Convert.ToDouble(fields[5]));
+                                                       (float)Convert.ToDouble(fields[5]),
+                                                       0f,
+                                                       0f);
 
                                     }
                                 }
@@ -381,6 +467,16 @@ namespace RaginRovers
                     Key = Keys.None;
                 }
             }
+
+            if (!EditMode) 
+            {
+                for (int i = 0; i < cannonGroups.Count; i++)
+                {
+                    factory = cannonManager.ManipulateCannons(factory, cannonGroups[i]);
+                }
+            }
+
+            cannonManager.Update(gameTime, factory, cannonGroups);
 
             if (EditMode)
             {

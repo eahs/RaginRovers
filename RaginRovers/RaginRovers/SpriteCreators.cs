@@ -12,6 +12,8 @@ using FarseerPhysics.Dynamics;
 using System.IO;
 using Microsoft.Xna.Framework.Storage;
 using RaginRoversLibrary;
+using FarseerPhysics.Collision.Shapes;
+using FarseerPhysics.Factories;
 
 namespace RaginRovers
 {
@@ -27,9 +29,14 @@ namespace RaginRovers
         PLATFORM_LEFT,
         PLATFORM_MIDDLE,
         PLATFORM_RIGHT,
+        CANNON,
+        CANNONWHEEL,
+        POWERMETERBAR,
+        POWERMETERTAB,
         BOOM = 300
     }
 
+    // Helper class to create sprites
     public static class SpriteCreators
     {
         public static Dictionary<string, Rectangle> spriteSourceRectangles;
@@ -92,6 +99,7 @@ namespace RaginRovers
                                                BodyType.Dynamic,
                                                true);
 
+            
             sprite.PhysicsBody.AngularDamping = 0.9f;
             sprite.PhysicsBody.Restitution = 0.2f;
             sprite.PhysicsBody.Mass = 40;
@@ -162,7 +170,13 @@ namespace RaginRovers
                                    SpriteCreators.spriteSourceRectangles["rover00"],
                                    velocity,
                                    BodyType.Dynamic,
-                                   true);
+                                   false);
+
+            //FarseerPhysics.Common.Vertices verts = new FarseerPhysics.Common.Vertices();
+            
+            Fixture bodyfixture = FixtureFactory.AttachRectangle(ConvertUnits.ToSimUnits(sprite.BoundingBoxRect.Width), ConvertUnits.ToSimUnits(sprite.BoundingBoxRect.Height), 1, Vector2.Zero, sprite.PhysicsBody);
+            bodyfixture.Restitution = 1;
+            bodyfixture.Friction = 1;
 
             SpriteCreators.AddFrames(sprite, "rover", 12);
 
@@ -242,6 +256,84 @@ namespace RaginRovers
                                    velocity,
                                    BodyType.Static,
                                    true);
+
+            sprite.Rotation = rotation;
+
+            return sprite;
+        }
+
+        public static Sprite CreateCannon(Vector2 location,
+                                                    Texture2D texture,
+                                                    Vector2 velocity,
+                                                    float rotation)
+        {
+           Sprite sprite = new Sprite("sprite",
+                                   location,
+                                   texture,
+                                   SpriteCreators.spriteSourceRectangles["cannon_0001_Layer-3"],
+                                   velocity,
+                                   BodyType.Static,
+                                   true);
+
+
+            sprite.PhysicsBody.CollidesWith = Category.None;
+
+            sprite.Rotation = rotation; //will change
+
+            return sprite;
+        }
+        public static Sprite CreateCannonWheel(Vector2 location,
+                                                    Texture2D texture,
+                                                    Vector2 velocity,
+                                                    float rotation)
+        {
+            Sprite sprite = new Sprite("sprite",
+                                   location,
+                                   texture,
+                                   SpriteCreators.spriteSourceRectangles["cannon_0000_Layer-7"],
+                                   velocity,
+                                   BodyType.Static,
+                                   true);
+
+                sprite.PhysicsBody.CollidesWith = Category.None;
+
+            sprite.Rotation = rotation;
+
+            return sprite;
+        }
+        public static Sprite CreatePowerMeterBar(Vector2 location,
+                                                     Texture2D texture,
+                                                     Vector2 velocity,
+                                                     float rotation)
+        {
+            Sprite sprite = new Sprite("sprite",
+                                   location,
+                                   texture,
+                                   new Rectangle(0,0,320,50),
+                                   velocity,
+                                   BodyType.Static,
+                                   true);
+
+            sprite.PhysicsBody.CollidesWith = Category.None;
+
+            sprite.Rotation = rotation;
+
+            return sprite;
+        }
+        public static Sprite CreatePowerMeterTab(Vector2 location,
+                                                     Texture2D texture,
+                                                     Vector2 velocity,
+                                                     float rotation)
+        {
+            Sprite sprite = new Sprite("sprite",
+                                   location,
+                                   texture,
+                                   new Rectangle(0, 0, 32, 100),
+                                   velocity,
+                                   BodyType.Static,
+                                   true);
+
+            sprite.PhysicsBody.CollidesWith = Category.None;
 
             sprite.Rotation = rotation;
 
