@@ -67,6 +67,8 @@ namespace RaginRovers
             graphics.ApplyChanges();
 
             Content.RootDirectory = "Content";
+
+            
         }
 
         /// <summary>
@@ -227,7 +229,10 @@ namespace RaginRovers
                 camera.Zoom = 1;
 
 
-            MouseState ms = Mouse.GetState();
+            MouseState msState = Mouse.GetState();
+            Vector2 ms = Vector2.Transform(new Vector2(msState.X, msState.Y), Matrix.Invert(camera.GetViewMatrix(Vector2.One)));
+            this.Window.Title = "Local Mouse> X: " + msState.X + " Y: " + msState.Y + ", World Mouse> X: " + ms.X + " Y: " + ms.Y;
+
             DetectKeyPress(kb, Keys.OemTilde);
             DetectKeyPress(kb, Keys.D1);  // Record if this key is pressed
             DetectKeyPress(kb, Keys.D2);  // Record if this key is pressed
@@ -481,14 +486,14 @@ namespace RaginRovers
 
             if (EditMode)
             {
-                if (ms.LeftButton == ButtonState.Pressed && !MouseDown)
+                if (msState.LeftButton == ButtonState.Pressed && !MouseDown)
                 {
                     MouseDown = true;
 
                     foreach (int key in factory.Objects.Keys)
                     {
                         Sprite sprite = factory.Objects[key].sprite;
-                        if (sprite.IsBoxColliding(new Rectangle(ms.X + (int)camera.Position.X, ms.Y, 1, 1)))
+                        if (sprite.IsBoxColliding(new Rectangle((int)ms.X + (int)camera.Position.X, (int)ms.Y, 1, 1)))
                         {
                             DragSprite = key;
                             DragOffset = new Vector2(ms.X, ms.Y) - sprite.Location;
@@ -501,7 +506,7 @@ namespace RaginRovers
                     factory.Objects[DragSprite].sprite.Location = new Vector2(ms.X, ms.Y) - DragOffset;
                 }
 
-                if (ms.LeftButton == ButtonState.Released)
+                if (msState.LeftButton == ButtonState.Released)
                 {
                     MouseDown = false;
                     DragSprite = -1;

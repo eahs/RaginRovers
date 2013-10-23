@@ -1,11 +1,16 @@
 using System;
 using System.Threading;
+using System.Runtime.InteropServices;
 
 namespace RaginRovers
 {
+
 #if WINDOWS || XBOX
     static class Program
     {
+        static LidgrenWorkThread workerObject;
+        static Thread workerThread;
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -20,8 +25,8 @@ namespace RaginRovers
             }
 
             //Create Thread
-            LidgrenWorkThread workerObject = new LidgrenWorkThread();
-            Thread workerThread = new Thread(workerObject.SyncComps);
+            workerObject = new LidgrenWorkThread();
+            workerThread = new Thread(workerObject.SyncComps);
             //Start Thread
             workerThread.Start();
 
@@ -39,10 +44,14 @@ namespace RaginRovers
             //workerThread.Join();
             #endregion
 
-            using (Game1 game = new Game1())
-            {
-                game.Run();
-            }
+            Game1 game = new Game1();
+            game.Exiting += new EventHandler<EventArgs>(game_Exiting);
+            game.Run();
+        }
+
+        static void game_Exiting(object sender, EventArgs e)
+        {
+            workerThread.Abort();
         }
     }
 #endif

@@ -34,3 +34,11 @@ C:\Users\tanczosm\Documents\GitHub\RaginRovers\Lidgren XNA Extensions\Lidgren XN
 C:\Users\tanczosm\Documents\GitHub\RaginRovers\Lidgren XNA Extensions\Lidgren XNA Extensions\obj\Debug\Lidgren XNA Extensions.csprojResolveAssemblyReference.cache
 C:\Users\tanczosm\Documents\GitHub\RaginRovers\Lidgren XNA Extensions\Lidgren XNA Extensions\obj\Debug\Lidgren.Network.Xna.dll
 C:\Users\tanczosm\Documents\GitHub\RaginRovers\Lidgren XNA Extensions\Lidgren XNA Extensions\obj\Debug\Lidgren.Network.Xna.pdb
+H:\GitHub\RaginRovers\Lidgren XNA Extensions\Lidgren XNA Extensions\bin\Debug\Lidgren.Network.Xna.dll
+H:\GitHub\RaginRovers\Lidgren XNA Extensions\Lidgren XNA Extensions\bin\Debug\Lidgren.Network.Xna.pdb
+H:\GitHub\RaginRovers\Lidgren XNA Extensions\Lidgren XNA Extensions\bin\Debug\Lidgren.Network.dll
+H:\GitHub\RaginRovers\Lidgren XNA Extensions\Lidgren XNA Extensions\bin\Debug\Lidgren.Network.pdb
+H:\GitHub\RaginRovers\Lidgren XNA Extensions\Lidgren XNA Extensions\bin\Debug\Lidgren.Network.xml
+H:\GitHub\RaginRovers\Lidgren XNA Extensions\Lidgren XNA Extensions\obj\Debug\ResolveAssemblyReference.cache
+H:\GitHub\RaginRovers\Lidgren XNA Extensions\Lidgren XNA Extensions\obj\Debug\Lidgren.Network.Xna.dll
+H:\GitHub\RaginRovers\Lidgren XNA Extensions\Lidgren XNA Extensions\obj\Debug\Lidgren.Network.Xna.pdb
