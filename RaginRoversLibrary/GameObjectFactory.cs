@@ -124,9 +124,9 @@ namespace RaginRoversLibrary
                 );
             */
             bool inserted = false;
-            for (int i = this.sortedobjects.Count - 1; i >= 0; i--)
+            for (int i = 0; i < this.sortedobjects.Count; i++)
             {
-                if (go.depth <= this.objects[this.sortedobjects[i]].depth)
+                if (go.depth > this.objects[this.sortedobjects[i]].depth)
                 {
                     this.sortedobjects.Insert(i, lastid);
                     inserted = true;

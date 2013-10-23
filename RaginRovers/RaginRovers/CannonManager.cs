@@ -77,8 +77,17 @@ namespace RaginRoversLibrary
             if (cannonGroups.cannonState == RaginRovers.Game1.CannonState.SHOOT)
                 {
                     ShootDoggy(factory, cannonGroups);
-                    cannonGroups.cannonState = RaginRovers.Game1.CannonState.ROTATE;
+                    cannonGroups.cannonState = RaginRovers.Game1.CannonState.COOLDOWN;
                 }
+
+            if (cannonGroups.cannonState == RaginRovers.Game1.CannonState.COOLDOWN)
+            {
+                if (factory.Objects[cannonGroups.boomKey].sprite.Dead)
+                {
+                    cannonGroups.cannonState = Game1.CannonState.ROTATE;
+                }
+            }
+
             return factory;
         }
 
@@ -94,7 +103,7 @@ namespace RaginRoversLibrary
                 //dog
                 int dog = factory.Create(
                     (int)RaginRovers.GameObjectTypes.DOG,
-                    factory.Objects[cannonGroup.cannonKey].sprite.Location,
+                    factory.Objects[cannonGroup.cannonKey].sprite.Location + new Vector2(30, 0),
                     "spritesheet",
                     Vector2.Zero,
                     factory.Objects[cannonGroup.cannonKey].sprite.Rotation,
@@ -119,8 +128,8 @@ namespace RaginRoversLibrary
                 factory.Objects[dog].sprite.PhysicsBody.Mass = 30;
                 factory.Objects[dog].sprite.PhysicsBody.Restitution = 0.4f;
 
-                factory.Objects[cannonGroup.boomKey].sprite.Rotation = factory.Objects[cannonGroup.cannonKey].sprite.Rotation;
-
+                //factory.Objects[cannonGroup.boomKey].sprite.Rotation = factory.Objects[cannonGroup.cannonKey].sprite.Rotation;
+                factory.Objects[cannonGroup.boomKey].sprite.Location = factory.Objects[cannonGroup.cannonKey].sprite.Location - factory.Objects[cannonGroup.boomKey].sprite.Origin + new Vector2(0, -150) + factory.Objects[dog].sprite.PhysicsBody.LinearVelocity / factory.Objects[dog].sprite.PhysicsBody.LinearVelocity.Length() * 200;
                 
 
             return factory;
@@ -138,11 +147,12 @@ namespace RaginRoversLibrary
                                         new Vector2(0, 0),
                                         0,
                                         -MathHelper.PiOver2,
-                                        0);
+                                        0,
+                                        32);
             }
             else
             {
-                icannon = factory.Create((int)RaginRovers.GameObjectTypes.CANNON, new Vector2(location.X  - 95, location.Y - 80), "spritesheet", new Vector2(0, 0), -MathHelper.Pi, -MathHelper.Pi, -MathHelper.PiOver2);
+                icannon = factory.Create((int)RaginRovers.GameObjectTypes.CANNON, new Vector2(location.X  - 95, location.Y - 80), "spritesheet", new Vector2(0, 0), -MathHelper.Pi, -MathHelper.Pi, -MathHelper.PiOver2, 32);
             }
 
             //factory.Objects[icannon].sprite.Origin = new Vector2(120, 103);
@@ -156,7 +166,7 @@ namespace RaginRoversLibrary
                 new Vector2(0, 0),
                 0,
                 0f,
-                0f);
+                0f, 31);
             int ibar = factory.Create(
                  (int)RaginRovers.GameObjectTypes.POWERMETERBAR,
                  new Vector2(
@@ -166,7 +176,7 @@ namespace RaginRoversLibrary
                  new Vector2(0, 0),
                  0,
                  0f,
-                 0f);
+                 0f, 30);
             int itab = factory.Create(
                  (int)RaginRovers.GameObjectTypes.POWERMETERTAB,
                  new Vector2(
@@ -176,7 +186,7 @@ namespace RaginRoversLibrary
                  new Vector2(0, 0),
                  0,
                  0f,
-                 0f);
+                 0f, 30);
             //had to put after because cant access origin before sprite is created
             factory.Objects[itab].sprite.Location -= new Vector2(0, factory.Objects[itab].sprite.Origin.Y);
 
@@ -197,7 +207,7 @@ namespace RaginRoversLibrary
                 Vector2.Zero,
                 factory.Objects[icannon].sprite.Rotation,
                 0,
-                0);
+                0, 5);
 
             //changing location so that origins equal
             factory.Objects[boom].sprite.Location += factory.Objects[icannon].sprite.Origin - factory.Objects[boom].sprite.Origin;
@@ -210,9 +220,7 @@ namespace RaginRoversLibrary
 
             cannonGroups.Add(new CannonGroups(icannon, iwheel, ibar, itab, boom, isReversed));
 
-
-
-            factory.Objects[iwheel].sprite.Location = factory.Objects[icannon].sprite.Location + factory.Objects[icannon].sprite.Origin - factory.Objects[iwheel].sprite.Origin;
+            factory.Objects[iwheel].sprite.Location = factory.Objects[icannon].sprite.Location + factory.Objects[icannon].sprite.Origin - new Vector2(109-20, 113); // factory.Objects[iwheel].sprite.Origin;
             //groupNumber++;
             return factory;
         }

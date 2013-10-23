@@ -30,7 +30,8 @@ namespace RaginRovers
         {
             ROTATE,
             POWER,
-            SHOOT
+            SHOOT,
+            COOLDOWN
         }
 
 
@@ -526,7 +527,7 @@ namespace RaginRovers
                 spriteBatch.Draw(textureManager.Texture("background"), new Rectangle(x * this.Window.ClientBounds.Width, 0, this.Window.ClientBounds.Width, this.Window.ClientBounds.Height), new Rectangle(0, 0, textureManager.Texture("background").Width, textureManager.Texture("background").Height), Color.White);
             }
 
-            foreach (int key in factory.Objects.Keys)
+            foreach (int key in factory.SortedObjectsList)
             {
                 factory.Objects[key].sprite.Draw(spriteBatch);
             }
