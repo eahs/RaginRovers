@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Lidgren.Network;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
@@ -59,6 +60,8 @@ namespace RaginRovers
         int DragSprite = -1; // Which sprite are we dragging around
         Vector2 DragOffset = Vector2.Zero;
 
+        NetClient client;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -68,7 +71,12 @@ namespace RaginRovers
 
             Content.RootDirectory = "Content";
 
-            
+
+            NetPeerConfiguration config = new NetPeerConfiguration("raginrovers");
+            config.EnableMessageType(NetIncomingMessageType.DiscoveryResponse);
+
+            client = new NetClient(config);
+            client.Start();
         }
 
         /// <summary>
@@ -79,6 +87,8 @@ namespace RaginRovers
         /// </summary>
         protected override void Initialize()
         {
+            client.DiscoverLocalPeers(14242);
+
             // TODO: Add your initialization logic here
             GameWorld.Initialize(0, 5700, this.Window.ClientBounds.Width, this.Window.ClientBounds.Height, new Vector2(0, 9.8f));
             GameWorld.ViewPortXOffset = 0;
@@ -114,6 +124,29 @@ namespace RaginRovers
 
 
             base.Initialize();
+        }
+
+
+        public void HandleIncomingNetworkData()
+        {
+            // read messages
+            NetIncomingMessage msg;
+            while ((msg = client.ReadMessage()) != null)
+            {
+                switch (msg.MessageType)
+                {
+                    case NetIncomingMessageType.DiscoveryResponse:
+                        // just connect to first server discovered
+                        client.Connect(msg.SenderEndPoint);
+                        break;
+                    case NetIncomingMessageType.Data:
+                        // server sent a position update
+
+                        Dictionary<string, string> data = Networking.DeserializeData(msg.ReadString());
+
+                        break;
+                }
+            }
         }
 
         /// <summary>
@@ -284,6 +317,10 @@ namespace RaginRovers
                             {
                                 cannonManager.ChangeCannonState(cannonGroups[1]);
                                 groupofinterest = 1;
+
+                                NetOutgoingMessage om = client.CreateMessage();
+                                om.Write("msg=hello;x=3.2;y=4");
+                                client.SendMessage(om, NetDeliveryMethod.Unreliable);
                             }
                             break;
 
@@ -513,7 +550,16 @@ namespace RaginRovers
                 }
             }
 
+            HandleIncomingNetworkData();
+
             base.Update(gameTime);
+        }
+
+        protected override void OnExiting(object sender, EventArgs args)
+        {
+            client.Shutdown("bye");
+
+            base.OnExiting(sender, args);
         }
 
         /// <summary>

@@ -51,6 +51,7 @@ namespace RaginRovers
 
         static void game_Exiting(object sender, EventArgs e)
         {
+            workerObject.RequestStop();
             workerThread.Abort();
         }
     }

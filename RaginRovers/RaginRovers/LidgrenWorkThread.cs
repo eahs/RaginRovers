@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 
 namespace RaginRovers
 {
@@ -16,6 +17,8 @@ namespace RaginRovers
             {
                 Communication.Receive();
                 whatever++;
+
+                Thread.Sleep(1);
             }
         }
         
