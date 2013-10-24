@@ -45,6 +45,8 @@ namespace RaginRovers
 
             while ((msg = server.ReadMessage()) != null)
             {
+                Stuff = null;
+
                 switch (msg.MessageType)
                 {
                     case NetIncomingMessageType.DiscoveryRequest:
@@ -140,7 +142,10 @@ namespace RaginRovers
                             */
                             
                         }
-                        Send(player, "msg=shoot;client=1;vel=303.2;rotation=40");
+
+                        if (Stuff != null)
+                            //Send(player, "msg=shoot;client=1;vel=303.2;rotation=40");
+                            Send(player, SerializeData(Stuff));
                     }
 
                     // schedule next update
