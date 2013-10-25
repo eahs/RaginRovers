@@ -60,7 +60,7 @@ namespace RaginRoversLibrary
                     if (factory.Objects[cannonGroups.cannonKey].sprite.Rotation <= factory.Objects[cannonGroups.cannonKey].sprite.UpperRotationBounds)
                         factory.Objects[cannonGroups.cannonKey].sprite.rotationDirection = 1;
 
-
+                 
 
                     factory.Objects[cannonGroups.cannonKey].sprite.Rotation += ((MathHelper.PiOver4 / 16) * factory.Objects[cannonGroups.cannonKey].sprite.rotationDirection);
                         
