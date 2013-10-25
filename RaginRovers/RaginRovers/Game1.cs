@@ -31,6 +31,7 @@ namespace RaginRovers
         {
             ROTATE,
             POWER,
+            WAITING, /* Fire confirmation has to come from the server */
             SHOOT,
             COOLDOWN
         }
@@ -143,6 +144,18 @@ namespace RaginRovers
                         // server sent a position update
 
                         Dictionary<string, string> data = Networking.DeserializeData(msg.ReadString());
+
+                        //action=shoot;cannonGroup=1;rotation=
+                        if (data.ContainsKey("action") && data["action"] == "shoot")
+                        {
+                            int cannonGroup = Convert.ToInt32(data["cannonGroup"]);
+                            double cannonRotation = Convert.ToDouble(data["rotation"]);
+                            double cannonPower = Convert.ToDouble(data["power"]);
+
+                            cannonGroups[cannonGroup].Power = (float)cannonPower;
+                            cannonGroups[cannonGroup].Rotation = (float)cannonRotation;
+                            cannonManager.ChangeCannonState(cannonGroups[cannonGroup]);
+                        }
 
                         break;
                 }
@@ -309,6 +322,13 @@ namespace RaginRovers
                             {
                                 cannonManager.ChangeCannonState(cannonGroups[0]);
                                 groupofinterest = 0;
+
+                                if (cannonGroups[0].cannonState == CannonState.WAITING)
+                                {
+                                    NetOutgoingMessage om = client.CreateMessage();
+                                    om.Write("action=shoot;cannonGroup=0;rotation=" + cannonGroups[0].Rotation + ";power=" + cannonGroups[0].Power);
+                                    client.SendMessage(om, NetDeliveryMethod.Unreliable);
+                                }
                             }
                             break;
 
@@ -318,9 +338,12 @@ namespace RaginRovers
                                 cannonManager.ChangeCannonState(cannonGroups[1]);
                                 groupofinterest = 1;
 
-                                NetOutgoingMessage om = client.CreateMessage();
-                                om.Write("msg=hello;x=3.2;y=4");
-                                client.SendMessage(om, NetDeliveryMethod.Unreliable);
+                                if (cannonGroups[1].cannonState == CannonState.WAITING)
+                                {
+                                    NetOutgoingMessage om = client.CreateMessage();
+                                    om.Write("action=shoot;cannonGroup=1;rotation=" + cannonGroups[1].Rotation + ";power=" + cannonGroups[1].Power);
+                                    client.SendMessage(om, NetDeliveryMethod.Unreliable);
+                                }
                             }
                             break;
 

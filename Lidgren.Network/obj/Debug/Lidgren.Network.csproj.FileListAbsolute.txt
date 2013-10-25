@@ -22,7 +22,6 @@ C:\Users\SlowBen\Documents\GitHub\RaginRovers\Lidgren.Network\obj\Debug\Lidgren.
 C:\Users\tanczosm\Documents\GitHub\RaginRovers\Lidgren.Network\bin\Debug\Lidgren.Network.XML
 C:\Users\tanczosm\Documents\GitHub\RaginRovers\Lidgren.Network\bin\Debug\Lidgren.Network.dll
 C:\Users\tanczosm\Documents\GitHub\RaginRovers\Lidgren.Network\bin\Debug\Lidgren.Network.pdb
-C:\Users\tanczosm\Documents\GitHub\RaginRovers\Lidgren.Network\obj\Debug\Lidgren.Network.csprojResolveAssemblyReference.cache
 C:\Users\tanczosm\Documents\GitHub\RaginRovers\Lidgren.Network\obj\Debug\Lidgren.Network.dll
 C:\Users\tanczosm\Documents\GitHub\RaginRovers\Lidgren.Network\obj\Debug\Lidgren.Network.pdb
 H:\GitHub\RaginRovers\Lidgren.Network\bin\Debug\Lidgren.Network.dll

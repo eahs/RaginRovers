@@ -34,14 +34,20 @@ namespace RaginRoversLibrary
         {
         }
 
+        // ROTATE -> POWER -> WAITING -> SHOOT -> COOLDOWN
         public void ChangeCannonState(CannonGroups cannonGroups)
         {
-            if (cannonGroups.cannonState == RaginRovers.Game1.CannonState.POWER)
-            {
-                cannonGroups.cannonState = RaginRovers.Game1.CannonState.SHOOT;
-            }
             if (cannonGroups.cannonState == RaginRovers.Game1.CannonState.ROTATE)
                 cannonGroups.cannonState = RaginRovers.Game1.CannonState.POWER;
+            else if (cannonGroups.cannonState == RaginRovers.Game1.CannonState.POWER)
+                cannonGroups.cannonState = RaginRovers.Game1.CannonState.WAITING;
+            else if (cannonGroups.cannonState == RaginRovers.Game1.CannonState.WAITING)
+                cannonGroups.cannonState = RaginRovers.Game1.CannonState.SHOOT;
+            else if (cannonGroups.cannonState == Game1.CannonState.SHOOT)
+                cannonGroups.cannonState = RaginRovers.Game1.CannonState.COOLDOWN;
+            else if (cannonGroups.cannonState == Game1.CannonState.COOLDOWN)
+                cannonGroups.cannonState = RaginRovers.Game1.CannonState.ROTATE;
+
         }
 
         public GameObjectFactory ManipulateCannons(GameObjectFactory factory, CannonGroups cannonGroups)
@@ -77,14 +83,14 @@ namespace RaginRoversLibrary
             if (cannonGroups.cannonState == RaginRovers.Game1.CannonState.SHOOT)
                 {
                     ShootDoggy(factory, cannonGroups);
-                    cannonGroups.cannonState = RaginRovers.Game1.CannonState.COOLDOWN;
+                    ChangeCannonState(cannonGroups);
                 }
 
             if (cannonGroups.cannonState == RaginRovers.Game1.CannonState.COOLDOWN)
             {
                 if (factory.Objects[cannonGroups.boomKey].sprite.Dead)
                 {
-                    cannonGroups.cannonState = Game1.CannonState.ROTATE;
+                    ChangeCannonState(cannonGroups); 
                 }
             }
 
@@ -106,7 +112,7 @@ namespace RaginRoversLibrary
                     factory.Objects[cannonGroup.cannonKey].sprite.Location + new Vector2(30, 0),
                     "spritesheet",
                     Vector2.Zero,
-                    factory.Objects[cannonGroup.cannonKey].sprite.Rotation,
+                    cannonGroup.Rotation,
                     0,
                     0);
 
@@ -116,11 +122,11 @@ namespace RaginRoversLibrary
                 }
 
                 factory.Objects[dog].sprite.PhysicsBody.LinearVelocity = new Vector2(
-                        10 * (float)Math.Cos((double)factory.Objects[cannonGroup.cannonKey].sprite.Rotation),
-                        10 * (float)Math.Sin((double)factory.Objects[cannonGroup.cannonKey].sprite.Rotation));
+                        10 * (float)Math.Cos((double)cannonGroup.Rotation),
+                        10 * (float)Math.Sin((double)cannonGroup.Rotation));
 
                 //chaning magnitude depending on power bar
-                factory.Objects[dog].sprite.PhysicsBody.LinearVelocity *= ((factory.Objects[cannonGroup.tabKey].sprite.Location.X - factory.Objects[cannonGroup.barKey].sprite.Location.X) / factory.Objects[cannonGroup.barKey].sprite.BoundingBoxRect.Width) + 1;
+                factory.Objects[dog].sprite.PhysicsBody.LinearVelocity *= cannonGroup.Power; // ((factory.Objects[cannonGroup.tabKey].sprite.Location.X - factory.Objects[cannonGroup.barKey].sprite.Location.X) / factory.Objects[cannonGroup.barKey].sprite.BoundingBoxRect.Width) + 1;
 
                 factory.Objects[cannonGroup.boomKey].sprite.Dead = false;
                 cannonGroup.boomTime = 0f;
@@ -134,7 +140,7 @@ namespace RaginRoversLibrary
 
             return factory;
         }
-
+        
         public GameObjectFactory CreateCannonStuff(GameObjectFactory factory, Vector2 location, Camera camera, bool isReversed, ref List<CannonGroups> cannonGroups)
         {
             int icannon;
