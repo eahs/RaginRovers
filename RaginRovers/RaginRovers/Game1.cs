@@ -154,6 +154,8 @@ namespace RaginRovers
                                             double cannonRotation = Convert.ToDouble(data["rotation"]);
                                             double cannonPower = Convert.ToDouble(data["power"]);
 
+                                            cannonGroups[cannonGroup].cannonState = CannonState.WAITING;
+
                                             cannonGroups[cannonGroup].Power = (float)cannonPower;
                                             cannonGroups[cannonGroup].Rotation = (float)cannonRotation;
                                             cannonManager.ChangeCannonState(cannonGroups[cannonGroup]);
