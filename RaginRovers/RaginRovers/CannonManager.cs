@@ -215,6 +215,13 @@ namespace RaginRoversLibrary
                 0,
                 0, 5);
 
+            factory.Objects[icannon].saveable = false;
+            factory.Objects[iwheel].saveable = false;
+            factory.Objects[itab].saveable = false;
+            factory.Objects[ibar].saveable = false;
+            factory.Objects[boom].saveable = false;
+
+
             //changing location so that origins equal
             factory.Objects[boom].sprite.Location += factory.Objects[icannon].sprite.Origin - factory.Objects[boom].sprite.Origin;
 

@@ -22,6 +22,12 @@ namespace RaginRoversLibrary
         public string textureassetname;  // Asset name for the texture this object uses
         public Sprite sprite;  // You may never ever ever ever ever store a reference to this sprite directly
                                // if you want to reference this GameObject do it by id #
+        public bool saveable;
+
+        public GameObject()
+        {
+            saveable = true;
+        }
 
         public int CompareTo(Object other)
         {
@@ -165,14 +171,15 @@ namespace RaginRoversLibrary
 
             foreach (int key in objects.Keys)
             {
-                lines +=    objects[key].id + "\t" +
-                            objects[key].typeid + "\t" +
-                            objects[key].sprite.Location.X + "\t" +
-                            objects[key].sprite.Location.Y + "\t" +
-                            objects[key].textureassetname + "\t" +
-                            objects[key].sprite.Rotation +
-                            "\n"
-                         ;
+                if (objects[key].saveable)
+                    lines +=    objects[key].id + "\t" +
+                                objects[key].typeid + "\t" +
+                                objects[key].sprite.Location.X + "\t" +
+                                objects[key].sprite.Location.Y + "\t" +
+                                objects[key].textureassetname + "\t" +
+                                objects[key].sprite.Rotation +
+                                "\n"
+                             ;
             }
 
            
