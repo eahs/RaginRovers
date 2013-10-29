@@ -8,7 +8,7 @@ namespace RaginRovers
 {
     class LidgrenWorkThread
     {
-        Networking Communication = new Networking();
+        ServerNetworking Communication = new ServerNetworking();
         bool Receiver = true;
         long whatever = 0;
         public void SyncComps()

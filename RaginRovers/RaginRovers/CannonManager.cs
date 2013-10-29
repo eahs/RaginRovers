@@ -37,22 +37,22 @@ namespace RaginRoversLibrary
         // ROTATE -> POWER -> WAITING -> SHOOT -> COOLDOWN
         public void ChangeCannonState(CannonGroups cannonGroups)
         {
-            if (cannonGroups.cannonState == RaginRovers.Game1.CannonState.ROTATE)
-                cannonGroups.cannonState = RaginRovers.Game1.CannonState.POWER;
-            else if (cannonGroups.cannonState == RaginRovers.Game1.CannonState.POWER)
-                cannonGroups.cannonState = RaginRovers.Game1.CannonState.WAITING;
-            else if (cannonGroups.cannonState == RaginRovers.Game1.CannonState.WAITING)
-                cannonGroups.cannonState = RaginRovers.Game1.CannonState.SHOOT;
-            else if (cannonGroups.cannonState == Game1.CannonState.SHOOT)
-                cannonGroups.cannonState = RaginRovers.Game1.CannonState.COOLDOWN;
-            else if (cannonGroups.cannonState == Game1.CannonState.COOLDOWN)
-                cannonGroups.cannonState = RaginRovers.Game1.CannonState.ROTATE;
+            if (cannonGroups.cannonState == CannonState.ROTATE)
+                cannonGroups.cannonState = CannonState.POWER;
+            else if (cannonGroups.cannonState == CannonState.POWER)
+                cannonGroups.cannonState = CannonState.WAITING;
+            else if (cannonGroups.cannonState == CannonState.WAITING)
+                cannonGroups.cannonState = CannonState.SHOOT;
+            else if (cannonGroups.cannonState == CannonState.SHOOT)
+                cannonGroups.cannonState = CannonState.COOLDOWN;
+            else if (cannonGroups.cannonState == CannonState.COOLDOWN)
+                cannonGroups.cannonState = CannonState.ROTATE;
 
         }
 
         public GameObjectFactory ManipulateCannons(GameObjectFactory factory, CannonGroups cannonGroups)
         {
-            if (cannonGroups.cannonState == RaginRovers.Game1.CannonState.ROTATE)
+            if (cannonGroups.cannonState == CannonState.ROTATE)
                 {
                             //decide whether to rotate one way or back
                     if (factory.Objects[cannonGroups.cannonKey].sprite.Rotation >= factory.Objects[cannonGroups.cannonKey].sprite.LowerRotationBounds)
@@ -66,7 +66,7 @@ namespace RaginRoversLibrary
                         
 
                 }
-            if (cannonGroups.cannonState == RaginRovers.Game1.CannonState.POWER)
+            if (cannonGroups.cannonState == CannonState.POWER)
                 {
 
                     if (factory.Objects[cannonGroups.barKey].sprite.Location.X > factory.Objects[cannonGroups.tabKey].sprite.Location.X)
@@ -80,13 +80,13 @@ namespace RaginRoversLibrary
                     factory.Objects[cannonGroups.tabKey].sprite.Location += new Vector2(10 * Direction, 0);
                         
                 }
-            if (cannonGroups.cannonState == RaginRovers.Game1.CannonState.SHOOT)
+            if (cannonGroups.cannonState == CannonState.SHOOT)
                 {
                     ShootDoggy(factory, cannonGroups);
                     ChangeCannonState(cannonGroups);
                 }
 
-            if (cannonGroups.cannonState == RaginRovers.Game1.CannonState.COOLDOWN)
+            if (cannonGroups.cannonState == CannonState.COOLDOWN)
             {
                 if (factory.Objects[cannonGroups.boomKey].sprite.Dead)
                 {

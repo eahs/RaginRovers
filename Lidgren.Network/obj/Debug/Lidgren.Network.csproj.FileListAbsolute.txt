@@ -28,3 +28,4 @@ H:\GitHub\RaginRovers\Lidgren.Network\bin\Debug\Lidgren.Network.pdb
 H:\GitHub\RaginRovers\Lidgren.Network\obj\Debug\ResolveAssemblyReference.cache
 H:\GitHub\RaginRovers\Lidgren.Network\obj\Debug\Lidgren.Network.dll
 H:\GitHub\RaginRovers\Lidgren.Network\obj\Debug\Lidgren.Network.pdb
+H:\GitHub\RaginRovers\Lidgren.Network\bin\Debug\Lidgren.Network.XML

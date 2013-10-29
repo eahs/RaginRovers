@@ -8,6 +8,15 @@ using Microsoft.Xna.Framework;
 
 namespace RaginRovers
 {
+    public enum CannonState
+    {
+        ROTATE,
+        POWER,
+        WAITING, /* Fire confirmation has to come from the server */
+        SHOOT,
+        COOLDOWN
+    }
+
     public class CannonGroups
     {
         public int cannonKey;
@@ -18,7 +27,7 @@ namespace RaginRovers
         public float boomTime;
         public bool isFlipped;
 
-        public RaginRovers.Game1.CannonState cannonState = new RaginRovers.Game1.CannonState();
+        public CannonState cannonState;
         private GameObjectFactory factory;
 
         public CannonGroups(int cannonKey,
@@ -35,7 +44,7 @@ namespace RaginRovers
             this.tabKey = tabKey;
             this.boomKey = boomKey;
             this.isFlipped = isFlipped;
-            cannonState = Game1.CannonState.ROTATE;
+            cannonState = CannonState.ROTATE;
         }
 
         public float Rotation
