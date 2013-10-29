@@ -203,6 +203,8 @@ namespace RaginRovers
 
             SpriteCreators.AddFrames(sprite, "boom", 12);
 
+
+
             sprite.Rotation = rotation;
 
             return sprite;

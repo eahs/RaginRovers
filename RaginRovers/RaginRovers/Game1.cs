@@ -123,7 +123,6 @@ namespace RaginRovers
             factory.AddCreator((int)GameObjectTypes.POWERMETERTAB, SpriteCreators.CreatePowerMeterTab);
 
 
-
             base.Initialize();
         }
 
@@ -146,16 +145,38 @@ namespace RaginRovers
                         Dictionary<string, string> data = Networking.DeserializeData(msg.ReadString());
 
                         //action=shoot;cannonGroup=1;rotation=
-                        if (data.ContainsKey("action") && data["action"] == "shoot")
+                        if (data.ContainsKey("action"))
                         {
-                            int cannonGroup = Convert.ToInt32(data["cannonGroup"]);
-                            double cannonRotation = Convert.ToDouble(data["rotation"]);
-                            double cannonPower = Convert.ToDouble(data["power"]);
+                            switch (data["action"])
+                            {
+                                case "shoot":
+                                            int cannonGroup = Convert.ToInt32(data["cannonGroup"]);
+                                            double cannonRotation = Convert.ToDouble(data["rotation"]);
+                                            double cannonPower = Convert.ToDouble(data["power"]);
 
-                            cannonGroups[cannonGroup].Power = (float)cannonPower;
-                            cannonGroups[cannonGroup].Rotation = (float)cannonRotation;
-                            cannonManager.ChangeCannonState(cannonGroups[cannonGroup]);
+                                            cannonGroups[cannonGroup].cannonState = CannonState.WAITING;
+
+                                            cannonGroups[cannonGroup].Power = (float)cannonPower;
+                                            cannonGroups[cannonGroup].Rotation = (float)cannonRotation;
+                                            cannonManager.ChangeCannonState(cannonGroups[cannonGroup]);
+                                            break;
+
+                                case "create":
+
+                                       
+                                        factory.Create(Convert.ToInt32(data["gotype"]),
+                                                       new Vector2((float)Convert.ToDouble(data["location.x"]), (float)Convert.ToDouble(data["location.y"])),
+                                                       data["textureassetname"],
+                                                       Vector2.Zero,
+                                                       (float)Convert.ToDouble(data["rotation"]),
+                                                       (float)Convert.ToDouble(data["upperBounds"]),
+                                                       (float)Convert.ToDouble(data["lowerBounds"]));
+
+
+                                            break;
+                            }
                         }
+                       
 
                         break;
                 }
@@ -503,6 +524,13 @@ namespace RaginRovers
                                     {
                                         string[] fields = lines[i].Split('\t');
 
+
+
+                                        NetOutgoingMessage om = client.CreateMessage();
+                                        om.Write("action=create;gotype=" + Convert.ToInt32(fields[1]) + ";textureassetname=" + fields[4] + ";location.x=" + (float)Convert.ToDouble(fields[2]) + ";location.y=" + (float)Convert.ToDouble(fields[3]) + ";rotation=" + (float)Convert.ToDouble(fields[5]) + ";upperBounds=" + 0f + ";lowerBounds=" + 0f);
+                                        client.SendMessage(om, NetDeliveryMethod.Unreliable);
+
+                                        /*
                                         factory.Create(Convert.ToInt32(fields[1]),
                                                        new Vector2((float)Convert.ToDouble(fields[2]), (float)Convert.ToDouble(fields[3])),
                                                        fields[4],
@@ -510,7 +538,7 @@ namespace RaginRovers
                                                        (float)Convert.ToDouble(fields[5]),
                                                        0f,
                                                        0f);
-
+                                        */
                                     }
                                 }
                             }

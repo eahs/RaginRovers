@@ -20,15 +20,15 @@ namespace RaginRovers
             {
                 if (args[0] == "server")
                 {
-                    return;
+                    //Create Thread
+                    workerObject = new LidgrenWorkThread();
+                    workerThread = new Thread(workerObject.SyncComps);
+                    //Start Thread
+                    workerThread.Start();
                 }
             }
 
-            //Create Thread
-            workerObject = new LidgrenWorkThread();
-            workerThread = new Thread(workerObject.SyncComps);
-            //Start Thread
-            workerThread.Start();
+
 
             #region use elsewhere
             //Loop until worker thread active
@@ -51,8 +51,11 @@ namespace RaginRovers
 
         static void game_Exiting(object sender, EventArgs e)
         {
-            workerObject.RequestStop();
-            workerThread.Abort();
+            if (workerObject != null)
+            {
+                workerObject.RequestStop();
+                workerThread.Abort();
+            }
         }
     }
 #endif
