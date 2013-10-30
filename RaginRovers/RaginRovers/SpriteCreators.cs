@@ -33,13 +33,15 @@ namespace RaginRovers
         CANNONWHEEL,
         POWERMETERBAR,
         POWERMETERTAB,
-        BOOM = 300
+        BOOM = 300,
+        PUFF
     }
 
     // Helper class to create sprites
     public static class SpriteCreators
     {
         public static Dictionary<string, Rectangle> spriteSourceRectangles;
+        public static Random rand = new Random(System.Environment.TickCount);
 
         public static void Load(string path)
         {
@@ -100,10 +102,10 @@ namespace RaginRovers
                                                true);
 
 
-            //sprite.PhysicsBody.AngularDamping = 0.9f;
-            //sprite.PhysicsBody.Restitution = 0.2f;
-            //sprite.PhysicsBody.Mass = 40;
-            //sprite.Rotation = rotation;
+            sprite.PhysicsBody.AngularDamping = 0.9f;
+            sprite.PhysicsBody.Restitution = 0.2f;
+            sprite.PhysicsBody.Mass = 40;
+            sprite.Rotation = rotation;
 
             return sprite;
         }
@@ -145,6 +147,8 @@ namespace RaginRovers
 
             SpriteCreators.AddFrames(sprite, "cat", 10);
 
+            sprite.Frame = rand.Next(0, 10);
+
             /*
             for (int i = 1; i <= 10; i++)
             {
@@ -158,7 +162,7 @@ namespace RaginRovers
             //rects
             //9, 19, 95, 111
 
-            sprite.PhysicsBodyFixture = FixtureFactory.AttachRectangle(ConvertUnits.ToSimUnits(95), ConvertUnits.ToSimUnits(111), 1, ConvertUnits.ToSimUnits(new Vector2(9, 19)), sprite.PhysicsBody);
+            sprite.PhysicsBodyFixture = FixtureFactory.AttachRectangle(ConvertUnits.ToSimUnits(95), ConvertUnits.ToSimUnits(100), 1, ConvertUnits.ToSimUnits(new Vector2(9, 10)), sprite.PhysicsBody);
 
             sprite.PhysicsBodyFixture.OnCollision += new OnCollisionEventHandler(sprite.HandleCollision);
 
@@ -194,6 +198,7 @@ namespace RaginRovers
             //rects
             //16, 12, 175, 125
             sprite.PhysicsBodyFixture = FixtureFactory.AttachRectangle(ConvertUnits.ToSimUnits(175), ConvertUnits.ToSimUnits(125), 1, ConvertUnits.ToSimUnits(new Vector2(16, 12)), sprite.PhysicsBody);
+            sprite.PhysicsBodyFixture.Friction = 15f;
 
             sprite.PhysicsBodyFixture.OnCollision += new OnCollisionEventHandler(sprite.HandleCollision);
 
@@ -220,6 +225,28 @@ namespace RaginRovers
 
 
 
+            sprite.Rotation = rotation;
+
+            return sprite;
+        }
+
+        public static Sprite CreatePuff(Vector2 location,
+                                            Texture2D texture,
+                                            Vector2 velocity,
+                                            float rotation)
+        {
+            Sprite sprite = new Sprite("sprite",
+                                   location,
+                                   texture,
+                                   SpriteCreators.spriteSourceRectangles["puffs_01"],
+                                   velocity,
+                                   BodyType.Static,
+                                   true);
+
+            sprite.PhysicsBody.CollidesWith = Category.None;
+            sprite.FrameTime = 0.06f;
+
+            SpriteCreators.AddFrames(sprite, "puffs_", 7);
             sprite.Rotation = rotation;
 
             return sprite;

@@ -64,7 +64,7 @@ namespace RaginRovers
             DetectKeyPress(kb, Keys.Space);
             DetectKeyPress(kb, Keys.N);
             DetectKeyPress(kb, Keys.J);
-
+            DetectKeyPress(kb, Keys.Q);
 
 
             if (KeyDown)
@@ -113,6 +113,18 @@ namespace RaginRovers
                             //camera.Zoom = 1f;
                             
                             window.Title = "Ragin Rovers " + (EditMode ? " | EDITING MODE" : "");
+                            break;
+
+                        case Keys.Q:
+
+                            if (EditMode)
+                            {
+                                int puff = factory.Create((int)GameObjectTypes.PUFF, new Vector2((int)ms.X /*+ camera.Position.X*/ - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0, 0f, 0f);
+                                factory.Objects[puff].sprite.PhysicsBody.Mass = 30;
+                                factory.Objects[puff].sprite.PhysicsBody.Restitution = 0.4f;
+                                factory.Objects[puff].saveable = false;
+                            }
+
                             break;
 
                         case Keys.D1:

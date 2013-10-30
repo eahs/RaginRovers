@@ -86,6 +86,7 @@ namespace RaginRovers
             factory.AddCreator((int)GameObjectTypes.CAT, SpriteCreators.CreateCat);
             factory.AddCreator((int)GameObjectTypes.DOG, SpriteCreators.CreateDog);
             factory.AddCreator((int)GameObjectTypes.BOOM, SpriteCreators.CreateBoom);
+            factory.AddCreator((int)GameObjectTypes.PUFF, SpriteCreators.CreatePuff);
             factory.AddCreator((int)GameObjectTypes.WOOD1, SpriteCreators.CreateWood1);
             factory.AddCreator((int)GameObjectTypes.WOOD2, SpriteCreators.CreateWood2);
             factory.AddCreator((int)GameObjectTypes.WOOD3, SpriteCreators.CreateWood3);
