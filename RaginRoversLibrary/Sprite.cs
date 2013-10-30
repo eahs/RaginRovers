@@ -105,25 +105,25 @@ namespace RaginRoversLibrary
             flipType = new FlipType();
             flipType = FlipType.NONE;
 
-            /*
-            body.Restitution = 1f;
-            body.Mass = 20;
-            body.Friction = 5;
-            body.LinearDamping = 2.4f;
-            body.AngularDamping = 6.4f;
-            body.Rotation = 1.3f;
+
+            body.Restitution = .2f;
+            body.Mass = 100;
+            body.Friction = 10;
+            //body.LinearDamping = 2.4f;
+            //body.AngularDamping = 6.4f;
+            /*body.Rotation = 1.3f;
             //            box.AngularVelocity = 0.1f;
             body.Inertia = 25.5f;
             */
             this.Location = location;
-//            body.Position = ConvertUnits.ToSimUnits(this.Location);
+            //            body.Position = ConvertUnits.ToSimUnits(this.Location);
             body.IgnoreGravity = false;
 
             if (AddFixture)
             {
                 bodyfixture = FixtureFactory.AttachRectangle(ConvertUnits.ToSimUnits(initialFrame.Width), ConvertUnits.ToSimUnits(initialFrame.Height), 1, Vector2.Zero, body);
-                bodyfixture.Restitution = 1;
-                bodyfixture.Friction = 1;
+                //bodyfixture.Restitution = 1;
+                //bodyfixture.Friction = 1;
 
                 bodyfixture.OnCollision += new OnCollisionEventHandler(HandleCollision);
             }
@@ -131,23 +131,23 @@ namespace RaginRoversLibrary
             this.Velocity = ConvertUnits.ToSimUnits(velocity);
         }
 
-        
+
         public void Destroy()
         {
             if (GameWorld.world.BodyList.Contains(body))
                 GameWorld.world.RemoveBody(body);
         }
 
-         ~Sprite()
+        ~Sprite()
         {
             this.Destroy();
         }
 
-         public override string ToString()
-         {
-             return this.name;
-         }
-    
+        public override string ToString()
+        {
+            return this.name;
+        }
+
         public virtual bool HandleCollision(Fixture a, Fixture b, Contact contact)
         {
             if (OnCollision != null)
@@ -172,6 +172,10 @@ namespace RaginRoversLibrary
             get
             {
                 return bodyfixture;
+            }
+            set
+            {
+                bodyfixture = value;
             }
         }
 
@@ -260,8 +264,8 @@ namespace RaginRoversLibrary
                 return new Rectangle(
                     (int)location.X,
                     (int)location.Y,
-                    (int)((float)frameWidth*scale),
-                    (int)((float)frameHeight*scale));
+                    (int)((float)frameWidth * scale),
+                    (int)((float)frameHeight * scale));
             }
         }
 
@@ -296,12 +300,12 @@ namespace RaginRoversLibrary
         public bool IsCircleColliding(Vector2 otherCenter, float otherRadius)
         {
             if (Vector2.Distance(Center, otherCenter) <
-                ((int)((float)CollisionRadius*scale) + otherRadius))
+                ((int)((float)CollisionRadius * scale) + otherRadius))
                 return true;
             else
                 return false;
         }
-        
+
 
         public void AddFrame(Rectangle frameRectangle)
         {
@@ -352,9 +356,9 @@ namespace RaginRoversLibrary
 
             // Translate position to display unit coordinates
             dest = new Rectangle((int)(ConvertUnits.ToDisplayUnits(body.Position.X)), (int)ConvertUnits.ToDisplayUnits(body.Position.Y), (int)((float)frameWidth * scale), (int)((float)frameHeight * scale));
-            
 
-//            spriteBatch.Draw(crate, new Rectangle((int)ConvertUnits.ToDisplayUnits(box.Position.X), (int)ConvertUnits.ToDisplayUnits(box.Position.Y), (int)crate.Width, (int)crate.Height), null, Color.White, box.Rotation, Vector2.Zero, SpriteEffects.None, 0f);
+
+            //            spriteBatch.Draw(crate, new Rectangle((int)ConvertUnits.ToDisplayUnits(box.Position.X), (int)ConvertUnits.ToDisplayUnits(box.Position.Y), (int)crate.Width, (int)crate.Height), null, Color.White, box.Rotation, Vector2.Zero, SpriteEffects.None, 0f);
             if (!Dead)
                 spriteBatch.Draw(
                     Texture,
