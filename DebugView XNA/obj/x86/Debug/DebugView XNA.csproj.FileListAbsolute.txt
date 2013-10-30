@@ -72,3 +72,4 @@ H:\GitHub\RaginRovers\DebugView XNA\obj\x86\Debug\ResolveAssemblyReference.cache
 H:\GitHub\RaginRovers\DebugView XNA\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
 H:\GitHub\RaginRovers\DebugView XNA\obj\x86\Debug\DebugViewXNA.dll
 H:\GitHub\RaginRovers\DebugView XNA\obj\x86\Debug\DebugViewXNA.pdb
+C:\Users\EAHSCS\Documents\GitHub\RaginRovers\DebugView XNA\bin\x86\Debug\DebugViewXNA.XML
