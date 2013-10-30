@@ -105,13 +105,13 @@ namespace RaginRoversLibrary
             flipType = new FlipType();
             flipType = FlipType.NONE;
 
-            /*
-            body.Restitution = 1f;
-            body.Mass = 20;
-            body.Friction = 5;
-            body.LinearDamping = 2.4f;
-            body.AngularDamping = 6.4f;
-            body.Rotation = 1.3f;
+            
+            body.Restitution = .2f;
+            body.Mass = 100;
+            body.Friction = 10;
+            //body.LinearDamping = 2.4f;
+            //body.AngularDamping = 6.4f;
+            /*body.Rotation = 1.3f;
             //            box.AngularVelocity = 0.1f;
             body.Inertia = 25.5f;
             */
@@ -122,8 +122,8 @@ namespace RaginRoversLibrary
             if (AddFixture)
             {
                 bodyfixture = FixtureFactory.AttachRectangle(ConvertUnits.ToSimUnits(initialFrame.Width), ConvertUnits.ToSimUnits(initialFrame.Height), 1, Vector2.Zero, body);
-                bodyfixture.Restitution = 1;
-                bodyfixture.Friction = 1;
+                //bodyfixture.Restitution = 1;
+                //bodyfixture.Friction = 1;
 
                 bodyfixture.OnCollision += new OnCollisionEventHandler(HandleCollision);
             }
@@ -172,6 +172,10 @@ namespace RaginRoversLibrary
             get
             {
                 return bodyfixture;
+            }
+            set
+            {
+                bodyfixture = value;
             }
         }
 

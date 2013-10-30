@@ -100,10 +100,10 @@ namespace RaginRovers
                                                true);
 
             
-            sprite.PhysicsBody.AngularDamping = 0.9f;
-            sprite.PhysicsBody.Restitution = 0.2f;
-            sprite.PhysicsBody.Mass = 40;
-            sprite.Rotation = rotation;
+            //sprite.PhysicsBody.AngularDamping = 0.9f;
+            //sprite.PhysicsBody.Restitution = 0.2f;
+            //sprite.PhysicsBody.Mass = 40;
+            //sprite.Rotation = rotation;
 
             return sprite;
         }
@@ -141,7 +141,7 @@ namespace RaginRovers
                                    SpriteCreators.spriteSourceRectangles["cat00"],
                                    velocity,
                                    BodyType.Dynamic,
-                                   true);
+                                   false);
 
             SpriteCreators.AddFrames(sprite, "cat", 10);
 
@@ -154,6 +154,13 @@ namespace RaginRovers
             */
 
             sprite.Rotation = rotation;
+
+            //rects
+                    //9, 19, 95, 111
+
+            sprite.PhysicsBodyFixture = FixtureFactory.AttachRectangle(ConvertUnits.ToSimUnits(95), ConvertUnits.ToSimUnits(111), 1, ConvertUnits.ToSimUnits(new Vector2(9, 19)), sprite.PhysicsBody);
+
+            sprite.PhysicsBodyFixture.OnCollision += new OnCollisionEventHandler(sprite.HandleCollision);
 
             return sprite;
         }
@@ -173,14 +180,22 @@ namespace RaginRovers
                                    false);
 
             //FarseerPhysics.Common.Vertices verts = new FarseerPhysics.Common.Vertices();
-            
-            Fixture bodyfixture = FixtureFactory.AttachRectangle(ConvertUnits.ToSimUnits(sprite.BoundingBoxRect.Width), ConvertUnits.ToSimUnits(sprite.BoundingBoxRect.Height), 1, Vector2.Zero, sprite.PhysicsBody);
-            bodyfixture.Restitution = 1;
-            bodyfixture.Friction = 1;
 
             SpriteCreators.AddFrames(sprite, "rover", 12);
 
             sprite.Rotation = rotation;
+            //option 1 with two fixtures
+                    //rects
+                            //45, 16, 153, 114
+                            //0, 60, 45, 70
+            //sprite.PhysicsBodyFixture = FixtureFactory.AttachRectangle(ConvertUnits.ToSimUnits(153), ConvertUnits.ToSimUnits(114), 1, ConvertUnits.ToSimUnits(new Vector2(45, 16)), sprite.PhysicsBody);
+            //sprite.PhysicsBodyFixture = FixtureFactory.AttachRectangle(ConvertUnits.ToSimUnits(45), ConvertUnits.ToSimUnits(70), 1, ConvertUnits.ToSimUnits(new Vector2(0, 60)), sprite.PhysicsBody);
+            //option 2 with one fixture
+                    //rects
+                            //16, 12, 175, 125
+            sprite.PhysicsBodyFixture = FixtureFactory.AttachRectangle(ConvertUnits.ToSimUnits(175), ConvertUnits.ToSimUnits(125), 1, ConvertUnits.ToSimUnits(new Vector2(16, 12)), sprite.PhysicsBody);
+
+            sprite.PhysicsBodyFixture.OnCollision += new OnCollisionEventHandler(sprite.HandleCollision);
 
             return sprite;
         }
