@@ -34,7 +34,9 @@ namespace RaginRovers
         POWERMETERBAR,
         POWERMETERTAB,
         BOOM = 300,
-        PUFF
+        PUFF,
+        DINO,
+        SUN
     }
 
     // Helper class to create sprites
@@ -247,6 +249,48 @@ namespace RaginRovers
             sprite.FrameTime = 0.06f;
 
             SpriteCreators.AddFrames(sprite, "puffs_", 7);
+            sprite.Rotation = rotation;
+
+            return sprite;
+        }
+
+        public static Sprite CreateSun(Vector2 location,
+                                            Texture2D texture,
+                                            Vector2 velocity,
+                                            float rotation)
+        {
+            Sprite sprite = new Sprite("sprite",
+                                   location,
+                                   texture,
+                                   SpriteCreators.spriteSourceRectangles["sun00"],
+                                   velocity,
+                                   BodyType.Static,
+                                   true);
+
+            sprite.PhysicsBody.CollidesWith = Category.None;
+            sprite.FrameTime = 0.06f;
+
+            SpriteCreators.AddFrames(sprite, "sun", 4);
+            sprite.Rotation = rotation;
+
+            return sprite;
+        }
+
+        public static Sprite CreateDino(Vector2 location,
+                                            Texture2D texture,
+                                            Vector2 velocity,
+                                            float rotation)
+        {
+            Sprite sprite = new Sprite("sprite",
+                                   location,
+                                   texture,
+                                   SpriteCreators.spriteSourceRectangles["dinosaur"],
+                                   velocity,
+                                   BodyType.Static,
+                                   true);
+
+            sprite.PhysicsBody.CollidesWith = Category.None;
+            sprite.PhysicsBody.IgnoreGravity = true;
             sprite.Rotation = rotation;
 
             return sprite;

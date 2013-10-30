@@ -85,8 +85,10 @@ namespace RaginRovers
             // Add a few sprite creators
             factory.AddCreator((int)GameObjectTypes.CAT, SpriteCreators.CreateCat);
             factory.AddCreator((int)GameObjectTypes.DOG, SpriteCreators.CreateDog);
+            factory.AddCreator((int)GameObjectTypes.SUN, SpriteCreators.CreateSun);
             factory.AddCreator((int)GameObjectTypes.BOOM, SpriteCreators.CreateBoom);
             factory.AddCreator((int)GameObjectTypes.PUFF, SpriteCreators.CreatePuff);
+            factory.AddCreator((int)GameObjectTypes.DINO, SpriteCreators.CreateDino);
             factory.AddCreator((int)GameObjectTypes.WOOD1, SpriteCreators.CreateWood1);
             factory.AddCreator((int)GameObjectTypes.WOOD2, SpriteCreators.CreateWood2);
             factory.AddCreator((int)GameObjectTypes.WOOD3, SpriteCreators.CreateWood3);
@@ -124,6 +126,8 @@ namespace RaginRovers
             textureManager.LoadTexture("spritesheet");
             textureManager.LoadTexture("boom");
             textureManager.LoadTexture("cursor");
+            textureManager.LoadTexture("sun");
+            textureManager.LoadTexture("explosion1");
 
             /*
             int cat = factory.Create((int)GameObjectTypes.CAT, Vector2.Zero, "spritesheet", Vector2.Zero, 0);
@@ -144,11 +148,7 @@ namespace RaginRovers
             //FixtureFactory.AttachRectangle((float)GameWorld.WorldWidth, 10, 1, new Vector2(0, ConvertUnits.ToDisplayUnits(this.Window.ClientBounds.Height-30)), body);
             FixtureFactory.AttachRectangle(ConvertUnits.ToSimUnits(GameWorld.WorldWidth)*10, ConvertUnits.ToSimUnits(10), 1, Vector2.Zero, body);
 
-
-            //create cannons
-            cannonManager.CreateCannonStuff(factory, new Vector2(0, 500), camera, true, ref cannonGroups); //need how to figure out location
-            cannonManager.CreateCannonStuff(factory, new Vector2(500, 500), camera, false, ref cannonGroups); //need how to figure out location
-
+            SetupLevel();
         }
 
         /// <summary>
@@ -256,6 +256,21 @@ namespace RaginRovers
             
 
             base.Draw(gameTime);
+        }
+
+
+        public void SetupLevel()
+        {
+            //create cannons
+            cannonManager.CreateCannonStuff(factory, new Vector2(GameWorld.WorldWidth-250, 500), camera, true, ref cannonGroups); //need how to figure out location
+            cannonManager.CreateCannonStuff(factory, new Vector2(0, 500), camera, false, ref cannonGroups); //need how to figure out location
+
+            // Create some dinos
+            factory.Create((int)GameObjectTypes.DINO, new Vector2(1000, this.Window.ClientBounds.Height-100), "spritesheet", Vector2.Zero, 0f, 0f, 0f);
+            factory.Create((int)GameObjectTypes.DINO, new Vector2(GameWorld.WorldWidth-1000, this.Window.ClientBounds.Height - 100), "spritesheet", Vector2.Zero, 0f, 0f, 0f);
+
+            // Create sun
+            factory.Create((int)GameObjectTypes.SUN, new Vector2(this.Window.ClientBounds.Width * 2 - 400, -800), "sun", Vector2.Zero, 0f, 0f, 0f);
         }
 
 

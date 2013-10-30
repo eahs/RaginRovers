@@ -71,7 +71,6 @@ namespace RaginRoversLibrary
 
         protected string name;
 
-
         public event OnCollisionEventHandler OnCollision;
 
         public Sprite(
