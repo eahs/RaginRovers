@@ -100,6 +100,8 @@ namespace RaginRovers
             factory.AddCreator((int)GameObjectTypes.CANNONWHEEL, SpriteCreators.CreateCannonWheel);
             factory.AddCreator((int)GameObjectTypes.POWERMETERBAR, SpriteCreators.CreatePowerMeterBar);
             factory.AddCreator((int)GameObjectTypes.POWERMETERTAB, SpriteCreators.CreatePowerMeterTab);
+            factory.AddCreator((int)GameObjectTypes.EXPLOSION1, SpriteCreators.CreateExplosion1);
+            factory.AddCreator((int)GameObjectTypes.EXPLOSION1, SpriteCreators.CreateExplosion2);
 
             mapEditor = new MapEditor(Window, client, cannonManager, cannonGroups);
 
@@ -118,7 +120,7 @@ namespace RaginRovers
             camera = new Camera(new Viewport(GameWorld.ViewPortXOffset, 0, this.Window.ClientBounds.Width, this.Window.ClientBounds.Height));
             camera.Origin = new Vector2(camera.ViewPort.Width / 2.0f, camera.ViewPort.Height);
 
-            camera.Position = new Vector2(GameWorld.WorldWidth * (ScreenConfiguration-1), camera.Position.Y);
+            camera.Position = new Vector2((GameWorld.WorldWidth/3) * (ScreenConfiguration-1), camera.Position.Y);
 
 
             // Load all the textures we're going to need for this game
@@ -144,9 +146,10 @@ namespace RaginRovers
             Body body = BodyFactory.CreateBody(GameWorld.world);
             body.BodyType = BodyType.Static;
             body.Position = ConvertUnits.ToSimUnits(new Vector2(0, this.Window.ClientBounds.Height-105));
+            body.UserData = new GameObject(-1, (int)GameObjectTypes.GROUND);
 
             //FixtureFactory.AttachRectangle((float)GameWorld.WorldWidth, 10, 1, new Vector2(0, ConvertUnits.ToDisplayUnits(this.Window.ClientBounds.Height-30)), body);
-            FixtureFactory.AttachRectangle(ConvertUnits.ToSimUnits(GameWorld.WorldWidth)*10, ConvertUnits.ToSimUnits(10), 1, Vector2.Zero, body);
+            Fixture ground = FixtureFactory.AttachRectangle(ConvertUnits.ToSimUnits(GameWorld.WorldWidth)*10, ConvertUnits.ToSimUnits(10), 1, Vector2.Zero, body, "ground");
 
             SetupLevel();
         }
@@ -207,7 +210,8 @@ namespace RaginRovers
                 factory.Objects[key].sprite.Update(gameTime);
             }
 
-            MouseState msState = Mouse.GetState();
+            SunManager.Instance.Update(gameTime);
+            SpriteHelper.Instance.Update(gameTime);
 
             mapEditor.Update(gameTime, camera);
             client.Update(gameTime);
@@ -269,8 +273,8 @@ namespace RaginRovers
             factory.Create((int)GameObjectTypes.DINO, new Vector2(1000, this.Window.ClientBounds.Height-100), "spritesheet", Vector2.Zero, 0f, 0f, 0f);
             factory.Create((int)GameObjectTypes.DINO, new Vector2(GameWorld.WorldWidth-1000, this.Window.ClientBounds.Height - 100), "spritesheet", Vector2.Zero, 0f, 0f, 0f);
 
-            // Create sun
-            factory.Create((int)GameObjectTypes.SUN, new Vector2(this.Window.ClientBounds.Width * 2 - 400, -800), "sun", Vector2.Zero, 0f, 0f, 0f);
+            // Sun
+            SunManager.Instance.Mood = SunMood.GRIN;
         }
 
 

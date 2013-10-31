@@ -12,4 +12,5 @@ Content\Audio\Sound Effects.xnb
 Content\Audio\wood_hit_wood_heavy_1.xnb
 Content\explosion1.xnb
 Content\sun.xnb
+Content\explosion2.xnb
 Content\spritesheet.txt

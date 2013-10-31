@@ -127,6 +127,15 @@
       <Output>H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\sun.xnb</Output>
       <Time>2013-10-30T14:05:17-04:00</Time>
     </Item>
+    <Item>
+      <Source>explosion2.png</Source>
+      <Name>explosion2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\explosion2.xnb</Output>
+      <Time>2013-10-31T14:17:55-04:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>

@@ -110,6 +110,7 @@
     <Compile Include="CannonGroups.cs" />
     <Compile Include="CannonManager.cs" />
     <Compile Include="ClientNetworking.cs" />
+    <Compile Include="CollisionEvents.cs" />
     <Compile Include="LidgrenWorkThread.cs" />
     <Compile Include="MapEditor.cs" />
     <Compile Include="ServerNetworking.cs" />
@@ -117,6 +118,8 @@
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="SpriteCreators.cs" />
+    <Compile Include="SpriteHelper.cs" />
+    <Compile Include="SunManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Game.ico" />

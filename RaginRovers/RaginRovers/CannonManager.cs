@@ -116,6 +116,8 @@ namespace RaginRoversLibrary
                     0,
                     0);
 
+                factory.Objects[dog].sprite.OnCollision += new OnCollisionEventHandler(CollisionEvents.dog_OnCollision);
+
                 if (cannonGroup.isFlipped)
                 {
                     factory.Objects[dog].sprite.flipType  = Sprite.FlipType.VERTICAL;
@@ -140,6 +142,8 @@ namespace RaginRoversLibrary
 
             return factory;
         }
+
+
         
         public GameObjectFactory CreateCannonStuff(GameObjectFactory factory, Vector2 location, Camera camera, bool isReversed, ref List<CannonGroups> cannonGroups)
         {

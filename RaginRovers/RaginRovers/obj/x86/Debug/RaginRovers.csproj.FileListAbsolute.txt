@@ -100,3 +100,4 @@ H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\Sound 
 H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\wood_hit_wood_heavy_1.xnb
 H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\explosion1.xnb
 H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\sun.xnb
+H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\explosion2.xnb

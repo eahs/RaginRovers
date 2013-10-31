@@ -98,7 +98,7 @@ namespace RaginRoversLibrary
 
             body = BodyFactory.CreateBody(GameWorld.world);
             body.BodyType = bodytype;
-            body.UserData = this;
+            //body.UserData = this; // NO!!!!
 
             spriteEffects = new SpriteEffects();
             flipType = new FlipType();
@@ -152,8 +152,7 @@ namespace RaginRoversLibrary
         {
             if (OnCollision != null)
             {
-                if ((string)a.Body.UserData == name || (string)b.Body.UserData == name)
-                    return OnCollision(a, b, contact);
+                return OnCollision(a, b, contact);
             }
 
             return true;
@@ -248,6 +247,11 @@ namespace RaginRoversLibrary
         {
             get { return frameTime; }
             set { frameTime = MathHelper.Max(0, value); }
+        }
+
+        public int FrameCount
+        {
+            get { return frames.Count; }
         }
 
         public virtual Rectangle Source

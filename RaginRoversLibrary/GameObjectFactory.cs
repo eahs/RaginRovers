@@ -23,10 +23,22 @@ namespace RaginRoversLibrary
         public Sprite sprite;  // You may never ever ever ever ever store a reference to this sprite directly
                                // if you want to reference this GameObject do it by id #
         public bool saveable;
+        public int collisioncount;
+        public bool alive;
 
         public GameObject()
         {
             saveable = true;
+            depth = 64;
+            alive = true;
+            collisioncount = 0;
+        }
+
+        public GameObject(int id, int typeid)
+        {
+            sprite = null;
+            this.id = id;
+            this.typeid = typeid;
         }
 
         public int CompareTo(Object other)
@@ -116,6 +128,7 @@ namespace RaginRoversLibrary
 
             go.sprite.UpperRotationBounds = upperBounds;
             go.sprite.LowerRotationBounds = lowerBounds;
+            go.sprite.PhysicsBody.UserData = go;
 
             this.objects.Add(lastid, go);
 

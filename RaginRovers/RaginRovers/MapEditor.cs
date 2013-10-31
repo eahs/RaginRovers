@@ -41,7 +41,7 @@ namespace RaginRovers
             MouseState msState = Mouse.GetState();
 
             Vector2 ms = Vector2.Transform(new Vector2(msState.X, msState.Y), Matrix.Invert(camera.GetViewMatrix(Vector2.One)));
-            window.Title = "Local Mouse> X: " + msState.X + " Y: " + msState.Y + ", World Mouse> X: " + ms.X + " Y: " + ms.Y;
+            window.Title = "Local Mouse> X: " + msState.X + " Y: " + msState.Y + ", World Mouse> X: " + ms.X + ", Y: " + ms.Y + ", Zoom: " + camera.Zoom;
 
             DetectKeyPress(kb, Keys.OemTilde);
             DetectKeyPress(kb, Keys.D1);  // Record if this key is pressed
@@ -73,25 +73,16 @@ namespace RaginRovers
                 {
                     switch (Key)
                     {
-                        case Keys.Enter:
-
-                            foreach (int i in factory.Objects.Keys)
-                            {
-                                if (factory.Objects[i].typeid == (int)GameObjectTypes.DOG)
-                                    factory.Objects[i].sprite.PhysicsBody.ApplyLinearImpulse(new Vector2(60, 40));
-                            }
-
-                            break;
                         ////////////////////////////////////////////////////
                         case Keys.Space:
                             if (!EditMode)
                             {
                                 cannonManager.ChangeCannonState(cannonGroups[0]);
-
+                                
                                 if (cannonGroups[0].cannonState == CannonState.WAITING)
                                 {
                                     client.SendMessage("action=shoot;cannonGroup=0;rotation=" + cannonGroups[0].Rotation + ";power=" + cannonGroups[0].Power);
-
+                                    SunManager.Instance.Mood = SunMood.OPENSMILE;
                                 }
                             }
                             break;
@@ -104,6 +95,7 @@ namespace RaginRovers
                                 if (cannonGroups[1].cannonState == CannonState.WAITING)
                                 {
                                     client.SendMessage("action=shoot;cannonGroup=1;rotation=" + cannonGroups[1].Rotation + ";power=" + cannonGroups[1].Power);
+                                    SunManager.Instance.Mood = SunMood.OPENSMILE;
                                 }
                             }
                             break;

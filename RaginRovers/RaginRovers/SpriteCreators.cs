@@ -36,7 +36,9 @@ namespace RaginRovers
         BOOM = 300,
         PUFF,
         DINO,
-        SUN
+        SUN,
+        EXPLOSION1,
+        GROUND = 3000 // PLACEHOLDER - NOT A CREATEABLE TYPE
     }
 
     // Helper class to create sprites
@@ -165,7 +167,6 @@ namespace RaginRovers
             //9, 19, 95, 111
 
             sprite.PhysicsBodyFixture = FixtureFactory.AttachRectangle(ConvertUnits.ToSimUnits(95), ConvertUnits.ToSimUnits(100), 1, ConvertUnits.ToSimUnits(new Vector2(9, 10)), sprite.PhysicsBody);
-
             sprite.PhysicsBodyFixture.OnCollision += new OnCollisionEventHandler(sprite.HandleCollision);
 
             return sprite;
@@ -249,6 +250,50 @@ namespace RaginRovers
             sprite.FrameTime = 0.06f;
 
             SpriteCreators.AddFrames(sprite, "puffs_", 7);
+            sprite.Rotation = rotation;
+
+            return sprite;
+        }
+
+        public static Sprite CreateExplosion1(Vector2 location,
+                                    Texture2D texture,
+                                    Vector2 velocity,
+                                    float rotation)
+        {
+            Sprite sprite = new Sprite("sprite",
+                                   location,
+                                   texture,
+                                   SpriteCreators.spriteSourceRectangles["explosion1_00"],
+                                   velocity,
+                                   BodyType.Static,
+                                   true);
+
+            sprite.PhysicsBody.CollidesWith = Category.None;
+            sprite.FrameTime = 0.06f;
+
+            SpriteCreators.AddFrames(sprite, "explosion1_", 14);
+            sprite.Rotation = rotation;
+
+            return sprite;
+        }
+
+        public static Sprite CreateExplosion2(Vector2 location,
+                                    Texture2D texture,
+                                    Vector2 velocity,
+                                    float rotation)
+        {
+            Sprite sprite = new Sprite("sprite",
+                                   location,
+                                   texture,
+                                   SpriteCreators.spriteSourceRectangles["explosion2_00"],
+                                   velocity,
+                                   BodyType.Static,
+                                   true);
+
+            sprite.PhysicsBody.CollidesWith = Category.None;
+            sprite.FrameTime = 0.06f;
+
+            SpriteCreators.AddFrames(sprite, "explosion2_", 9);
             sprite.Rotation = rotation;
 
             return sprite;
