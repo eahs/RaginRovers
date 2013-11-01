@@ -62,6 +62,10 @@ namespace RaginRovers
                     SpriteHelper.Instance.TriggerAnimation(GameObjectTypes.EXPLOSION1, collidePoint - new Vector2(175, 197), "explosion1", 15);
 
             }
+            else if (otherObject.typeid == (int)GameObjectTypes.PLANE)
+            {
+                PlaneManager.Instance.planeState = PlaneState.BOMB;
+            }
 
 
             return true;

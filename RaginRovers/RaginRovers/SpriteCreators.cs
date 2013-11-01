@@ -38,6 +38,7 @@ namespace RaginRovers
         DINO,
         SUN,
         EXPLOSION1,
+        PLANE,
         GROUND = 3000 // PLACEHOLDER - NOT A CREATEABLE TYPE
     }
 
@@ -277,6 +278,7 @@ namespace RaginRovers
             return sprite;
         }
 
+
         public static Sprite CreateExplosion2(Vector2 location,
                                     Texture2D texture,
                                     Vector2 velocity,
@@ -294,6 +296,29 @@ namespace RaginRovers
             sprite.FrameTime = 0.06f;
 
             SpriteCreators.AddFrames(sprite, "explosion2_", 9);
+            sprite.Rotation = rotation;
+
+            return sprite;
+        }
+
+
+        public static Sprite CreatePlane(Vector2 location,
+                                    Texture2D texture,
+                                    Vector2 velocity,
+                                    float rotation)
+        {
+            Sprite sprite = new Sprite("sprite",
+                                   location,
+                                   texture,
+                                   texture.Bounds,
+                                   velocity,
+                                   BodyType.Static,
+                                   true);
+
+            sprite.PhysicsBodyFixture.OnCollision += new OnCollisionEventHandler(sprite.HandleCollision);
+            //sprite.FrameTime = 0.06f;
+
+            //SpriteCreators.AddFrames(sprite, "explosion1_", 14);
             sprite.Rotation = rotation;
 
             return sprite;

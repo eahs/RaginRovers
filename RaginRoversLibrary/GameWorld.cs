@@ -21,9 +21,11 @@ namespace RaginRoversLibrary
         public static World world;  // Must be initialized
         private static int world_ofs_x = 0;
         private static int worldmin = 0;
-        private static int worldmax = 5700;
-        private static int screen_width = 1900;
-        private static int screen_height = 1080;
+        private static int worldmax = 0;
+        private static int screen_width = 0;
+        private static int screen_height = 0;
+        private static float proportionGroundtoScreen = 1050 / 1280;
+        private static int heightofGround = 0;
 
         public static void Initialize(int worldmin, int worldmax, int screen_width, int screen_height, Vector2 gravity)
         {
@@ -31,6 +33,14 @@ namespace RaginRoversLibrary
             GameWorld.worldmax = worldmax;
             GameWorld.screen_height = screen_height;
             GameWorld.screen_width = screen_width;
+            if (screen_height == 727)
+            {
+                heightofGround = 720 - 105; //hardcode workaround
+            }
+            else if (screen_height == 1080)
+            {
+                heightofGround = 1080 - 200; //hardcode workaround
+            }
 
             world = new World(gravity);
         }
@@ -46,6 +56,22 @@ namespace RaginRoversLibrary
             get
             {
                 return worldmax;
+            }
+        }
+
+        public static int HeightofGround
+        {
+            get
+            {
+                return heightofGround;
+            }
+        }
+
+        public static float ProportionGroundtoScreen
+        {
+            get
+            {
+                return proportionGroundtoScreen;
             }
         }
 
