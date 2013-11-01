@@ -29,6 +29,8 @@ namespace RaginRoversLibrary
 
         public float BoomTime = 0f;
 
+        public int cannonPower = 10;
+
 
         public CannonManager()
         {
@@ -124,8 +126,8 @@ namespace RaginRoversLibrary
                 }
 
                 factory.Objects[dog].sprite.PhysicsBody.LinearVelocity = new Vector2(
-                        10 * (float)Math.Cos((double)cannonGroup.Rotation),
-                        10 * (float)Math.Sin((double)cannonGroup.Rotation));
+                        cannonPower * (float)Math.Cos((double)cannonGroup.Rotation),
+                        cannonPower * (float)Math.Sin((double)cannonGroup.Rotation));
 
                 //chaning magnitude depending on power bar
                 factory.Objects[dog].sprite.PhysicsBody.LinearVelocity *= cannonGroup.Power; // ((factory.Objects[cannonGroup.tabKey].sprite.Location.X - factory.Objects[cannonGroup.barKey].sprite.Location.X) / factory.Objects[cannonGroup.barKey].sprite.BoundingBoxRect.Width) + 1;
@@ -152,7 +154,7 @@ namespace RaginRoversLibrary
             {
                 icannon = factory.Create(
                                         (int)RaginRovers.GameObjectTypes.CANNON,
-                                        new Vector2((int)location.X  - 95, (int)location.Y - 80),
+                                        new Vector2((int)location.X, (int)location.Y),
                                         "spritesheet",
                                         new Vector2(0, 0),
                                         0,
@@ -162,8 +164,9 @@ namespace RaginRoversLibrary
             }
             else
             {
-                icannon = factory.Create((int)RaginRovers.GameObjectTypes.CANNON, new Vector2(location.X  - 95, location.Y - 80), "spritesheet", new Vector2(0, 0), -MathHelper.Pi, -MathHelper.Pi, -MathHelper.PiOver2, 32);
+                icannon = factory.Create((int)RaginRovers.GameObjectTypes.CANNON, new Vector2(location.X - 20, location.Y - 20), "spritesheet", new Vector2(0, 0), -MathHelper.Pi, -MathHelper.Pi, -MathHelper.PiOver2, 32);
             }
+            factory.Objects[icannon].sprite.Location -= new Vector2(0, factory.Objects[icannon].sprite.BoundingBoxRect.Height);
 
             //factory.Objects[icannon].sprite.Origin = new Vector2(120, 103);
             factory.Objects[icannon].sprite.Origin = new Vector2((factory.Objects[icannon].sprite.BoundingBoxRect.Width / 2) - 40, factory.Objects[icannon].sprite.BoundingBoxRect.Height / 2);

@@ -41,13 +41,18 @@ namespace RaginRovers
         CannonManager cannonManager;
         List<CannonGroups> cannonGroups;
 
+
         public int ScreenConfiguration = 1;
 
         public Game1()
         {
+            //with .5 zoom, 830 more on each side, 1660 more total, 
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferWidth = 1280;
             graphics.PreferredBackBufferHeight = 727;
+            //graphics.PreferredBackBufferWidth = 1920;
+            //graphics.PreferredBackBufferHeight = 1080;
+            //graphics.IsFullScreen = true;
             graphics.ApplyChanges();
 
             Content.RootDirectory = "Content";
@@ -77,6 +82,7 @@ namespace RaginRovers
             cannonManager = new CannonManager();
             cannonGroups = new List<CannonGroups>();
 
+
             client = new ClientNetworking();
             client.Connect();
             client.ActionHandler["shoot"] = new EventHandler(this.HandleNetworkShoot);
@@ -102,6 +108,7 @@ namespace RaginRovers
             factory.AddCreator((int)GameObjectTypes.POWERMETERTAB, SpriteCreators.CreatePowerMeterTab);
             factory.AddCreator((int)GameObjectTypes.EXPLOSION1, SpriteCreators.CreateExplosion1);
             factory.AddCreator((int)GameObjectTypes.EXPLOSION1, SpriteCreators.CreateExplosion2);
+            factory.AddCreator((int)GameObjectTypes.PLANE, SpriteCreators.CreatePlane);
 
             mapEditor = new MapEditor(Window, client, cannonManager, cannonGroups);
 
@@ -122,6 +129,8 @@ namespace RaginRovers
 
             camera.Position = new Vector2((GameWorld.WorldWidth/3) * (ScreenConfiguration-1), camera.Position.Y);
 
+            camera.Zoom = .5f;
+
 
             // Load all the textures we're going to need for this game
             textureManager.LoadTexture("background");
@@ -130,6 +139,7 @@ namespace RaginRovers
             textureManager.LoadTexture("cursor");
             textureManager.LoadTexture("sun");
             textureManager.LoadTexture("explosion1");
+            textureManager.LoadTexture("airplane-banner");
 
             /*
             int cat = factory.Create((int)GameObjectTypes.CAT, Vector2.Zero, "spritesheet", Vector2.Zero, 0);
@@ -143,9 +153,14 @@ namespace RaginRovers
             factory.Objects[cat].sprite.PhysicsBody.Restitution = 0.8f;
             */
 
+
+
+            
+
             Body body = BodyFactory.CreateBody(GameWorld.world);
             body.BodyType = BodyType.Static;
-            body.Position = ConvertUnits.ToSimUnits(new Vector2(0, this.Window.ClientBounds.Height-105));
+            body.Position = ConvertUnits.ToSimUnits(new Vector2(0, GameWorld.HeightofGround)); //hardcode workaround, can't figure out what to multiply the proportion by
+            // * GameWorld.ProportionGroundtoScreen));
             body.UserData = new GameObject(-1, (int)GameObjectTypes.GROUND);
 
             //FixtureFactory.AttachRectangle((float)GameWorld.WorldWidth, 10, 1, new Vector2(0, ConvertUnits.ToDisplayUnits(this.Window.ClientBounds.Height-30)), body);
@@ -170,6 +185,7 @@ namespace RaginRovers
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
@@ -203,7 +219,7 @@ namespace RaginRovers
                     camera.Zoom -= 0.005f;
             }
             if (kb.IsKeyDown(Keys.P))
-                camera.Zoom = 1;
+                camera.Zoom = .5f;
 
             foreach (int key in factory.Objects.Keys)
             {
@@ -212,6 +228,7 @@ namespace RaginRovers
 
             SunManager.Instance.Update(gameTime);
             SpriteHelper.Instance.Update(gameTime);
+            PlaneManager.Instance.Update(gameTime);
 
             mapEditor.Update(gameTime, camera);
             client.Update(gameTime);
@@ -266,8 +283,8 @@ namespace RaginRovers
         public void SetupLevel()
         {
             //create cannons
-            cannonManager.CreateCannonStuff(factory, new Vector2(GameWorld.WorldWidth-250, 500), camera, true, ref cannonGroups); //need how to figure out location
-            cannonManager.CreateCannonStuff(factory, new Vector2(0, 500), camera, false, ref cannonGroups); //need how to figure out location
+            cannonManager.CreateCannonStuff(factory, new Vector2(GameWorld.WorldWidth-250, GameWorld.HeightofGround), camera, true, ref cannonGroups); //need how to figure out location
+            cannonManager.CreateCannonStuff(factory, new Vector2(0, GameWorld.HeightofGround), camera, false, ref cannonGroups); //need how to figure out location
 
             // Create some dinos
             factory.Create((int)GameObjectTypes.DINO, new Vector2(1000, this.Window.ClientBounds.Height-100), "spritesheet", Vector2.Zero, 0f, 0f, 0f);
