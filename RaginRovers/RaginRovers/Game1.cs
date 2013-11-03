@@ -50,6 +50,9 @@ namespace RaginRovers
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferWidth = 1280;
             graphics.PreferredBackBufferHeight = 727;
+
+            //graphics.PreferredBackBufferHeight = 500;
+
             //graphics.PreferredBackBufferWidth = 1920;
             //graphics.PreferredBackBufferHeight = 1080;
             //graphics.IsFullScreen = true;
@@ -287,8 +290,11 @@ namespace RaginRovers
             cannonManager.CreateCannonStuff(factory, new Vector2(0, GameWorld.HeightofGround), camera, false, ref cannonGroups); //need how to figure out location
 
             // Create some dinos
-            factory.Create((int)GameObjectTypes.DINO, new Vector2(1000, this.Window.ClientBounds.Height-100), "spritesheet", Vector2.Zero, 0f, 0f, 0f);
-            factory.Create((int)GameObjectTypes.DINO, new Vector2(GameWorld.WorldWidth-1000, this.Window.ClientBounds.Height - 100), "spritesheet", Vector2.Zero, 0f, 0f, 0f);
+            int dino = factory.Create((int)GameObjectTypes.DINO, new Vector2(1000, this.Window.ClientBounds.Height-100), "spritesheet", Vector2.Zero, 0f, 0f, 0f);
+            factory.Objects[dino].saveable = false;
+
+            dino = factory.Create((int)GameObjectTypes.DINO, new Vector2(GameWorld.WorldWidth-1000, this.Window.ClientBounds.Height - 100), "spritesheet", Vector2.Zero, 0f, 0f, 0f);
+            factory.Objects[dino].saveable = false;
 
             // Sun
             SunManager.Instance.Mood = SunMood.GRIN;

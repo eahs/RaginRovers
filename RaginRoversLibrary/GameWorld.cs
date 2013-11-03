@@ -24,7 +24,7 @@ namespace RaginRoversLibrary
         private static int worldmax = 0;
         private static int screen_width = 0;
         private static int screen_height = 0;
-        private static float proportionGroundtoScreen = 1050 / 1280;
+        private static float proportionGroundtoScreen = 1084f / 1280f;
         private static int heightofGround = 0;
 
         public static void Initialize(int worldmin, int worldmax, int screen_width, int screen_height, Vector2 gravity)
@@ -41,6 +41,7 @@ namespace RaginRoversLibrary
             {
                 heightofGround = 1080 - 200; //hardcode workaround
             }
+            heightofGround = (int)((float)screen_height * proportionGroundtoScreen);
 
             world = new World(gravity);
         }
@@ -57,6 +58,16 @@ namespace RaginRoversLibrary
             {
                 return worldmax;
             }
+        }
+
+        public static Tuple<double, double> ScreenToVector(double x, double y)
+        {
+            return new Tuple<double, double>(x, heightofGround - y);
+        }
+
+        public static Tuple<double, double> VectorToScreen(double x, double y)
+        {
+            return new Tuple<double, double>(x, heightofGround - y);
         }
 
         public static int HeightofGround

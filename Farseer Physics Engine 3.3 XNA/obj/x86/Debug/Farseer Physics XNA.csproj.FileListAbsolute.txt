@@ -77,3 +77,4 @@ H:\GitHub\RaginRovers\Farseer Physics Engine 3.3 XNA\obj\x86\Debug\Microsoft.Xna
 H:\GitHub\RaginRovers\Farseer Physics Engine 3.3 XNA\obj\x86\Debug\FarseerPhysicsXNA.dll
 H:\GitHub\RaginRovers\Farseer Physics Engine 3.3 XNA\obj\x86\Debug\FarseerPhysicsXNA.pdb
 C:\Users\EAHSCS\Documents\GitHub\RaginRovers\Farseer Physics Engine 3.3 XNA\bin\x86\Debug\FarseerPhysicsXNA.XML
+C:\Users\tanczosm\Documents\GitHub\RaginRovers\Farseer Physics Engine 3.3 XNA\obj\x86\Debug\Farseer Physics XNA.csprojResolveAssemblyReference.cache

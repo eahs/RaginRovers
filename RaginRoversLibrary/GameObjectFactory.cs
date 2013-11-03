@@ -184,11 +184,13 @@ namespace RaginRoversLibrary
 
             foreach (int key in objects.Keys)
             {
+                Tuple<double, double> v = GameWorld.ScreenToVector((double)objects[key].sprite.Location.X, (double)objects[key].sprite.Location.Y);
+
                 if (objects[key].saveable)
                     lines +=    objects[key].id + "\t" +
                                 objects[key].typeid + "\t" +
-                                objects[key].sprite.Location.X + "\t" +
-                                objects[key].sprite.Location.Y + "\t" +
+                                v.Item1 + "\t" +
+                                v.Item2 + "\t" +
                                 objects[key].textureassetname + "\t" +
                                 objects[key].sprite.Rotation +
                                 "\n"

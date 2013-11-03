@@ -201,7 +201,7 @@ namespace RaginRovers
             //option 2 with one fixture
             //rects
             //16, 12, 175, 125
-            sprite.PhysicsBodyFixture = FixtureFactory.AttachRectangle(ConvertUnits.ToSimUnits(175), ConvertUnits.ToSimUnits(125), 1, ConvertUnits.ToSimUnits(new Vector2(16, 12)), sprite.PhysicsBody);
+            sprite.PhysicsBodyFixture = FixtureFactory.AttachRectangle(ConvertUnits.ToSimUnits(175), ConvertUnits.ToSimUnits(100), 1, ConvertUnits.ToSimUnits(new Vector2(16, 12)), sprite.PhysicsBody);
             sprite.PhysicsBodyFixture.Friction = 15f;
 
             sprite.PhysicsBodyFixture.OnCollision += new OnCollisionEventHandler(sprite.HandleCollision);

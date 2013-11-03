@@ -269,7 +269,12 @@ namespace RaginRovers
                                     {
                                         string[] fields = lines[i].Split('\t');
 
-                                        client.SendMessage("action=create;gotype=" + Convert.ToInt32(fields[1]) + ";textureassetname=" + fields[4] + ";location.x=" + (float)Convert.ToDouble(fields[2]) + ";location.y=" + (float)Convert.ToDouble(fields[3]) + ";rotation=" + (float)Convert.ToDouble(fields[5]) + ";upperBounds=" + 0f + ";lowerBounds=" + 0f);
+                                        double vx = (float)Convert.ToDouble(fields[2]);
+                                        double vy = (float)Convert.ToDouble(fields[3]);
+
+                                        Tuple<double, double> v = GameWorld.VectorToScreen(vx, vy);
+
+                                        client.SendMessage("action=create;gotype=" + Convert.ToInt32(fields[1]) + ";textureassetname=" + fields[4] + ";location.x=" + v.Item1 + ";location.y=" + v.Item2 + ";rotation=" + (float)Convert.ToDouble(fields[5]) + ";upperBounds=" + 0f + ";lowerBounds=" + 0f);
 
                                         /*
                                         factory.Create(Convert.ToInt32(fields[1]),
