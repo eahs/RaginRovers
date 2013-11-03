@@ -310,7 +310,7 @@ namespace RaginRovers
             Sprite sprite = new Sprite("sprite",
                                    location,
                                    texture,
-                                   texture.Bounds,
+                                   SpriteCreators.spriteSourceRectangles["plane00"],
                                    velocity,
                                    BodyType.Static,
                                    true);
@@ -318,7 +318,7 @@ namespace RaginRovers
             sprite.PhysicsBodyFixture.OnCollision += new OnCollisionEventHandler(sprite.HandleCollision);
             //sprite.FrameTime = 0.06f;
 
-            //SpriteCreators.AddFrames(sprite, "explosion1_", 14);
+            SpriteCreators.AddFrames(sprite, "plane", 3);
             sprite.Rotation = rotation;
 
             return sprite;

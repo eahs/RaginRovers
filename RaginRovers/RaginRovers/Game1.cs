@@ -143,6 +143,7 @@ namespace RaginRovers
             textureManager.LoadTexture("sun");
             textureManager.LoadTexture("explosion1");
             textureManager.LoadTexture("airplane-banner");
+            textureManager.LoadTexture("plane_with_banner");
 
             /*
             int cat = factory.Create((int)GameObjectTypes.CAT, Vector2.Zero, "spritesheet", Vector2.Zero, 0);

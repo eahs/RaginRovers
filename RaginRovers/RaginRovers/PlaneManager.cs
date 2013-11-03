@@ -23,6 +23,7 @@ namespace RaginRovers
         public PlaneState planeState = PlaneState.NORMAL;
         public int direction = 1;
         public int planeSpeed = 4;
+        public int currentPlane = 0;
 
         public PlaneManager()
         {
@@ -30,7 +31,7 @@ namespace RaginRovers
 
             plane = factory.Create((int)RaginRovers.GameObjectTypes.PLANE,
                 Vector2.Zero,
-                "airplane-banner",
+                "plane_with_banner",
                 Vector2.Zero,
                 0f,
                 0f,
@@ -45,13 +46,17 @@ namespace RaginRovers
             if (factory.Objects[plane].sprite.Location.X > 5700 + 638)
             {
                 direction = -1;
-                factory.Objects[plane].sprite.flipType = Sprite.FlipType.HORIZONTAL;
+                currentPlane = (currentPlane + 1) % 4;
+                //factory.Objects[plane].sprite.flipType = Sprite.FlipType.HORIZONTAL;
             }
             if (factory.Objects[plane].sprite.Location.X < -638 - factory.Objects[plane].sprite.BoundingBoxRect.Width)
             {
                 direction = 1;
-                factory.Objects[plane].sprite.flipType = Sprite.FlipType.NONE;
+                currentPlane = (currentPlane + 1) % 4;
+                //factory.Objects[plane].sprite.flipType = Sprite.FlipType.NONE;
             }
+
+            factory.Objects[plane].sprite.Frame = currentPlane;
         }
         public static PlaneManager Instance
         {

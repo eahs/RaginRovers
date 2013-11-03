@@ -145,6 +145,15 @@
       <Output>C:\Users\tanczosm\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\wood_hit_wood_heavy_1.xnb</Output>
       <Time>2013-11-01T22:02:40.8915562-04:00</Time>
     </Item>
+    <Item>
+      <Source>plane_with_banner.png</Source>
+      <Name>plane_with_banner</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\tanczosm\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\plane_with_banner.xnb</Output>
+      <Time>2013-11-03T13:10:31.7622864-05:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>
