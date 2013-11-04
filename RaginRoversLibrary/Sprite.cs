@@ -98,6 +98,7 @@ namespace RaginRoversLibrary
 
             body = BodyFactory.CreateBody(GameWorld.world);
             body.BodyType = bodytype;
+            body.SleepingAllowed = false;
             //body.UserData = this; // NO!!!!
 
             spriteEffects = new SpriteEffects();
@@ -135,7 +136,9 @@ namespace RaginRoversLibrary
         public void Destroy()
         {
             if (GameWorld.world.BodyList.Contains(body))
+            {
                 GameWorld.world.RemoveBody(body);
+            }
         }
 
         ~Sprite()

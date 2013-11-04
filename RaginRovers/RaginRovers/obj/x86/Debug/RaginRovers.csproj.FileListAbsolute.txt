@@ -126,3 +126,4 @@ C:\Users\tanczosm\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\D
 C:\Users\tanczosm\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\Sound Effects.xnb
 C:\Users\tanczosm\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\wood_hit_wood_heavy_1.xnb
 C:\Users\tanczosm\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\plane_with_banner.xnb
+C:\Users\tanczosm\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\clouds.xnb

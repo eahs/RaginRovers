@@ -21,7 +21,12 @@ namespace RaginRovers
     {
         DOG,
         CAT,
-        CLOUD,
+        CLOUD1,
+        CLOUD2,
+        CLOUD3,
+        CLOUD4,
+        CLOUD5,
+        CLOUD6,
         WOOD1,
         WOOD2,
         WOOD3,
@@ -467,7 +472,7 @@ namespace RaginRovers
             Sprite sprite = new Sprite("sprite",
                                    location,
                                    texture,
-                                   new Rectangle(0, 0, 320, 50),
+                                   new Rectangle(0, 914, 320, 50),
                                    velocity,
                                    BodyType.Static,
                                    true);
@@ -486,7 +491,7 @@ namespace RaginRovers
             Sprite sprite = new Sprite("sprite",
                                    location,
                                    texture,
-                                   new Rectangle(0, 0, 32, 100),
+                                   new Rectangle(0, 966, 18, 45),
                                    velocity,
                                    BodyType.Static,
                                    true);
@@ -497,5 +502,56 @@ namespace RaginRovers
 
             return sprite;
         }
+
+        public static Sprite CreateCloudHelper(Rectangle source, Vector2 location,
+                                                     Texture2D texture,
+                                                     Vector2 velocity,
+                                                     float rotation)
+        {
+            Sprite sprite = new Sprite("sprite",
+                                   location,
+                                   texture,
+                                   source,
+                                   velocity,
+                                   BodyType.Dynamic,
+                                   true);
+
+            sprite.PhysicsBody.IgnoreGravity = true;
+            sprite.PhysicsBody.CollidesWith = Category.None;
+            sprite.Rotation = rotation;
+
+            return sprite;
+        }
+
+        public static Sprite CreateCloud1(Vector2 location, Texture2D texture, Vector2 velocity, float rotation)
+        {
+            return CreateCloudHelper(SpriteCreators.spriteSourceRectangles["cloud1"], location, texture, velocity, rotation);
+        }
+
+        public static Sprite CreateCloud2(Vector2 location, Texture2D texture, Vector2 velocity, float rotation)
+        {
+            return CreateCloudHelper(SpriteCreators.spriteSourceRectangles["cloud2"], location, texture, velocity, rotation);
+        }
+
+        public static Sprite CreateCloud3(Vector2 location, Texture2D texture, Vector2 velocity, float rotation)
+        {
+            return CreateCloudHelper(SpriteCreators.spriteSourceRectangles["cloud3"], location, texture, velocity, rotation);
+        }
+
+        public static Sprite CreateCloud4(Vector2 location, Texture2D texture, Vector2 velocity, float rotation)
+        {
+            return CreateCloudHelper(SpriteCreators.spriteSourceRectangles["cloud4"], location, texture, velocity, rotation);
+        }
+
+        public static Sprite CreateCloud5(Vector2 location, Texture2D texture, Vector2 velocity, float rotation)
+        {
+            return CreateCloudHelper(SpriteCreators.spriteSourceRectangles["cloud5"], location, texture, velocity, rotation);
+        }
+
+        public static Sprite CreateCloud6(Vector2 location, Texture2D texture, Vector2 velocity, float rotation)
+        {
+            return CreateCloudHelper(SpriteCreators.spriteSourceRectangles["cloud6"], location, texture, velocity, rotation);
+        }
+
     }
 }

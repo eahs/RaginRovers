@@ -110,6 +110,7 @@
     <Compile Include="CannonGroups.cs" />
     <Compile Include="CannonManager.cs" />
     <Compile Include="ClientNetworking.cs" />
+    <Compile Include="CloudManager.cs" />
     <Compile Include="CollisionEvents.cs" />
     <Compile Include="LidgrenWorkThread.cs" />
     <Compile Include="MapEditor.cs" />

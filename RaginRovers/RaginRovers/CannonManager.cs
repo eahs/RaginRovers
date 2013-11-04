@@ -185,17 +185,17 @@ namespace RaginRoversLibrary
                  new Vector2(
                      factory.Objects[icannon].sprite.Location.X,
                      factory.Objects[icannon].sprite.Location.Y + factory.Objects[icannon].sprite.BoundingBoxRect.Height + 50),
-                 "background",
+                 "spritesheet",
                  new Vector2(0, 0),
-                 0,
+                 isReversed ? -MathHelper.Pi: 0,
                  0f,
-                 0f, 30);
+                 0f, 30);       
             int itab = factory.Create(
                  (int)RaginRovers.GameObjectTypes.POWERMETERTAB,
                  new Vector2(
                      factory.Objects[ibar].sprite.Location.X,
                      factory.Objects[ibar].sprite.Location.Y + factory.Objects[ibar].sprite.Origin.Y),
-                 "background",
+                 "spritesheet",
                  new Vector2(0, 0),
                  0,
                  0f,

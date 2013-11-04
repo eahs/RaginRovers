@@ -8,7 +8,7 @@
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
       <Output>C:\Users\tanczosm\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\spritesheet.xnb</Output>
-      <Time>2013-10-21T22:41:28.883282-04:00</Time>
+      <Time>2013-11-03T20:54:06.5512014-05:00</Time>
     </Item>
     <Item>
       <Source>background.png</Source>
@@ -153,6 +153,15 @@
       <Options>None</Options>
       <Output>C:\Users\tanczosm\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\plane_with_banner.xnb</Output>
       <Time>2013-11-03T13:10:31.7622864-05:00</Time>
+    </Item>
+    <Item>
+      <Source>clouds.png</Source>
+      <Name>clouds</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\tanczosm\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\clouds.xnb</Output>
+      <Time>2013-11-03T22:12:44.4630505-05:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>

@@ -40,7 +40,7 @@ namespace RaginRovers
         MapEditor mapEditor;
         CannonManager cannonManager;
         List<CannonGroups> cannonGroups;
-
+        CloudManager cloudManager;
 
         public int ScreenConfiguration = 1;
 
@@ -98,6 +98,12 @@ namespace RaginRovers
             factory.AddCreator((int)GameObjectTypes.BOOM, SpriteCreators.CreateBoom);
             factory.AddCreator((int)GameObjectTypes.PUFF, SpriteCreators.CreatePuff);
             factory.AddCreator((int)GameObjectTypes.DINO, SpriteCreators.CreateDino);
+            factory.AddCreator((int)GameObjectTypes.CLOUD1, SpriteCreators.CreateCloud1);
+            factory.AddCreator((int)GameObjectTypes.CLOUD2, SpriteCreators.CreateCloud2);
+            factory.AddCreator((int)GameObjectTypes.CLOUD3, SpriteCreators.CreateCloud3);
+            factory.AddCreator((int)GameObjectTypes.CLOUD4, SpriteCreators.CreateCloud4);
+            factory.AddCreator((int)GameObjectTypes.CLOUD5, SpriteCreators.CreateCloud5);
+            factory.AddCreator((int)GameObjectTypes.CLOUD6, SpriteCreators.CreateCloud6);
             factory.AddCreator((int)GameObjectTypes.WOOD1, SpriteCreators.CreateWood1);
             factory.AddCreator((int)GameObjectTypes.WOOD2, SpriteCreators.CreateWood2);
             factory.AddCreator((int)GameObjectTypes.WOOD3, SpriteCreators.CreateWood3);
@@ -142,8 +148,8 @@ namespace RaginRovers
             textureManager.LoadTexture("cursor");
             textureManager.LoadTexture("sun");
             textureManager.LoadTexture("explosion1");
-            textureManager.LoadTexture("airplane-banner");
             textureManager.LoadTexture("plane_with_banner");
+            textureManager.LoadTexture("clouds");
 
             /*
             int cat = factory.Create((int)GameObjectTypes.CAT, Vector2.Zero, "spritesheet", Vector2.Zero, 0);
@@ -233,6 +239,7 @@ namespace RaginRovers
             SunManager.Instance.Update(gameTime);
             SpriteHelper.Instance.Update(gameTime);
             PlaneManager.Instance.Update(gameTime);
+            cloudManager.Update(gameTime);
 
             mapEditor.Update(gameTime, camera);
             client.Update(gameTime);
@@ -299,6 +306,9 @@ namespace RaginRovers
 
             // Sun
             SunManager.Instance.Mood = SunMood.GRIN;
+
+            // Clouds
+            cloudManager = new CloudManager();
         }
 
 
