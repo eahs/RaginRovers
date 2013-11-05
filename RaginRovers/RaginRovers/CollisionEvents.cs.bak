@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework;
 
 namespace RaginRovers
 {
-    public static class CollisionEvents
+    static class CollisionEvents
     {
         public static bool cat_OnCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)
         {
@@ -65,7 +65,6 @@ namespace RaginRovers
             else if (otherObject.typeid == (int)GameObjectTypes.PLANE)
             {
                 PlaneManager.Instance.planeState = PlaneState.BOMB;
-                //do some bombing
             }
 
 
@@ -77,10 +76,6 @@ namespace RaginRovers
             GameObject wood = (GameObject)fixtureA.Body.UserData;
             GameObject otherObject = (GameObject)fixtureB.Body.UserData;
 
-            if (otherObject.typeid == (int)GameObjectTypes.WOOD1 || otherObject.typeid == (int)GameObjectTypes.WOOD2 || otherObject.typeid == (int)GameObjectTypes.WOOD3 || otherObject.typeid == (int)GameObjectTypes.WOOD4)
-            {
-                //trying to play the wood clanking sound but can't figure out
-            }
             return true;
         }
 

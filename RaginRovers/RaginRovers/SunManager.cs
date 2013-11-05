@@ -77,6 +77,7 @@ namespace RaginRovers
 
                     suncount += (Math.PI / 180) * rotamt;
                     sunsprite.Rotation = (float)((Math.PI / 10) * Math.Sin(suncount));
+                    sunsprite.Location = defaultLocation + new Vector2((float)(25 * Math.Sin(suncount)), (float)(10 * Math.Abs(Math.Sin(suncount))));
                 }
             }
             else if (mood == SunMood.OHFACE)

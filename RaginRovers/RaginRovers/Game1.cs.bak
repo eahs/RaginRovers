@@ -34,7 +34,6 @@ namespace RaginRovers
         // Managers
         GameObjectFactory factory;
         TextureManager textureManager;
-        public AudioManager audioManager;
         ClientNetworking client;
 
         // 
@@ -78,10 +77,6 @@ namespace RaginRovers
 
             // Create the texture manager
             textureManager = new TextureManager(Content);
-
-            //Create the audio manager
-            audioManager = AudioManager.Instance;
-            audioManager.Initialize(Content);
 
             // Now load the sprite creator factory helper
             factory = GameObjectFactory.Instance;
@@ -155,14 +150,6 @@ namespace RaginRovers
             textureManager.LoadTexture("explosion1");
             textureManager.LoadTexture("plane_with_banner");
             textureManager.LoadTexture("clouds");
-            audioManager.LoadSoundEffect("airplane");
-            audioManager.LoadSoundEffect("cat1");
-            audioManager.LoadSoundEffect("cat2");
-            audioManager.LoadSoundEffect("cat3");
-            audioManager.LoadSoundEffect("cat4");
-            audioManager.LoadSoundEffect("dog1");
-            audioManager.LoadSoundEffect("meat_hit");
-            audioManager.LoadSoundEffect("wood_hitting");
 
             /*
             int cat = factory.Create((int)GameObjectTypes.CAT, Vector2.Zero, "spritesheet", Vector2.Zero, 0);
@@ -188,7 +175,7 @@ namespace RaginRovers
 
             //FixtureFactory.AttachRectangle((float)GameWorld.WorldWidth, 10, 1, new Vector2(0, ConvertUnits.ToDisplayUnits(this.Window.ClientBounds.Height-30)), body);
             Fixture ground = FixtureFactory.AttachRectangle(ConvertUnits.ToSimUnits(GameWorld.WorldWidth)*10, ConvertUnits.ToSimUnits(10), 1, Vector2.Zero, body, "ground");
-            
+
             SetupLevel();
         }
 
@@ -220,10 +207,8 @@ namespace RaginRovers
             if (kb.IsKeyDown(Keys.Right))
             {
                 if (camera.Position.X < GameWorld.WorldWidth - this.Window.ClientBounds.Width)
-                {
                     camera.Position = new Vector2(camera.Position.X + 15, camera.Position.Y);
-                }
-                camera.OriginalPosition = new Vector2(camera.Position.X, camera.OriginalPosition.Y);                 
+                    
             }
             if (kb.IsKeyDown(Keys.Left))
             {
@@ -231,7 +216,6 @@ namespace RaginRovers
                 if (camera.Position.X < 0)
                     camera.Position = Vector2.Zero;
 
-                camera.OriginalPosition = new Vector2(camera.Position.X, camera.OriginalPosition.Y);
             }
             if (kb.IsKeyDown(Keys.Z))
             {
@@ -254,12 +238,12 @@ namespace RaginRovers
 
             SunManager.Instance.Update(gameTime);
             SpriteHelper.Instance.Update(gameTime);
-            PlaneManager.Instance.Update(gameTime, audioManager);
+            PlaneManager.Instance.Update(gameTime);
             cloudManager.Update(gameTime);
 
-            mapEditor.Update(gameTime, camera, audioManager);
+            mapEditor.Update(gameTime, camera);
             client.Update(gameTime);
-            camera.Update(gameTime);
+
             base.Update(gameTime);
         }
 

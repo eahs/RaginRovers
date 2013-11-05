@@ -90,7 +90,6 @@ H:\GitHub\RaginRovers\RaginRovers\RaginRovers\obj\x86\Debug\ResolveAssemblyRefer
 H:\GitHub\RaginRovers\RaginRovers\RaginRovers\obj\x86\Debug\Microsoft.Xna.Framework.RuntimeProfile.txt
 H:\GitHub\RaginRovers\RaginRovers\RaginRovers\obj\x86\Debug\RaginRovers.exe
 H:\GitHub\RaginRovers\RaginRovers\RaginRovers\obj\x86\Debug\RaginRovers.pdb
-H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\airplane-fly-by-02.xnb
 H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\cat_meow.xnb
 H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\cat_meow_human_voice_1.xnb
 H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\cat_meow_human_voice_2.xnb
@@ -127,3 +126,14 @@ C:\Users\tanczosm\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\D
 C:\Users\tanczosm\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\wood_hit_wood_heavy_1.xnb
 C:\Users\tanczosm\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\plane_with_banner.xnb
 C:\Users\tanczosm\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\clouds.xnb
+H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\airplane-banner.xnb
+H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\plane_with_banner.xnb
+H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\clouds.xnb
+H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\airplane.xnb
+H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\cat1.xnb
+H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\cat2.xnb
+H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\cat3.xnb
+H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\cat4.xnb
+H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\dog1.xnb
+H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\meat_hit.xnb
+H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\wood_hitting.xnb

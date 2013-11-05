@@ -6,7 +6,6 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 using RaginRoversLibrary;
 using System.IO;
-using FarseerPhysics.Dynamics;
 
 namespace RaginRovers
 {
@@ -36,7 +35,7 @@ namespace RaginRovers
             
         }
 
-        public void Update(GameTime gameTime, Camera camera, AudioManager audioManager)
+        public void Update(GameTime gameTime, Camera camera)
         {
             KeyboardState kb = Keyboard.GetState();
             MouseState msState = Mouse.GetState();
@@ -84,8 +83,6 @@ namespace RaginRovers
                                 {
                                     client.SendMessage("action=shoot;cannonGroup=0;rotation=" + cannonGroups[0].Rotation + ";power=" + cannonGroups[0].Power);
                                     SunManager.Instance.Mood = SunMood.OPENSMILE;
-                                    camera.Shake(10, 1);
-                                    audioManager.SoundEffect("dog1").Play();
                                 }
                             }
                             break;
@@ -99,8 +96,6 @@ namespace RaginRovers
                                 {
                                     client.SendMessage("action=shoot;cannonGroup=1;rotation=" + cannonGroups[1].Rotation + ";power=" + cannonGroups[1].Power);
                                     SunManager.Instance.Mood = SunMood.OPENSMILE;
-                                    camera.Shake(10, 1);
-                                    audioManager.SoundEffect("dog1").Play();
                                 }
                             }
                             break;
@@ -151,8 +146,6 @@ namespace RaginRovers
                             if (EditMode)
                             {
                                 int board = factory.Create((int)GameObjectTypes.WOOD1, new Vector2((int)ms.X /*+ camera.Position.X*/ - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0, 0f, 0f);
-
-                                factory.Objects[board].sprite.OnCollision += new OnCollisionEventHandler(CollisionEvents.wood_OnCollision);
                             }
 
                             break;
@@ -162,7 +155,6 @@ namespace RaginRovers
                             if (EditMode)
                             {
                                 int board = factory.Create((int)GameObjectTypes.WOOD2, new Vector2((int)ms.X /*+ camera.Position.X*/ - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0, 0f, 0f);
-                                factory.Objects[board].sprite.OnCollision += new OnCollisionEventHandler(CollisionEvents.wood_OnCollision);
                             }
 
                             break;
@@ -172,7 +164,6 @@ namespace RaginRovers
                             if (EditMode)
                             {
                                 int board = factory.Create((int)GameObjectTypes.WOOD3, new Vector2((int)ms.X /*+ camera.Position.X*/ - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0, 0f, 0f);
-                                factory.Objects[board].sprite.OnCollision += new OnCollisionEventHandler(CollisionEvents.wood_OnCollision);
                             }
 
                             break;
@@ -182,7 +173,6 @@ namespace RaginRovers
                             if (EditMode)
                             {
                                 int board = factory.Create((int)GameObjectTypes.WOOD4, new Vector2((int)ms.X /*+ camera.Position.X*/ - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0, 0f, 0f);
-                                factory.Objects[board].sprite.OnCollision += new OnCollisionEventHandler(CollisionEvents.wood_OnCollision);
                             }
 
                             break;

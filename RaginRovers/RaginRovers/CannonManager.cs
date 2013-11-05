@@ -184,7 +184,7 @@ namespace RaginRoversLibrary
                  (int)RaginRovers.GameObjectTypes.POWERMETERBAR,
                  new Vector2(
                      factory.Objects[icannon].sprite.Location.X,
-                     factory.Objects[icannon].sprite.Location.Y + factory.Objects[icannon].sprite.BoundingBoxRect.Height + 50),
+                     factory.Objects[icannon].sprite.Location.Y + factory.Objects[icannon].sprite.BoundingBoxRect.Height + 20),
                  "spritesheet",
                  new Vector2(0, 0),
                  isReversed ? -MathHelper.Pi: 0,

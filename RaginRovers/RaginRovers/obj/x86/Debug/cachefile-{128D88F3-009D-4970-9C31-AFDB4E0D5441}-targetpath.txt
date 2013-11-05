@@ -6,7 +6,8 @@ Content\explosion1.xnb
 Content\sun.xnb
 Content\explosion2.xnb
 Content\airplane-banner.xnb
-Content\Audio\airplane-fly-by-02.xnb
+Content\plane_with_banner.xnb
+Content\clouds.xnb
 Content\Audio\cat_meow.xnb
 Content\Audio\cat_meow_human_voice_1.xnb
 Content\Audio\cat_meow_human_voice_2.xnb
@@ -14,6 +15,12 @@ Content\Audio\cat_meow_human_voice_3.xnb
 Content\Audio\human_face_punch.xnb
 Content\Audio\Sound Effects.xnb
 Content\Audio\wood_hit_wood_heavy_1.xnb
-Content\plane_with_banner.xnb
-Content\clouds.xnb
+Content\Audio\cat1.xnb
+Content\Audio\cat2.xnb
+Content\Audio\cat3.xnb
+Content\Audio\cat4.xnb
+Content\Audio\dog1.xnb
+Content\Audio\meat_hit.xnb
+Content\Audio\wood_hitting.xnb
+Content\Audio\airplane.xnb
 Content\spritesheet.txt
