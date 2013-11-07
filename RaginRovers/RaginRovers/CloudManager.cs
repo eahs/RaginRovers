@@ -18,26 +18,42 @@ namespace RaginRovers
             rand = new Random(10); // We have to make sure all systems follow the same random pattern
             factory = GameObjectFactory.Instance;
             clouds = new List<int>();
-
-            for (int i = 0; i < 15; i++)
+/*
+            if (Game1.ScreenConfiguration == 1)
             {
-                int cloud = factory.Create(
-                         (int)RaginRovers.GameObjectTypes.CLOUD1 + rand.Next(0, 5),
-                         new Vector2(
-                             rand.Next(-1024, GameWorld.WorldWidth + 1024),
-                             rand.Next(-800, 0)),
-                         "clouds",
-                         new Vector2(5 + rand.Next(0, 15), 0),
-                         0,
-                         0f,
-                         0f, 100);
+                for (int i = 0; i < 15; i++)
+                {
+                    Vector2 v = new Vector2(rand.Next(-1024, GameWorld.WorldWidth + 1024), rand.Next(-800, 0));
+                    Vector2 velocity = new Vector2(5 + rand.Next(0, 15), 0);
 
-                clouds.Add(
-                                cloud
-                    );
+                    client.SendMessage("action=createother;gotype=" + (int)RaginRovers.GameObjectTypes.CLOUD1 + rand.Next(0, 5) + ";textureassetname=clouds;location.x=" + v.X + ";location.y=" + v.Y + ";rotation=0;upperBounds=0;lowerBounds=0;velocity.x=" + velocity.X + ";velocity.y=" + velocity.Y);
+    
+                    
+                    int cloud = factory.Create(
+                             (int)RaginRovers.GameObjectTypes.CLOUD1 + rand.Next(0, 5),
+                             new Vector2(
+                                 rand.Next(-1024, GameWorld.WorldWidth + 1024),
+                                 rand.Next(-800, 0)),
+                             "clouds",
+                             new Vector2(5 + rand.Next(0, 15), 0),
+                             0,
+                             0f,
+                             0f, 100);
 
-                factory.Objects[cloud].saveable = false;
-            }
+                    clouds.Add(
+                                    cloud
+                        );
+
+                    factory.Objects[cloud].saveable = false;
+                  
+                }
+            }  */
+        }
+
+        public void AddCloud(int cloud)
+        {
+            clouds.Add(cloud);
+            factory.Objects[cloud].saveable = false;
         }
 
         public void Update(GameTime gameTime)

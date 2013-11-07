@@ -21,10 +21,10 @@ namespace RaginRovers
 
             if (args.Length > 0)
             {
-                if (args[1] == "2" || args[1] == "3")
+                if (args[0] == "2" || args[0] == "3")
                 {
                     startServer = false;
-                    ScreenConfiguration = Convert.ToInt32(args[1]);
+                    ScreenConfiguration = Convert.ToInt32(args[0]);
                 }
             }
 
@@ -53,7 +53,7 @@ namespace RaginRovers
             #endregion
 
             Game1 game = new Game1();
-            game.ScreenConfiguration = ScreenConfiguration;
+            Game1.ScreenConfiguration = ScreenConfiguration;
             game.Exiting += new EventHandler<EventArgs>(game_Exiting);
             game.Run();
         }

@@ -112,9 +112,11 @@ namespace RaginRovers
                                                true);
 
 
+            sprite.PhysicsBody.LinearDamping = 0.9f;
             sprite.PhysicsBody.AngularDamping = 0.9f;
             sprite.PhysicsBody.Restitution = 0.2f;
-            sprite.PhysicsBody.Mass = 40;
+            sprite.PhysicsBody.Mass = 35f;
+            sprite.PhysicsBody.Friction = 1f;
             sprite.Rotation = rotation;
 
             return sprite;

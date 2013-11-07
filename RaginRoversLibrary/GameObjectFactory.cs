@@ -124,13 +124,17 @@ namespace RaginRoversLibrary
             if (this.creators.ContainsKey(gotype))
             {
                 go.sprite = this.creators[gotype](location, textureManager.Texture(textureassetname), velocity, rotation);
+
+                go.sprite.UpperRotationBounds = upperBounds;
+                go.sprite.LowerRotationBounds = lowerBounds;
+                go.sprite.PhysicsBody.UserData = go;
+
+                this.objects.Add(lastid, go);
+
+
             }
-
-            go.sprite.UpperRotationBounds = upperBounds;
-            go.sprite.LowerRotationBounds = lowerBounds;
-            go.sprite.PhysicsBody.UserData = go;
-
-            this.objects.Add(lastid, go);
+            else
+                return -1;
 
             /*
             this.sortedobjects = this.objects.ToList();

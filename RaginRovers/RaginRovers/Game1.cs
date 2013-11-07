@@ -43,7 +43,7 @@ namespace RaginRovers
         List<CannonGroups> cannonGroups;
         CloudManager cloudManager;
 
-        public int ScreenConfiguration = 1;
+        public static int ScreenConfiguration = 1;
 
         public Game1()
         {
@@ -71,7 +71,7 @@ namespace RaginRovers
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            GameWorld.Initialize(0, 5700, this.Window.ClientBounds.Width, this.Window.ClientBounds.Height, new Vector2(0, 9.8f));
+            GameWorld.Initialize(0, 8700, this.Window.ClientBounds.Width, this.Window.ClientBounds.Height, new Vector2(0, 9.8f));
             GameWorld.ViewPortXOffset = 0;
 
             SpriteCreators.Load("Content\\spritesheet.txt");
@@ -95,6 +95,8 @@ namespace RaginRovers
             client.Connect();
             client.ActionHandler["shoot"] = new EventHandler(this.HandleNetworkShoot);
             client.ActionHandler["create"] = new EventHandler(this.HandleNetworkCreate);
+            client.ActionHandler["plane"] = new EventHandler(this.HandleNetworkPlane);
+            client.ActionHandler["createother"] = new EventHandler(this.HandleNetworkCreateOtherStuff);
 
             // Add a few sprite creators
             factory.AddCreator((int)GameObjectTypes.CAT, SpriteCreators.CreateCat);
@@ -325,6 +327,7 @@ namespace RaginRovers
 
             // Clouds
             cloudManager = new CloudManager();
+
         }
 
 
@@ -357,6 +360,26 @@ namespace RaginRovers
                             (float)Convert.ToDouble(data["upperBounds"]),
                             (float)Convert.ToDouble(data["lowerBounds"]));
 
+        }
+
+        public void HandleNetworkCreateOtherStuff(object incoming, EventArgs args)
+        {
+            Dictionary<string, string> data = (Dictionary<string, string>)incoming;
+
+            int cloud = factory.Create(Convert.ToInt32(data["gotype"]),
+                            new Vector2((float)Convert.ToDouble(data["location.x"]), (float)Convert.ToDouble(data["location.y"])),
+                            data["textureassetname"],
+                            new Vector2((float)Convert.ToDouble(data["velocity.x"]), (float)Convert.ToDouble(data["velocity.y"])),
+                            (float)Convert.ToDouble(data["rotation"]),
+                            (float)Convert.ToDouble(data["upperBounds"]),
+                            (float)Convert.ToDouble(data["lowerBounds"]));
+
+            cloudManager.AddCloud(cloud);
+        }
+
+        public void HandleNetworkPlane(object incoming, EventArgs args)
+        {
+            PlaneManager.Instance.CreatePlane();
         }
     }
 }

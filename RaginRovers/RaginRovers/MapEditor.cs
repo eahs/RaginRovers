@@ -268,6 +268,19 @@ namespace RaginRovers
 
                         case Keys.L:
 
+                            // Plane
+                            client.SendMessage("action=plane;monkeys=awesome"); // lol
+
+                            // Clouds
+                            Random rand = new Random();
+                            for (int i = 0; i < 15; i++)
+                            {
+                                Vector2 v = new Vector2(rand.Next(-1024, GameWorld.WorldWidth + 1024), rand.Next(-800, 0));
+                                Vector2 velocity = new Vector2(5 + rand.Next(0, 15), 0);
+
+                                client.SendMessage("action=createother;gotype=" + (int)(RaginRovers.GameObjectTypes.CLOUD1 + rand.Next(0, 4)) + ";textureassetname=clouds;location.x=" + v.X + ";location.y=" + v.Y + ";rotation=0;upperBounds=0;lowerBounds=0;velocity.x=" + velocity.X + ";velocity.y=" + velocity.Y);
+                            }
+
                             using (StreamReader infile = new StreamReader("map.txt"))
                             {
                                 string objs = infile.ReadToEnd();

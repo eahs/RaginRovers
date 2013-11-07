@@ -20,17 +20,28 @@ namespace RaginRovers
 
         private static PlaneManager instance;
         private GameObjectFactory factory;
-        private int plane;
+        private int plane = -1;
         public PlaneState planeState = PlaneState.NORMAL;
         public int direction = 1;
         public int planeSpeed = 4;
         public int currentPlane = 0;
         public SoundEffectInstance soundBuzz;
         private AudioManager audioManager;
+        private bool isCreated = false;
 
         public PlaneManager()
         {
             factory = GameObjectFactory.Instance;
+        }
+
+        public void CreatePlane()
+        {
+            // Already created plane?
+            if (plane != -1)
+            {
+                factory.Objects[plane].sprite.Location = new Vector2(-638 - factory.Objects[plane].sprite.BoundingBoxRect.Width, -650);
+                return;
+            }
 
             plane = factory.Create((int)RaginRovers.GameObjectTypes.PLANE,
                 Vector2.Zero,
@@ -48,9 +59,14 @@ namespace RaginRovers
             soundBuzz = audioManager.GetSoundEffectLooped("airplane");
             soundBuzz.Volume = 0.2f;
             soundBuzz.Play();
+
+            isCreated = true;
         }
+
         public void Update(GameTime gametime, AudioManager audioManager)
         {
+            if (!isCreated) return;
+
             soundBuzz.Pan = MathHelper.Clamp(factory.Objects[plane].sprite.Location.X, 0, (float)GameWorld.WorldWidth) / (float)GameWorld.WorldWidth;
 
             factory.Objects[plane].sprite.Location += new Vector2(planeSpeed * direction, 0);
