@@ -123,7 +123,8 @@ namespace RaginRovers
             factory.AddCreator((int)GameObjectTypes.EXPLOSION1, SpriteCreators.CreateExplosion1);
             factory.AddCreator((int)GameObjectTypes.EXPLOSION1, SpriteCreators.CreateExplosion2);
             factory.AddCreator((int)GameObjectTypes.PLANE, SpriteCreators.CreatePlane);
-
+            factory.AddCreator((int)GameObjectTypes.CATSPLODE, SpriteCreators.CreateCatsplode);
+            factory.AddCreator((int)GameObjectTypes.DUSTSPLODE, SpriteCreators.CreateDustsplode);
             mapEditor = new MapEditor(Window, client, cannonManager, cannonGroups);
 
             base.Initialize();
@@ -156,6 +157,9 @@ namespace RaginRovers
             textureManager.LoadTexture("explosion1");
             textureManager.LoadTexture("plane_with_banner");
             textureManager.LoadTexture("clouds");
+            textureManager.LoadTexture("catsplode");
+            textureManager.LoadTexture("dustsplode");
+
             AudioManager.Instance.LoadSoundEffect("airplane");
             AudioManager.Instance.LoadSoundEffect("cat1");
             AudioManager.Instance.LoadSoundEffect("cat2");
@@ -164,6 +168,18 @@ namespace RaginRovers
             AudioManager.Instance.LoadSoundEffect("dog1");
             AudioManager.Instance.LoadSoundEffect("meat_hit");
             AudioManager.Instance.LoadSoundEffect("wood_hitting");
+            AudioManager.Instance.LoadSoundEffect("cat_aaagh");
+            AudioManager.Instance.LoadSoundEffect("cat_gibberish");
+            AudioManager.Instance.LoadSoundEffect("cat_moan");
+            AudioManager.Instance.LoadSoundEffect("cat_myschool");
+            AudioManager.Instance.LoadSoundEffect("cat_pburgrules");
+            AudioManager.Instance.LoadSoundEffect("cat_soclose");
+            AudioManager.Instance.LoadSoundEffect("cat_taunt");
+            AudioManager.Instance.LoadSoundEffect("dog_bark");
+            AudioManager.Instance.LoadSoundEffect("dog_impact");
+            AudioManager.Instance.LoadSoundEffect("dog_oof");
+            AudioManager.Instance.LoadSoundEffect("dog_launch");
+            AudioManager.Instance.LoadSoundEffect("cannon_boom");
 
             /*
             int cat = factory.Create((int)GameObjectTypes.CAT, Vector2.Zero, "spritesheet", Vector2.Zero, 0);
@@ -186,10 +202,12 @@ namespace RaginRovers
             body.Position = ConvertUnits.ToSimUnits(new Vector2(0, GameWorld.HeightofGround)); //hardcode workaround, can't figure out what to multiply the proportion by
             // * GameWorld.ProportionGroundtoScreen));
             body.UserData = new GameObject(-1, (int)GameObjectTypes.GROUND);
+            body.Friction = 1f;
 
             //FixtureFactory.AttachRectangle((float)GameWorld.WorldWidth, 10, 1, new Vector2(0, ConvertUnits.ToDisplayUnits(this.Window.ClientBounds.Height-30)), body);
-            Fixture ground = FixtureFactory.AttachRectangle(ConvertUnits.ToSimUnits(GameWorld.WorldWidth)*10, ConvertUnits.ToSimUnits(10), 1, Vector2.Zero, body, "ground");
+            Fixture ground = FixtureFactory.AttachRectangle(ConvertUnits.ToSimUnits(GameWorld.WorldWidth)*10, ConvertUnits.ToSimUnits(10), 10, Vector2.Zero, body, "ground");
             ground.Restitution = 0f;
+            
             
             SetupLevel();
         }
@@ -346,6 +364,11 @@ namespace RaginRovers
             cannonGroups[cannonGroup].Power = (float)cannonPower;
             cannonGroups[cannonGroup].Rotation = (float)cannonRotation;
             cannonManager.ChangeCannonState(cannonGroups[cannonGroup]);
+
+            AudioManager.Instance.SoundEffect("cannon_boom").Play();
+            AudioManager.Instance.SoundEffect("dog_launch").Play(0.5f, 0f, 0f);
+
+            camera.Shake(10, 1);
         }
 
         public void HandleNetworkCreate(object incoming, EventArgs args)

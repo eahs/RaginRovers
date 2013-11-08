@@ -83,10 +83,9 @@ namespace RaginRovers
                                 
                                 if (cannonGroups[0].cannonState == CannonState.WAITING)
                                 {
-                                    client.SendMessage("action=shoot;cannonGroup=0;rotation=" + cannonGroups[0].Rotation + ";power=" + cannonGroups[0].Power);
+                                    client.SendMessage("action=shoot;cannonGroup=0;rotation=" + cannonGroups[0].Rotation + ";power=" + cannonGroups[0].Power + ";Screen=" + Game1.ScreenConfiguration);
                                     SunManager.Instance.Mood = SunMood.OPENSMILE;
-                                    camera.Shake(10, 1);
-                                    AudioManager.Instance.SoundEffect("dog1").Play();
+                                  
                                 }
                             }
                             break;
@@ -98,10 +97,8 @@ namespace RaginRovers
 
                                 if (cannonGroups[1].cannonState == CannonState.WAITING)
                                 {
-                                    client.SendMessage("action=shoot;cannonGroup=1;rotation=" + cannonGroups[1].Rotation + ";power=" + cannonGroups[1].Power);
+                                    client.SendMessage("action=shoot;cannonGroup=1;rotation=" + cannonGroups[1].Rotation + ";power=" + cannonGroups[1].Power + ";Screen=" + Game1.ScreenConfiguration);
                                     SunManager.Instance.Mood = SunMood.OPENSMILE;
-                                    camera.Shake(10, 1);
-                                    AudioManager.Instance.SoundEffect("dog1").Play();
                                 }
                             }
                             break;

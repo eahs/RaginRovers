@@ -44,6 +44,8 @@ namespace RaginRovers
         SUN,
         EXPLOSION1,
         PLANE,
+        CATSPLODE,
+        DUSTSPLODE,
         GROUND = 3000 // PLACEHOLDER - NOT A CREATEABLE TYPE
     }
 
@@ -111,13 +113,22 @@ namespace RaginRovers
                                                BodyType.Dynamic,
                                                true);
 
-
-            sprite.PhysicsBody.LinearDamping = 0.9f;
-            sprite.PhysicsBody.AngularDamping = 0.9f;
-            sprite.PhysicsBody.Restitution = 0.2f;
-            sprite.PhysicsBody.Mass = 35f;
+            
+            sprite.PhysicsBody.LinearDamping = 0.3f;
+            sprite.PhysicsBody.AngularDamping = 0.3f;
+            sprite.PhysicsBody.Restitution = 0.0f;
+            sprite.PhysicsBody.Mass = 10f;
             sprite.PhysicsBody.Friction = 1f;
+            sprite.PhysicsBody.Inertia = 0;
+            sprite.PhysicsBody.SleepingAllowed = true;
+            sprite.PhysicsBody.Awake = false;
+
+            sprite.PhysicsBodyFixture.Restitution = 0f;
+            
+            
             sprite.Rotation = rotation;
+            
+            
 
             return sprite;
         }
@@ -199,6 +210,7 @@ namespace RaginRovers
             SpriteCreators.AddFrames(sprite, "rover", 12);
 
             sprite.Rotation = rotation;
+            
             //option 1 with two fixtures
             //rects
             //45, 16, 153, 114
@@ -208,10 +220,12 @@ namespace RaginRovers
             //option 2 with one fixture
             //rects
             //16, 12, 175, 125
-            sprite.PhysicsBodyFixture = FixtureFactory.AttachRectangle(ConvertUnits.ToSimUnits(175), ConvertUnits.ToSimUnits(100), 1, ConvertUnits.ToSimUnits(new Vector2(16, 12)), sprite.PhysicsBody);
+            sprite.PhysicsBodyFixture = FixtureFactory.AttachRectangle(ConvertUnits.ToSimUnits(175), ConvertUnits.ToSimUnits(100), 10, ConvertUnits.ToSimUnits(new Vector2(16, 12)), sprite.PhysicsBody);
             sprite.PhysicsBodyFixture.Friction = 15f;
 
             sprite.PhysicsBodyFixture.OnCollision += new OnCollisionEventHandler(sprite.HandleCollision);
+
+            sprite.PhysicsBody.Mass = 30f;
 
             return sprite;
         }
@@ -233,6 +247,56 @@ namespace RaginRovers
             sprite.FrameTime = 0.06f;
 
             SpriteCreators.AddFrames(sprite, "boom", 12);
+
+
+
+            sprite.Rotation = rotation;
+
+            return sprite;
+        }
+
+        public static Sprite CreateDustsplode(Vector2 location,
+                                            Texture2D texture,
+                                            Vector2 velocity,
+                                            float rotation)
+        {
+            Sprite sprite = new Sprite("sprite",
+                                   location,
+                                   texture,
+                                   SpriteCreators.spriteSourceRectangles["dustsplode00"],
+                                   velocity,
+                                   BodyType.Static,
+                                   true);
+
+            sprite.PhysicsBody.CollidesWith = Category.None;
+            sprite.FrameTime = 0.06f;
+
+            SpriteCreators.AddFrames(sprite, "dustsplode", 8);
+
+
+
+            sprite.Rotation = rotation;
+
+            return sprite;
+        }
+
+        public static Sprite CreateCatsplode(Vector2 location,
+                                            Texture2D texture,
+                                            Vector2 velocity,
+                                            float rotation)
+        {
+            Sprite sprite = new Sprite("sprite",
+                                   location,
+                                   texture,
+                                   SpriteCreators.spriteSourceRectangles["catsplode00"],
+                                   velocity,
+                                   BodyType.Static,
+                                   true);
+
+            sprite.PhysicsBody.CollidesWith = Category.None;
+            sprite.FrameTime = 0.06f;
+
+            SpriteCreators.AddFrames(sprite, "catsplode", 12);
 
 
 
