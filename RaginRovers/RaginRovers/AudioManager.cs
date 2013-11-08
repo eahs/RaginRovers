@@ -15,7 +15,7 @@ namespace RaginRoversLibrary
     public class AudioManager
     {
 
-        public static AudioManager instance;
+        private static AudioManager instance;
         Dictionary<string, SoundEffect> soundEffects;
         ContentManager Content;
 

@@ -36,7 +36,7 @@ namespace RaginRovers
             
         }
 
-        public void Update(GameTime gameTime, Camera camera, AudioManager audioManager)
+        public void Update(GameTime gameTime, Camera camera)
         {
             KeyboardState kb = Keyboard.GetState();
             MouseState msState = Mouse.GetState();
@@ -61,6 +61,7 @@ namespace RaginRovers
             DetectKeyPress(kb, Keys.Delete);
             DetectKeyPress(kb, Keys.M);
             DetectKeyPress(kb, Keys.L);
+            DetectKeyPress(kb, Keys.U);
             DetectKeyPress(kb, Keys.Enter);
             DetectKeyPress(kb, Keys.Space);
             DetectKeyPress(kb, Keys.N);
@@ -85,7 +86,7 @@ namespace RaginRovers
                                     client.SendMessage("action=shoot;cannonGroup=0;rotation=" + cannonGroups[0].Rotation + ";power=" + cannonGroups[0].Power);
                                     SunManager.Instance.Mood = SunMood.OPENSMILE;
                                     camera.Shake(10, 1);
-                                    audioManager.SoundEffect("dog1").Play();
+                                    AudioManager.Instance.SoundEffect("dog1").Play();
                                 }
                             }
                             break;
@@ -100,7 +101,7 @@ namespace RaginRovers
                                     client.SendMessage("action=shoot;cannonGroup=1;rotation=" + cannonGroups[1].Rotation + ";power=" + cannonGroups[1].Power);
                                     SunManager.Instance.Mood = SunMood.OPENSMILE;
                                     camera.Shake(10, 1);
-                                    audioManager.SoundEffect("dog1").Play();
+                                    AudioManager.Instance.SoundEffect("dog1").Play();
                                 }
                             }
                             break;
@@ -221,6 +222,84 @@ namespace RaginRovers
 
                             }
 
+                            break;
+
+                        case Keys.U:
+
+                            if (EditMode && MouseDown && DragSprite != -1)
+                            {
+                                List<int> IsInSameYasDragged = new List<int>();
+                                int HighestKey = 0;
+
+                                //finding which would collide if sprite dropped
+                                foreach (int keys in factory.Objects.Keys)
+                                {
+                                    if (factory.Objects[keys].sprite.IsBoxColliding(new Rectangle(
+                                                                                            (int)factory.Objects[DragSprite].sprite.Location.X,
+                                                                                            (int)factory.Objects[DragSprite].sprite.Location.Y,
+                                                                                            factory.Objects[DragSprite].sprite.BoundingBoxRect.Width,
+                                                                                            2000))
+                                        &&
+                                        keys != DragSprite)
+                                    {
+                                        IsInSameYasDragged.Add(keys);
+                                    }
+                                }
+                                if (IsInSameYasDragged.Count > 0) //work arounds, yay
+                                    HighestKey = IsInSameYasDragged[0];
+                                for (int i = 1; i < IsInSameYasDragged.Count; i++)
+                                {
+                                    if (factory.Objects[IsInSameYasDragged[i]].sprite.Location.Y < factory.Objects[HighestKey].sprite.Location.Y)
+                                    {
+                                        HighestKey = IsInSameYasDragged[i];
+                                    }
+                                }
+                                //create parallel universe?
+                                //World world2 = GameWorld.world;
+                                //world2.Step((float)(gameTime.ElapsedGameTime.TotalMilliseconds * 0.001));
+                                for (; ; )
+                                {
+                                    if (factory.Objects[DragSprite].sprite.PhysicsBody.ContactList == null)
+                                    {
+                                        factory.Objects[DragSprite].sprite.Location += new Vector2(0, 1);
+                                    }
+                                    if (factory.Objects[DragSprite].sprite.PhysicsBody.ContactList != null && factory.Objects[DragSprite].sprite.PhysicsBody.ContactList.Contact.FixtureB.Body == factory.Objects[HighestKey].sprite.PhysicsBody)
+                                    {
+                                        DragSprite = -1;
+                                        break;
+                                    }
+                                    //endless loop, need to somehow update the collision status
+
+                                }
+                                /*
+                                
+                                //increasing location until sitting right on top
+                                for (; ; )
+                                {
+                                    Sprite HighestKeySprite = factory.Objects[HighestKey].sprite;
+                                    Sprite DragSpriteSprite = factory.Objects[DragSprite].sprite;
+                                    float Highest_calcedY = HighestKeySprite.Location.Y;
+                                    float Dragged_calcedY = DragSpriteSprite.Location.Y;
+                                    float Dragged_calcedHeight = DragSpriteSprite.BoundingBoxRect.Height;
+                                    if (HighestKeySprite.Rotation == MathHelper.PiOver2)
+                                    {
+                                        Highest_calcedY = HighestKeySprite.Center.Y - (HighestKeySprite.Center.X - HighestKeySprite.Location.X);
+                                    }
+                                    if (DragSpriteSprite.Rotation == MathHelper.PiOver2)
+                                    {
+                                        Dragged_calcedY = DragSpriteSprite.Center.Y - (DragSpriteSprite.Center.X - DragSpriteSprite.Location.X);
+                                        Dragged_calcedHeight = DragSpriteSprite.BoundingBoxRect.Width;
+                                    }
+
+                                    if (Dragged_calcedY + Dragged_calcedHeight < Highest_calcedY)
+                                        factory.Objects[DragSprite].sprite.Location += new Vector2(0, 1);
+                                    else
+                                    {
+                                        DragSprite = -1;
+                                        break;
+                                    }
+                                }*/
+                            }
                             break;
 
                         case Keys.P:

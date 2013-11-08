@@ -23,11 +23,12 @@ namespace RaginRovers
         private int plane = -1;
         public PlaneState planeState = PlaneState.NORMAL;
         public int direction = 1;
-        public int planeSpeed = 4;
+        public int planeSpeed = 5;
         public int currentPlane = 0;
-        public SoundEffectInstance soundBuzz;
-        private AudioManager audioManager;
         private bool isCreated = false;
+        public int LengthAddedfromZoom = 1080;
+
+        private SoundEffectInstance soundBuzz;
 
         public PlaneManager()
         {
@@ -39,7 +40,7 @@ namespace RaginRovers
             // Already created plane?
             if (plane != -1)
             {
-                factory.Objects[plane].sprite.Location = new Vector2(-638 - factory.Objects[plane].sprite.BoundingBoxRect.Width, -650);
+                factory.Objects[plane].sprite.Location = new Vector2(-LengthAddedfromZoom - factory.Objects[plane].sprite.BoundingBoxRect.Width, -650);
                 return;
             }
 
@@ -50,34 +51,32 @@ namespace RaginRovers
                 0f,
                 0f,
                 0f);
-            factory.Objects[plane].sprite.Location = new Vector2(-638 - factory.Objects[plane].sprite.BoundingBoxRect.Width, -650);
+            factory.Objects[plane].sprite.Location = new Vector2(-LengthAddedfromZoom - factory.Objects[plane].sprite.BoundingBoxRect.Width, -650);
             factory.Objects[plane].sprite.Scale = 2;
             factory.Objects[plane].saveable = false;
 
-            this.audioManager = AudioManager.Instance;
-
-            soundBuzz = audioManager.GetSoundEffectLooped("airplane");
+            soundBuzz = AudioManager.Instance.GetSoundEffectLooped("airplane");
             soundBuzz.Volume = 0.2f;
             soundBuzz.Play();
 
             isCreated = true;
         }
 
-        public void Update(GameTime gametime, AudioManager audioManager)
+        public void Update(GameTime gametime)
         {
             if (!isCreated) return;
 
             soundBuzz.Pan = MathHelper.Clamp(factory.Objects[plane].sprite.Location.X, 0, (float)GameWorld.WorldWidth) / (float)GameWorld.WorldWidth;
 
             factory.Objects[plane].sprite.Location += new Vector2(planeSpeed * direction, 0);
-            if (factory.Objects[plane].sprite.Location.X > 5700 + 638)
+            if (factory.Objects[plane].sprite.Location.X > 12234 - LengthAddedfromZoom)
             {
                 direction = -1;
                 currentPlane = (currentPlane + 1) % 4;
                 //audioManager.SoundEffect("airplane").Play(0.2f, 0, 0);
                 //factory.Objects[plane].sprite.flipType = Sprite.FlipType.HORIZONTAL;
             }
-            if (factory.Objects[plane].sprite.Location.X < -638 - factory.Objects[plane].sprite.BoundingBoxRect.Width)
+            if (factory.Objects[plane].sprite.Location.X < -LengthAddedfromZoom - factory.Objects[plane].sprite.BoundingBoxRect.Width)
             {
                 direction = 1;
                 currentPlane = (currentPlane + 1) % 4;

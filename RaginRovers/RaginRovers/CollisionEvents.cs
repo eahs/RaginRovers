@@ -14,7 +14,22 @@ namespace RaginRovers
     {
         public static bool cat_OnCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)
         {
-            return true;
+            GameObject cat = (GameObject)fixtureA.Body.UserData;
+            GameObject otherObject = (GameObject)fixtureB.Body.UserData;
+
+            if (otherObject.typeid == (int)GameObjectTypes.DOG)
+            {
+                AudioManager.Instance.SoundEffect("meat_hit").Play();
+                AudioManager.Instance.SoundEffect("cat1").Play();
+
+                cat.sprite.HitPoints -= (int)otherObject.sprite.PhysicsBody.LinearVelocity.Length(); 
+
+            }
+            if (otherObject.typeid == (int)GameObjectTypes.WOOD1 || otherObject.typeid == (int)GameObjectTypes.WOOD2 || otherObject.typeid == (int)GameObjectTypes.WOOD3 || otherObject.typeid == (int)GameObjectTypes.WOOD4)
+            {
+                //if (otherObject.sprite.PhysicsBody
+            }
+           return true;
         }
 
         public static bool dog_OnCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)
@@ -80,6 +95,8 @@ namespace RaginRovers
             if (otherObject.typeid == (int)GameObjectTypes.WOOD1 || otherObject.typeid == (int)GameObjectTypes.WOOD2 || otherObject.typeid == (int)GameObjectTypes.WOOD3 || otherObject.typeid == (int)GameObjectTypes.WOOD4)
             {
                 //trying to play the wood clanking sound but can't figure out
+
+                AudioManager.Instance.SoundEffect("wood_hitting").Play();
             }
             return true;
         }

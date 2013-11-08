@@ -29,8 +29,7 @@ namespace RaginRoversLibrary
 
         public float BoomTime = 0f;
 
-        public int cannonPower = 10;
-
+        public int cannonPower = 13;
 
         public CannonManager()
         {
