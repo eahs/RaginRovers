@@ -21,11 +21,13 @@ namespace RaginRoversLibrary
         public static World world;  // Must be initialized
         private static int world_ofs_x = 0;
         private static int worldmin = 0;
-        private static int worldmax = 0;
+        public static int worldmax = 0;
         private static int screen_width = 0;
         private static int screen_height = 0;
         private static float proportionGroundtoScreen = 1084f / 1280f;
         private static int heightofGround = 0;
+
+        //9420+720 = 10140
 
         public static void Initialize(int worldmin, int worldmax, int screen_width, int screen_height, Vector2 gravity)
         {

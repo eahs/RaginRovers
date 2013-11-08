@@ -17,11 +17,11 @@ namespace RaginRovers
         static void Main(string[] args)
         {
             bool startServer = true;
-            int ScreenConfiguration = 1;
+            int ScreenConfiguration = 2;
 
             if (args.Length > 0)
             {
-                if (args[0] == "2" || args[0] == "3")
+                if (args[0] == "1" || args[0] == "3")
                 {
                     startServer = false;
                     ScreenConfiguration = Convert.ToInt32(args[0]);

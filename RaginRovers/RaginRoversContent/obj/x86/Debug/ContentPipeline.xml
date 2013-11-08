@@ -7,8 +7,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\spritesheet.xnb</Output>
-      <Time>2013-11-04T07:14:09-05:00</Time>
+      <Output>C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\spritesheet.xnb</Output>
+      <Time>2013-11-07T18:22:25.8666945-05:00</Time>
     </Item>
     <Item>
       <Source>background.png</Source>
@@ -16,8 +16,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\background.xnb</Output>
-      <Time>2013-10-23T07:45:11-04:00</Time>
+      <Output>C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\background.xnb</Output>
+      <Time>2013-11-07T18:22:25.7336111-05:00</Time>
     </Item>
     <Item>
       <Source>boom.png</Source>
@@ -25,8 +25,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\boom.xnb</Output>
-      <Time>2013-10-23T07:45:11-04:00</Time>
+      <Output>C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\boom.xnb</Output>
+      <Time>2013-11-07T18:22:25.7546203-05:00</Time>
     </Item>
     <Item>
       <Source>cursor.png</Source>
@@ -34,8 +34,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\cursor.xnb</Output>
-      <Time>2013-10-23T07:45:11-04:00</Time>
+      <Output>C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\cursor.xnb</Output>
+      <Time>2013-11-07T18:22:25.7616284-05:00</Time>
     </Item>
     <Item>
       <Source>explosion1.png</Source>
@@ -43,8 +43,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\explosion1.xnb</Output>
-      <Time>2013-09-12T09:42:34-04:00</Time>
+      <Output>C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\explosion1.xnb</Output>
+      <Time>2013-11-07T18:22:25.76863-05:00</Time>
     </Item>
     <Item>
       <Source>sun.png</Source>
@@ -52,8 +52,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\sun.xnb</Output>
-      <Time>2013-10-30T14:05:17-04:00</Time>
+      <Output>C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\sun.xnb</Output>
+      <Time>2013-11-07T18:22:25.8767102-05:00</Time>
     </Item>
     <Item>
       <Source>explosion2.png</Source>
@@ -61,8 +61,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\explosion2.xnb</Output>
-      <Time>2013-10-31T14:17:55-04:00</Time>
+      <Output>C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\explosion2.xnb</Output>
+      <Time>2013-11-07T18:22:25.7746336-05:00</Time>
     </Item>
     <Item>
       <Source>airplane-banner.png</Source>
@@ -70,8 +70,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\airplane-banner.xnb</Output>
-      <Time>2013-11-01T06:58:47-04:00</Time>
+      <Output>C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\airplane-banner.xnb</Output>
+      <Time>2013-11-07T18:22:25.7236008-05:00</Time>
     </Item>
     <Item>
       <Source>plane_with_banner.png</Source>
@@ -79,8 +79,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\plane_with_banner.xnb</Output>
-      <Time>2013-11-04T07:14:08-05:00</Time>
+      <Output>C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\plane_with_banner.xnb</Output>
+      <Time>2013-11-07T18:22:25.8346733-05:00</Time>
     </Item>
     <Item>
       <Source>clouds.png</Source>
@@ -88,134 +88,8 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
       <Options>None</Options>
-      <Output>H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\clouds.xnb</Output>
-      <Time>2013-11-04T07:14:08-05:00</Time>
-    </Item>
-    <Item>
-      <Source>Audio\cat_meow.mp3</Source>
-      <Name>Audio\cat_meow</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-      <Options>None</Options>
-      <Output>H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\cat_meow.xnb</Output>
-      <Time>2013-10-30T11:02:04-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Audio\cat_meow_human_voice_1.mp3</Source>
-      <Name>Audio\cat_meow_human_voice_1</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-      <Options>None</Options>
-      <Output>H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\cat_meow_human_voice_1.xnb</Output>
-      <Time>2013-10-30T11:02:04-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Audio\cat_meow_human_voice_2.mp3</Source>
-      <Name>Audio\cat_meow_human_voice_2</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-      <Options>None</Options>
-      <Output>H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\cat_meow_human_voice_2.xnb</Output>
-      <Time>2013-10-30T11:02:04-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Audio\cat_meow_human_voice_3.mp3</Source>
-      <Name>Audio\cat_meow_human_voice_3</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-      <Options>None</Options>
-      <Output>H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\cat_meow_human_voice_3.xnb</Output>
-      <Time>2013-10-30T11:02:04-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Audio\human_face_punch.mp3</Source>
-      <Name>Audio\human_face_punch</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-      <Options>None</Options>
-      <Output>H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\human_face_punch.xnb</Output>
-      <Time>2013-10-30T11:02:04-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Audio\Sound Effects.mp3</Source>
-      <Name>Audio\Sound Effects</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-      <Options>None</Options>
-      <Output>H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\Sound Effects.xnb</Output>
-      <Time>2013-10-30T11:02:04-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Audio\wood_hit_wood_heavy_1.mp3</Source>
-      <Name>Audio\wood_hit_wood_heavy_1</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-      <Options>None</Options>
-      <Output>H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\wood_hit_wood_heavy_1.xnb</Output>
-      <Time>2013-10-30T11:02:04-04:00</Time>
-    </Item>
-    <Item>
-      <Source>Audio\cat1.mp3</Source>
-      <Name>Audio\cat1</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-      <Options>None</Options>
-      <Output>H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\cat1.xnb</Output>
-      <Time>2013-11-03T19:32:00-05:00</Time>
-    </Item>
-    <Item>
-      <Source>Audio\cat2.mp3</Source>
-      <Name>Audio\cat2</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-      <Options>None</Options>
-      <Output>H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\cat2.xnb</Output>
-      <Time>2013-11-03T19:32:00-05:00</Time>
-    </Item>
-    <Item>
-      <Source>Audio\cat3.mp3</Source>
-      <Name>Audio\cat3</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-      <Options>None</Options>
-      <Output>H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\cat3.xnb</Output>
-      <Time>2013-11-03T19:32:00-05:00</Time>
-    </Item>
-    <Item>
-      <Source>Audio\cat4.mp3</Source>
-      <Name>Audio\cat4</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-      <Options>None</Options>
-      <Output>H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\cat4.xnb</Output>
-      <Time>2013-11-03T19:32:00-05:00</Time>
-    </Item>
-    <Item>
-      <Source>Audio\dog1.mp3</Source>
-      <Name>Audio\dog1</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-      <Options>None</Options>
-      <Output>H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\dog1.xnb</Output>
-      <Time>2013-11-03T19:32:00-05:00</Time>
-    </Item>
-    <Item>
-      <Source>Audio\meat_hit.mp3</Source>
-      <Name>Audio\meat_hit</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-      <Options>None</Options>
-      <Output>H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\meat_hit.xnb</Output>
-      <Time>2013-11-03T19:32:00-05:00</Time>
-    </Item>
-    <Item>
-      <Source>Audio\wood_hitting.mp3</Source>
-      <Name>Audio\wood_hitting</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-      <Options>None</Options>
-      <Output>H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\wood_hitting.xnb</Output>
-      <Time>2013-11-03T19:32:00-05:00</Time>
+      <Output>C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\clouds.xnb</Output>
+      <Time>2013-11-07T18:22:25.7586238-05:00</Time>
     </Item>
     <Item>
       <Source>Audio\airplane-fly-by-02.mp3</Source>
@@ -223,8 +97,134 @@
       <Importer>Mp3Importer</Importer>
       <Processor>SoundEffectProcessor</Processor>
       <Options>None</Options>
-      <Output>H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\airplane.xnb</Output>
-      <Time>2013-11-04T10:05:30-05:00</Time>
+      <Output>C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\airplane.xnb</Output>
+      <Time>2013-11-07T18:22:25.2516436-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\cat_meow.mp3</Source>
+      <Name>Audio\cat_meow</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\cat_meow.xnb</Output>
+      <Time>2013-11-07T18:22:25.2736586-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\cat_meow_human_voice_1.mp3</Source>
+      <Name>Audio\cat_meow_human_voice_1</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\cat_meow_human_voice_1.xnb</Output>
+      <Time>2013-11-07T18:22:25.2766587-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\cat_meow_human_voice_2.mp3</Source>
+      <Name>Audio\cat_meow_human_voice_2</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\cat_meow_human_voice_2.xnb</Output>
+      <Time>2013-11-07T18:22:25.27866-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\cat_meow_human_voice_3.mp3</Source>
+      <Name>Audio\cat_meow_human_voice_3</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\cat_meow_human_voice_3.xnb</Output>
+      <Time>2013-11-07T18:22:25.2826627-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\human_face_punch.mp3</Source>
+      <Name>Audio\human_face_punch</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\human_face_punch.xnb</Output>
+      <Time>2013-11-07T18:22:25.2866649-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\Sound Effects.mp3</Source>
+      <Name>Audio\Sound Effects</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\Sound Effects.xnb</Output>
+      <Time>2013-11-07T18:22:25.2386348-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\wood_hit_wood_heavy_1.mp3</Source>
+      <Name>Audio\wood_hit_wood_heavy_1</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\wood_hit_wood_heavy_1.xnb</Output>
+      <Time>2013-11-07T18:22:25.2916697-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\cat1.mp3</Source>
+      <Name>Audio\cat1</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\cat1.xnb</Output>
+      <Time>2013-11-07T18:22:25.2556446-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\cat2.mp3</Source>
+      <Name>Audio\cat2</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\cat2.xnb</Output>
+      <Time>2013-11-07T18:22:25.2586468-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\cat3.mp3</Source>
+      <Name>Audio\cat3</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\cat3.xnb</Output>
+      <Time>2013-11-07T18:22:25.2666545-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\cat4.mp3</Source>
+      <Name>Audio\cat4</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\cat4.xnb</Output>
+      <Time>2013-11-07T18:22:25.2696543-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\dog1.mp3</Source>
+      <Name>Audio\dog1</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\dog1.xnb</Output>
+      <Time>2013-11-07T18:22:25.283664-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\meat_hit.mp3</Source>
+      <Name>Audio\meat_hit</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\meat_hit.xnb</Output>
+      <Time>2013-11-07T18:22:25.2896671-05:00</Time>
+    </Item>
+    <Item>
+      <Source>Audio\wood_hitting.mp3</Source>
+      <Name>Audio\wood_hitting</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SoundEffectProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\wood_hitting.xnb</Output>
+      <Time>2013-11-07T18:22:25.2946706-05:00</Time>
     </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
@@ -232,39 +232,39 @@
       <TargetProfile>Reach</TargetProfile>
       <BuildConfiguration>Debug</BuildConfiguration>
       <CompressContent>false</CompressContent>
-      <RootDirectory>H:\GitHub\RaginRovers\RaginRovers\RaginRoversContent\</RootDirectory>
-      <LoggerRootDirectory>H:\GitHub\RaginRovers\RaginRovers\RaginRovers\</LoggerRootDirectory>
-      <IntermediateDirectory>H:\GitHub\RaginRovers\RaginRovers\RaginRoversContent\obj\x86\Debug\</IntermediateDirectory>
-      <OutputDirectory>H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\</OutputDirectory>
+      <RootDirectory>C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRoversContent\</RootDirectory>
+      <LoggerRootDirectory>C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\</LoggerRootDirectory>
+      <IntermediateDirectory>C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRoversContent\obj\x86\Debug\</IntermediateDirectory>
+      <OutputDirectory>C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\</OutputDirectory>
     </Settings>
     <Assemblies>
       <Assembly>
-        <Key>C:\Program Files\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.XImporter.dll</Key>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.XImporter.dll</Key>
         <Value>2010-08-23T12:41:18-04:00</Value>
       </Assembly>
       <Assembly>
-        <Key>C:\Program Files\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.VideoImporters.dll</Key>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.VideoImporters.dll</Key>
         <Value>2010-08-23T12:41:18-04:00</Value>
       </Assembly>
       <Assembly>
-        <Key>C:\Program Files\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.TextureImporter.dll</Key>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.TextureImporter.dll</Key>
         <Value>2010-08-23T12:41:18-04:00</Value>
       </Assembly>
       <Assembly>
-        <Key>C:\Program Files\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.FBXImporter.dll</Key>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.FBXImporter.dll</Key>
         <Value>2010-08-23T12:41:18-04:00</Value>
       </Assembly>
       <Assembly>
-        <Key>C:\Program Files\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.EffectImporter.dll</Key>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.EffectImporter.dll</Key>
         <Value>2010-08-23T12:41:18-04:00</Value>
       </Assembly>
       <Assembly>
-        <Key>C:\Program Files\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.AudioImporters.dll</Key>
+        <Key>C:\Program Files (x86)\Microsoft XNA\XNA Game Studio\v4.0\References\Windows\x86\Microsoft.Xna.Framework.Content.Pipeline.AudioImporters.dll</Key>
         <Value>2010-08-23T12:41:18-04:00</Value>
       </Assembly>
       <Assembly>
-        <Key>C:\WINDOWS\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
-        <Value>2011-04-07T08:07:55.6528615-04:00</Value>
+        <Key>C:\Windows\Microsoft.Net\assembly\GAC_32\Microsoft.Xna.Framework.Content.Pipeline\v4.0_4.0.0.0__842cf8be1de50553\Microsoft.Xna.Framework.Content.Pipeline.dll</Key>
+        <Value>2012-11-02T11:18:45.6175437-04:00</Value>
       </Assembly>
     </Assemblies>
   </Asset>

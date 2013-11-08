@@ -34,7 +34,6 @@ namespace RaginRovers
         // Managers
         GameObjectFactory factory;
         TextureManager textureManager;
-        public AudioManager audioManager;
         ClientNetworking client;
 
         // 
@@ -49,14 +48,14 @@ namespace RaginRovers
         {
             //with .5 zoom, 830 more on each side, 1660 more total, 
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferWidth = 1280;
-            graphics.PreferredBackBufferHeight = 727;
+            //graphics.PreferredBackBufferWidth = 1280;
+            //graphics.PreferredBackBufferHeight = 727;
 
             //graphics.PreferredBackBufferHeight = 500;
 
-            //graphics.PreferredBackBufferWidth = 1920;
-            //graphics.PreferredBackBufferHeight = 1080;
-            //graphics.IsFullScreen = true;
+            graphics.PreferredBackBufferWidth = 1920;
+            graphics.PreferredBackBufferHeight = 1080;
+            graphics.IsFullScreen = true;
             graphics.ApplyChanges();
 
             Content.RootDirectory = "Content";
@@ -71,7 +70,7 @@ namespace RaginRovers
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            GameWorld.Initialize(0, 8700, this.Window.ClientBounds.Width, this.Window.ClientBounds.Height, new Vector2(0, 9.8f));
+            GameWorld.Initialize(0, 12234 - ( 1080 * 2), this.Window.ClientBounds.Width, this.Window.ClientBounds.Height, new Vector2(0, 9.8f));
             GameWorld.ViewPortXOffset = 0;
 
             SpriteCreators.Load("Content\\spritesheet.txt");
@@ -80,8 +79,7 @@ namespace RaginRovers
             textureManager = new TextureManager(Content);
 
             //Create the audio manager
-            audioManager = AudioManager.Instance;
-            audioManager.Initialize(Content);
+            AudioManager.Instance.Initialize(Content);
 
             // Now load the sprite creator factory helper
             factory = GameObjectFactory.Instance;
@@ -143,9 +141,10 @@ namespace RaginRovers
             camera = new Camera(new Viewport(GameWorld.ViewPortXOffset, 0, this.Window.ClientBounds.Width, this.Window.ClientBounds.Height));
             camera.Origin = new Vector2(camera.ViewPort.Width / 2.0f, camera.ViewPort.Height);
 
-            camera.Position = new Vector2((GameWorld.WorldWidth/3) * (ScreenConfiguration-1), camera.Position.Y);
-
             camera.Zoom = .47f;
+
+            camera.Position = new Vector2((12234/3) * (ScreenConfiguration-1), camera.Position.Y);
+
 
 
             // Load all the textures we're going to need for this game
@@ -157,14 +156,14 @@ namespace RaginRovers
             textureManager.LoadTexture("explosion1");
             textureManager.LoadTexture("plane_with_banner");
             textureManager.LoadTexture("clouds");
-            audioManager.LoadSoundEffect("airplane");
-            audioManager.LoadSoundEffect("cat1");
-            audioManager.LoadSoundEffect("cat2");
-            audioManager.LoadSoundEffect("cat3");
-            audioManager.LoadSoundEffect("cat4");
-            audioManager.LoadSoundEffect("dog1");
-            audioManager.LoadSoundEffect("meat_hit");
-            audioManager.LoadSoundEffect("wood_hitting");
+            AudioManager.Instance.LoadSoundEffect("airplane");
+            AudioManager.Instance.LoadSoundEffect("cat1");
+            AudioManager.Instance.LoadSoundEffect("cat2");
+            AudioManager.Instance.LoadSoundEffect("cat3");
+            AudioManager.Instance.LoadSoundEffect("cat4");
+            AudioManager.Instance.LoadSoundEffect("dog1");
+            AudioManager.Instance.LoadSoundEffect("meat_hit");
+            AudioManager.Instance.LoadSoundEffect("wood_hitting");
 
             /*
             int cat = factory.Create((int)GameObjectTypes.CAT, Vector2.Zero, "spritesheet", Vector2.Zero, 0);
@@ -190,6 +189,7 @@ namespace RaginRovers
 
             //FixtureFactory.AttachRectangle((float)GameWorld.WorldWidth, 10, 1, new Vector2(0, ConvertUnits.ToDisplayUnits(this.Window.ClientBounds.Height-30)), body);
             Fixture ground = FixtureFactory.AttachRectangle(ConvertUnits.ToSimUnits(GameWorld.WorldWidth)*10, ConvertUnits.ToSimUnits(10), 1, Vector2.Zero, body, "ground");
+            ground.Restitution = 0f;
             
             SetupLevel();
         }
@@ -256,10 +256,10 @@ namespace RaginRovers
 
             SunManager.Instance.Update(gameTime);
             SpriteHelper.Instance.Update(gameTime);
-            PlaneManager.Instance.Update(gameTime, audioManager);
+            PlaneManager.Instance.Update(gameTime);
             cloudManager.Update(gameTime);
 
-            mapEditor.Update(gameTime, camera, audioManager);
+            mapEditor.Update(gameTime, camera);
             client.Update(gameTime);
             camera.Update(gameTime);
             base.Update(gameTime);
@@ -351,14 +351,39 @@ namespace RaginRovers
         public void HandleNetworkCreate(object incoming, EventArgs args)
         {
             Dictionary<string, string> data = (Dictionary<string, string>)incoming;
-
-            factory.Create(Convert.ToInt32(data["gotype"]),
-                            new Vector2((float)Convert.ToDouble(data["location.x"]), (float)Convert.ToDouble(data["location.y"])),
+            int XOffsetduetoScreenSizeChange = 0;
+            if (graphics.PreferredBackBufferWidth == 1920)
+                XOffsetduetoScreenSizeChange = 700;
+            int item = factory.Create(Convert.ToInt32(data["gotype"]),
+                            new Vector2((float)Convert.ToDouble(data["location.x"]) + XOffsetduetoScreenSizeChange, (float)Convert.ToDouble(data["location.y"])),
                             data["textureassetname"],
                             Vector2.Zero,
                             (float)Convert.ToDouble(data["rotation"]),
                             (float)Convert.ToDouble(data["upperBounds"]),
                             (float)Convert.ToDouble(data["lowerBounds"]));
+
+            if (factory.Objects[item].typeid == (int)GameObjectTypes.CAT)
+            {
+                factory.Objects[item].sprite.PhysicsBody.Friction = 15f;
+                factory.Objects[item].sprite.PhysicsBody.Restitution = 0f;
+                factory.Objects[item].sprite.PhysicsBody.Mass = 100f;
+                factory.Objects[item].sprite.PhysicsBody.AngularDamping = 1f;
+                factory.Objects[item].sprite.PhysicsBody.LinearDamping = 1f;
+                factory.Objects[item].sprite.OnCollision += new OnCollisionEventHandler(CollisionEvents.cat_OnCollision);
+            }
+            if (factory.Objects[item].typeid == (int)GameObjectTypes.DOG)
+            {
+                factory.Objects[item].sprite.OnCollision += new OnCollisionEventHandler(CollisionEvents.dog_OnCollision);
+            }
+            if (factory.Objects[item].typeid == (int)GameObjectTypes.WOOD1 || factory.Objects[item].typeid == (int)GameObjectTypes.WOOD2 || factory.Objects[item].typeid == (int)GameObjectTypes.WOOD3 || factory.Objects[item].typeid == (int)GameObjectTypes.WOOD4)
+            {
+                factory.Objects[item].sprite.PhysicsBody.Friction = 15f;
+                factory.Objects[item].sprite.PhysicsBody.Restitution = 0f;
+                factory.Objects[item].sprite.PhysicsBody.Mass = 100f;
+                factory.Objects[item].sprite.PhysicsBody.AngularDamping = 1f;
+                factory.Objects[item].sprite.PhysicsBody.LinearDamping = 1f;
+                factory.Objects[item].sprite.OnCollision += new OnCollisionEventHandler(CollisionEvents.wood_OnCollision);
+            }
 
         }
 

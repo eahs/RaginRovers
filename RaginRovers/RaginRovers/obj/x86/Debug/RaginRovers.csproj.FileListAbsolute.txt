@@ -104,7 +104,6 @@ C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\De
 C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\sun.xnb
 C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\explosion2.xnb
 C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\airplane-banner.xnb
-C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\airplane-fly-by-02.xnb
 C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\cat_meow.xnb
 C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\cat_meow_human_voice_1.xnb
 C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\cat_meow_human_voice_2.xnb
@@ -137,3 +136,13 @@ H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\cat4.x
 H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\dog1.xnb
 H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\meat_hit.xnb
 H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\wood_hitting.xnb
+C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\plane_with_banner.xnb
+C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\clouds.xnb
+C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\airplane.xnb
+C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\cat1.xnb
+C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\cat2.xnb
+C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\cat3.xnb
+C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\cat4.xnb
+C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\dog1.xnb
+C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\meat_hit.xnb
+C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\wood_hitting.xnb
