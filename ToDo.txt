@@ -1,3 +1,14 @@
--get sprites to draw in order so that cannon is on top of shot dog
--better hit boxes
--get boom to look better (placement)
+- sometimes won't load map *probably a networking issue
+- ressetting that I made crashes the game most of the time (once you press L and reload the map)
+		-breaks in HandleReset method in Game1 from deleting objects and then trying to call the deleted objects
+- need nice font for score
+- need a better placement for score
+- need better point system
+		- scorey score-  cat 300, plane 200, board 100, missing -50
+		- football score- cat 6 (touchdown), plane 2 (2 point conversion), board 1 (field goal), missing +-1 (either lose one or give the other person one)
+- better place to put logo
+		-make it smaller
+- make it more Easton v. Pburg themed
+- put in more soundeffects and wackiness
+- need background music
+		-found drum line on youtube and converted it but it is too long or something and breaks visual studios

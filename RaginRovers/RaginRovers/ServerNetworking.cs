@@ -34,7 +34,7 @@ namespace RaginRovers
             //netpeer = new NetPeer(config);
 
             //recipient = new NetConnection();
-
+            
             //recipient.Peer.DiscoverLocalPeers(config.Port);
         }
 
@@ -162,7 +162,7 @@ namespace RaginRovers
 
             sendMsg.Write(serializedData);
 
-            server.SendMessage(sendMsg, recipient, NetDeliveryMethod.Unreliable);
+            server.SendMessage(sendMsg, recipient, NetDeliveryMethod.ReliableUnordered);
         }
 
         public static string SerializeData(Dictionary<string, string> data)

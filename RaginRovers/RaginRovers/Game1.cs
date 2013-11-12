@@ -35,12 +35,17 @@ namespace RaginRovers
         GameObjectFactory factory;
         TextureManager textureManager;
         ClientNetworking client;
+        SpriteFont spriteFont;
 
-        // 
+        Song song;
+
+        public bool MapLoaded;
+
         MapEditor mapEditor;
         CannonManager cannonManager;
         List<CannonGroups> cannonGroups;
         CloudManager cloudManager;
+
 
         public static int ScreenConfiguration = 1;
 
@@ -48,14 +53,14 @@ namespace RaginRovers
         {
             //with .5 zoom, 830 more on each side, 1660 more total, 
             graphics = new GraphicsDeviceManager(this);
-            //graphics.PreferredBackBufferWidth = 1280;
-            //graphics.PreferredBackBufferHeight = 727;
+            graphics.PreferredBackBufferWidth = 1280;
+            graphics.PreferredBackBufferHeight = 727;
 
             //graphics.PreferredBackBufferHeight = 500;
 
-            graphics.PreferredBackBufferWidth = 1920;
-            graphics.PreferredBackBufferHeight = 1080;
-            graphics.IsFullScreen = true;
+            //graphics.PreferredBackBufferWidth = 1920;
+            //graphics.PreferredBackBufferHeight = 1080;
+            //graphics.IsFullScreen = true;
             graphics.ApplyChanges();
 
             Content.RootDirectory = "Content";
@@ -74,6 +79,8 @@ namespace RaginRovers
             GameWorld.ViewPortXOffset = 0;
 
             SpriteCreators.Load("Content\\spritesheet.txt");
+
+            MapLoaded = false;
 
             // Create the texture manager
             textureManager = new TextureManager(Content);
@@ -95,6 +102,7 @@ namespace RaginRovers
             client.ActionHandler["create"] = new EventHandler(this.HandleNetworkCreate);
             client.ActionHandler["plane"] = new EventHandler(this.HandleNetworkPlane);
             client.ActionHandler["createother"] = new EventHandler(this.HandleNetworkCreateOtherStuff);
+            client.ActionHandler["reset"] = new EventHandler(this.HandleReset);
 
             // Add a few sprite creators
             factory.AddCreator((int)GameObjectTypes.CAT, SpriteCreators.CreateCat);
@@ -125,6 +133,8 @@ namespace RaginRovers
             factory.AddCreator((int)GameObjectTypes.PLANE, SpriteCreators.CreatePlane);
             factory.AddCreator((int)GameObjectTypes.CATSPLODE, SpriteCreators.CreateCatsplode);
             factory.AddCreator((int)GameObjectTypes.DUSTSPLODE, SpriteCreators.CreateDustsplode);
+            factory.AddCreator((int)GameObjectTypes.EAHSCSLOGO, SpriteCreators.CreateEAHSCSLogo);
+
             mapEditor = new MapEditor(Window, client, cannonManager, cannonGroups);
 
             base.Initialize();
@@ -146,8 +156,6 @@ namespace RaginRovers
 
             camera.Position = new Vector2((12234/3) * (ScreenConfiguration-1), camera.Position.Y);
 
-
-
             // Load all the textures we're going to need for this game
             textureManager.LoadTexture("background");
             textureManager.LoadTexture("spritesheet");
@@ -159,6 +167,9 @@ namespace RaginRovers
             textureManager.LoadTexture("clouds");
             textureManager.LoadTexture("catsplode");
             textureManager.LoadTexture("dustsplode");
+            textureManager.LoadTexture("eahs_cs_logo");
+
+            spriteFont = Content.Load<SpriteFont>("spriteFont");
 
             AudioManager.Instance.LoadSoundEffect("airplane");
             AudioManager.Instance.LoadSoundEffect("cat1");
@@ -180,6 +191,7 @@ namespace RaginRovers
             AudioManager.Instance.LoadSoundEffect("dog_oof");
             AudioManager.Instance.LoadSoundEffect("dog_launch");
             AudioManager.Instance.LoadSoundEffect("cannon_boom");
+            //AudioManager.Instance.LoadSoundEffect("Drum_Line");
 
             /*
             int cat = factory.Create((int)GameObjectTypes.CAT, Vector2.Zero, "spritesheet", Vector2.Zero, 0);
@@ -207,7 +219,8 @@ namespace RaginRovers
             //FixtureFactory.AttachRectangle((float)GameWorld.WorldWidth, 10, 1, new Vector2(0, ConvertUnits.ToDisplayUnits(this.Window.ClientBounds.Height-30)), body);
             Fixture ground = FixtureFactory.AttachRectangle(ConvertUnits.ToSimUnits(GameWorld.WorldWidth)*10, ConvertUnits.ToSimUnits(10), 10, Vector2.Zero, body, "ground");
             ground.Restitution = 0f;
-            
+
+            //AudioManager.Instance.SoundEffect("Drum_Line").Play(); ;
             
             SetupLevel();
         }
@@ -271,15 +284,34 @@ namespace RaginRovers
             {
                 factory.Objects[key].sprite.Update(gameTime);
             }
+            
+            
 
             SunManager.Instance.Update(gameTime);
             SpriteHelper.Instance.Update(gameTime);
             PlaneManager.Instance.Update(gameTime);
             cloudManager.Update(gameTime);
 
-            mapEditor.Update(gameTime, camera);
+            mapEditor.Update(gameTime, camera); 
+            
             client.Update(gameTime);
             camera.Update(gameTime);
+            //funky
+            if (MapLoaded)
+            {
+                int cats = 0;
+                foreach (int key in factory.Objects.Keys)
+                {
+                    if (factory.Objects[key].typeid == (int)GameObjectTypes.CAT)
+                    {
+                        cats++;
+                    }
+                }
+                if (cats == 0)
+                {
+                    client.SendMessage("action=reset");
+                }
+            }
             base.Update(gameTime);
         }
 
@@ -311,6 +343,14 @@ namespace RaginRovers
                 factory.Objects[key].sprite.Draw(spriteBatch);
             }
 
+            //cannonggroups[0] is right and 1 is left
+            Vector2 stringdimesionsleft = spriteFont.MeasureString("Score: " + ScoreKeeper.Instance.PlayerLeftScore.ToString());
+            Vector2 stringdimesionsright = spriteFont.MeasureString("Score: " + ScoreKeeper.Instance.PlayerLeftScore.ToString());
+            spriteBatch.DrawString(spriteFont, "Score: " + ScoreKeeper.Instance.PlayerLeftScore.ToString(), factory.Objects[cannonGroups[1].cannonKey].sprite.Center + new Vector2(-stringdimesionsleft.X / 2, -1750) , Color.Black);
+            spriteBatch.DrawString(spriteFont, "Score: " + ScoreKeeper.Instance.PlayerRightScore.ToString(), factory.Objects[cannonGroups[0].cannonKey].sprite.Center + new Vector2(-stringdimesionsright.X / 2, -1750), Color.Black);
+
+            //spriteBatch.Draw(textureManager.Texture("eahs_cs_logo"), new Rectangle((GameWorld.WorldWidth / 2) - (textureManager.Texture("eahs_cs_logo").Bounds.Width / 2), -1210, textureManager.Texture("eahs_cs_logo").Bounds.Width, textureManager.Texture("eahs_cs_logo").Bounds.Height), Color.White);// textureManager.Texture("eahs_cs_logo").Bounds
+
             spriteBatch.End();
 
             
@@ -339,6 +379,11 @@ namespace RaginRovers
 
             dino = factory.Create((int)GameObjectTypes.DINO, new Vector2(GameWorld.WorldWidth-1000, this.Window.ClientBounds.Height - 100), "spritesheet", Vector2.Zero, 0f, 0f, 0f);
             factory.Objects[dino].saveable = false;
+
+            //create logo
+            int logo = factory.Create((int)GameObjectTypes.EAHSCSLOGO, new Vector2((GameWorld.WorldWidth / 2) - (textureManager.Texture("eahs_cs_logo").Bounds.Width / 2), -1210), "eahs_cs_logo", Vector2.Zero, 0f, 0f, 0f);
+            factory.Objects[logo].saveable = false;
+            factory.Objects[logo].sprite.Scale = .5f;
 
             // Sun
             SunManager.Instance.Mood = SunMood.GRIN;
@@ -378,12 +423,14 @@ namespace RaginRovers
             if (graphics.PreferredBackBufferWidth == 1920)
                 XOffsetduetoScreenSizeChange = 700;
             int item = factory.Create(Convert.ToInt32(data["gotype"]),
-                            new Vector2((float)Convert.ToDouble(data["location.x"]) + XOffsetduetoScreenSizeChange, (float)Convert.ToDouble(data["location.y"])),
+                            new Vector2((float)Convert.ToDouble(data["location.x"])/* + XOffsetduetoScreenSizeChange*/, (float)Convert.ToDouble(data["location.y"])),
                             data["textureassetname"],
                             Vector2.Zero,
                             (float)Convert.ToDouble(data["rotation"]),
                             (float)Convert.ToDouble(data["upperBounds"]),
                             (float)Convert.ToDouble(data["lowerBounds"]));
+
+            
 
             if (factory.Objects[item].typeid == (int)GameObjectTypes.CAT)
             {
@@ -393,6 +440,7 @@ namespace RaginRovers
                 factory.Objects[item].sprite.PhysicsBody.AngularDamping = 1f;
                 factory.Objects[item].sprite.PhysicsBody.LinearDamping = 1f;
                 factory.Objects[item].sprite.OnCollision += new OnCollisionEventHandler(CollisionEvents.cat_OnCollision);
+                MapLoaded = true;
             }
             if (factory.Objects[item].typeid == (int)GameObjectTypes.DOG)
             {
@@ -428,6 +476,24 @@ namespace RaginRovers
         public void HandleNetworkPlane(object incoming, EventArgs args)
         {
             PlaneManager.Instance.CreatePlane();
+        }
+
+        public void HandleReset(object incoming, EventArgs args)
+        {
+            List<int> NotSaveable = new List<int>();
+            for (int i = 0; i < factory.Objects.Keys.Count; i++)
+            {
+                if (factory.Objects[i].saveable)
+                {
+                    NotSaveable.Add(i);
+                }
+            }
+            for (int i = 0; i < NotSaveable.Count; i++)
+            {
+                factory.Objects.Remove(NotSaveable[i]);
+            }
+
+            MapLoaded = false;
         }
     }
 }

@@ -45,7 +45,7 @@ namespace RaginRoversLibrary
         public int BoundingXPadding = 0;
         public int BoundingYPadding = 0;
         public bool ReSpawn = true;
-        public int HitPoints = 100;
+        public int HitPoints = 50;
 
         //cannonspecifics
 
@@ -54,7 +54,8 @@ namespace RaginRoversLibrary
         public float LowerRotationBounds = 0;
         public int groupNumber = 0;
 
-        //
+        //1 is Left, 2 is Right
+        public int PlayerNumber = 0;
 
         public object tag;
 

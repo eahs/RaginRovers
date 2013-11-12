@@ -6,6 +6,7 @@ using RaginRoversLibrary;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Audio;
+using FarseerPhysics.Dynamics;
 
 namespace RaginRovers
 {
@@ -27,6 +28,8 @@ namespace RaginRovers
         public int currentPlane = 0;
         private bool isCreated = false;
         public int LengthAddedfromZoom = 1080;
+        private float timeElapsed = 0f;
+        private int DogsDropped = 0;
 
         private SoundEffectInstance soundBuzz;
 
@@ -64,6 +67,7 @@ namespace RaginRovers
 
         public void Update(GameTime gametime)
         {
+
             if (!isCreated) return;
 
             soundBuzz.Pan = MathHelper.Clamp(factory.Objects[plane].sprite.Location.X, 0, (float)GameWorld.WorldWidth) / (float)GameWorld.WorldWidth;
@@ -86,6 +90,33 @@ namespace RaginRovers
             }
 
             factory.Objects[plane].sprite.Frame = currentPlane;
+
+            if (planeState == PlaneState.BOMB)
+            {
+                timeElapsed += gametime.ElapsedGameTime.Milliseconds;
+
+                //make three dogs and drop them from plane
+                if (timeElapsed >= 2000f)
+                {
+                    int dog = factory.Create((int)RaginRovers.GameObjectTypes.DOG,
+                        Vector2.Zero,
+                        "spritesheet",
+                        Vector2.Zero,
+                        0f,
+                        0f,
+                        0f);
+                    factory.Objects[dog].sprite.Location = new Vector2(factory.Objects[plane].sprite.Location.X + factory.Objects[plane].sprite.BoundingBoxRect.Width - factory.Objects[dog].sprite.BoundingBoxRect.Width, factory.Objects[plane].sprite.Location.Y);
+
+                    factory.Objects[dog].sprite.OnCollision += new OnCollisionEventHandler(CollisionEvents.dog_OnCollision);
+                    timeElapsed = 0f;
+                    DogsDropped++;
+                }
+                if (DogsDropped == 3)
+                {
+                    planeState = PlaneState.NORMAL;
+                    DogsDropped = 0;
+                }
+            }
         }
         public static PlaneManager Instance
         {

@@ -53,7 +53,7 @@ namespace RaginRovers
             {
                 NetOutgoingMessage om = client.CreateMessage();
                 om.Write(msg);
-                client.SendMessage(om, NetDeliveryMethod.Unreliable);
+                client.SendMessage(om, NetDeliveryMethod.ReliableUnordered);
             }
         }
 

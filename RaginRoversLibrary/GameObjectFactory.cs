@@ -182,6 +182,33 @@ namespace RaginRoversLibrary
             }
         }
 
+        public void RemoveAll()
+        {
+            List<int> Kays = new List<int>();
+            foreach (int key in this.objects.Keys)
+            {
+                Kays.Add(key);
+            }
+            foreach (int key in Kays)
+            {
+                if (this.objects.ContainsKey(key))
+                {
+                    if (objects[key].sprite != null)
+                    {
+                        objects[key].sprite.Destroy();
+                        objects[key].sprite = null;
+                        objects[key] = null;
+                    }
+
+                    this.objects.Remove(key);
+
+                    this.sortedobjects.Remove(key);
+
+
+                }
+            }
+        }
+
         public string Serialize()
         {
             string lines = "";
