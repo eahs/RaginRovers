@@ -119,6 +119,11 @@ namespace RaginRoversLibrary
 
                 factory.Objects[dog].sprite.OnCollision += new OnCollisionEventHandler(CollisionEvents.dog_OnCollision);
 
+                if (factory.Objects[cannonGroup.cannonKey].sprite.Location.X > 6000)
+                    factory.Objects[dog].sprite.PlayerNumber = 2; 
+                if (factory.Objects[cannonGroup.cannonKey].sprite.Location.X < 6000)
+                    factory.Objects[dog].sprite.PlayerNumber = 1;
+
                 if (cannonGroup.isFlipped)
                 {
                     factory.Objects[dog].sprite.flipType  = Sprite.FlipType.VERTICAL;

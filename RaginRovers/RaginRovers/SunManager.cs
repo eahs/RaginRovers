@@ -35,9 +35,10 @@ namespace RaginRovers
             factory = GameObjectFactory.Instance;
 
             rand = new Random(System.Environment.TickCount);
-            defaultLocation = new Vector2(GameWorld.WorldWidth / 2, -800);
 
-            this.sun = factory.Create((int)GameObjectTypes.SUN, defaultLocation, "sun", Vector2.Zero, 0f, 0f, 0f, 256);
+            this.sun = factory.Create((int)GameObjectTypes.SUN, new Vector2(GameWorld.WorldWidth / 2, -800), "sun", Vector2.Zero, 0f, 0f, 0f, 256);
+            factory.Objects[sun].sprite.Location -= new Vector2(factory.Objects[sun].sprite.BoundingBoxRect.Width / 2, 0);
+            defaultLocation = factory.Objects[sun].sprite.Location;
             factory.Objects[sun].saveable = false;
         }
 

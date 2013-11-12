@@ -32,7 +32,7 @@ namespace RaginRovers
             }
             if (otherObject.typeid == (int)GameObjectTypes.WOOD1 || otherObject.typeid == (int)GameObjectTypes.WOOD2 || otherObject.typeid == (int)GameObjectTypes.WOOD3 || otherObject.typeid == (int)GameObjectTypes.WOOD4)
             {
-                if (otherObject.sprite.PhysicsBody.LinearVelocity.Length() > 0)
+                if (otherObject.sprite.PhysicsBody.LinearVelocity.Length() > 2)
                 {
                     cat.sprite.HitPoints = 0;
                 }
@@ -50,6 +50,8 @@ namespace RaginRovers
                         GameObjectFactory.Instance.Remove(cat.id);
                     }, 100);
                 }, 100);
+
+                AudioManager.Instance.SoundEffect("dog_oof").Play();
 
                 return true;
             }
@@ -75,7 +77,15 @@ namespace RaginRovers
                 if (dog.collisioncount == 1)
                 {
                     SunManager.Instance.Mood = SunMood.MAD;
-                    AudioManager.Instance.SoundEffect("dog_oof").Play(0.5f, 0, 0);
+                    //AudioManager.Instance.SoundEffect("dog_oof").Play(0.5f, 0, 0);
+                    if (dog.sprite.PlayerNumber == 1)
+                    {
+                        ScoreKeeper.Instance.PlayerLeftScore -= ScoreKeeper.Missing;
+                    }
+                    if (dog.sprite.PlayerNumber == 2)
+                    {
+                        ScoreKeeper.Instance.PlayerRightScore -= ScoreKeeper.Missing;
+                    }
 
                     SpriteHelper.Instance.TriggerAfter(delegate()
                     {
@@ -102,6 +112,20 @@ namespace RaginRovers
                         }, 6000);
 
                     return true;
+                }
+            }
+            else if (otherObject.typeid == (int)GameObjectTypes.CAT)
+            {
+                if (dog.collisioncount == 1)
+                {
+                    if (dog.sprite.PlayerNumber == 1)
+                    {
+                        ScoreKeeper.Instance.PlayerLeftScore += ScoreKeeper.HittingCat;
+                    }
+                    if (dog.sprite.PlayerNumber == 2)
+                    {
+                        ScoreKeeper.Instance.PlayerRightScore += ScoreKeeper.HittingCat;
+                    }
                 }
             }
             else if (otherObject.typeid == (int)GameObjectTypes.DOG)
@@ -139,6 +163,17 @@ namespace RaginRovers
                         GameObjectFactory.Instance.Remove(otherObject.id);
                     }, 100);
 
+                    AudioManager.Instance.SoundEffect("dog_impact").Play();
+
+                    if (dog.sprite.PlayerNumber == 1)
+                    {
+                        ScoreKeeper.Instance.PlayerLeftScore += ScoreKeeper.HittingWood;
+                    }
+                    if (dog.sprite.PlayerNumber == 2)
+                    {
+                        ScoreKeeper.Instance.PlayerRightScore += ScoreKeeper.HittingWood;
+                    }
+
 
                     return true;
                 }
@@ -153,6 +188,14 @@ namespace RaginRovers
             {
                 PlaneManager.Instance.planeState = PlaneState.BOMB;
                 //do some bombing
+                if (dog.sprite.PlayerNumber == 1)
+                {
+                    ScoreKeeper.Instance.PlayerLeftScore += ScoreKeeper.HittingPlane;
+                }
+                if (dog.sprite.PlayerNumber == 2)
+                {
+                    ScoreKeeper.Instance.PlayerRightScore += ScoreKeeper.HittingPlane;
+                }
 
                 AudioManager.Instance.SoundEffect("dog_bark").Play(0.5f, 0, 0);
             }
@@ -168,7 +211,6 @@ namespace RaginRovers
 
             if (otherObject.typeid == (int)GameObjectTypes.WOOD1 || otherObject.typeid == (int)GameObjectTypes.WOOD2 || otherObject.typeid == (int)GameObjectTypes.WOOD3 || otherObject.typeid == (int)GameObjectTypes.WOOD4)
             {
-                //trying to play the wood clanking sound but can't figure out
 
                 AudioManager.Instance.SoundEffect("wood_hitting").Play(0.01f, 0f, 0f);
             }

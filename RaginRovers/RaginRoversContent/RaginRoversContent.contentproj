@@ -47,6 +47,11 @@
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
+    <Compile Include="spriteFont.spritefont">
+      <Name>spriteFont</Name>
+      <Importer>FontDescriptionImporter</Importer>
+      <Processor>FontDescriptionProcessor</Processor>
+    </Compile>
     <None Include="spritesheet.txt">
       <Name>spritesheet</Name>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -262,6 +267,13 @@
     </Compile>
     <Compile Include="dustsplode.png">
       <Name>dustsplode</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="eahs_cs_logo.png">
+      <Name>eahs_cs_logo</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>

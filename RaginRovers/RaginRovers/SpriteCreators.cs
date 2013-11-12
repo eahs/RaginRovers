@@ -46,6 +46,7 @@ namespace RaginRovers
         PLANE,
         CATSPLODE,
         DUSTSPLODE,
+        EAHSCSLOGO,
         GROUND = 3000 // PLACEHOLDER - NOT A CREATEABLE TYPE
     }
 
@@ -120,8 +121,8 @@ namespace RaginRovers
             sprite.PhysicsBody.Mass = 10f;
             sprite.PhysicsBody.Friction = 1f;
             sprite.PhysicsBody.Inertia = 0;
-            sprite.PhysicsBody.SleepingAllowed = true;
-            sprite.PhysicsBody.Awake = false;
+            //sprite.PhysicsBody.SleepingAllowed = true;
+            //sprite.PhysicsBody.Awake = false;
 
             sprite.PhysicsBodyFixture.Restitution = 0f;
             
@@ -426,6 +427,25 @@ namespace RaginRovers
                                    location,
                                    texture,
                                    SpriteCreators.spriteSourceRectangles["dinosaur"],
+                                   velocity,
+                                   BodyType.Static,
+                                   true);
+
+            sprite.PhysicsBody.CollidesWith = Category.None;
+            sprite.PhysicsBody.IgnoreGravity = true;
+            sprite.Rotation = rotation;
+
+            return sprite;
+        }
+        public static Sprite CreateEAHSCSLogo(Vector2 location,
+                                            Texture2D texture,
+                                            Vector2 velocity,
+                                            float rotation)
+        {
+            Sprite sprite = new Sprite("sprite",
+                                   location,
+                                   texture,
+                                   SpriteCreators.spriteSourceRectangles["eahscslogo"],
                                    velocity,
                                    BodyType.Static,
                                    true);
