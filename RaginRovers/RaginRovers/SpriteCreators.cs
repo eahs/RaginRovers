@@ -385,9 +385,8 @@ namespace RaginRovers
                                    SpriteCreators.spriteSourceRectangles["plane00"],
                                    velocity,
                                    BodyType.Static,
-                                   true);
+                                   false);
 
-            sprite.PhysicsBodyFixture.OnCollision += new OnCollisionEventHandler(sprite.HandleCollision);
             //sprite.FrameTime = 0.06f;
 
             SpriteCreators.AddFrames(sprite, "plane", 3);
@@ -437,7 +436,7 @@ namespace RaginRovers
 
             return sprite;
         }
-        public static Sprite CreateEAHSCSLogo(Vector2 location,
+        /*public static Sprite CreateEAHSCSLogo(Vector2 location,
                                             Texture2D texture,
                                             Vector2 velocity,
                                             float rotation)
@@ -455,7 +454,7 @@ namespace RaginRovers
             sprite.Rotation = rotation;
 
             return sprite;
-        }
+        }*/
 
         public static Sprite CreatePlatformLeft(Vector2 location,
                                                     Texture2D texture,

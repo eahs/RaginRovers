@@ -53,13 +53,13 @@ namespace RaginRovers
         {
             //with .5 zoom, 830 more on each side, 1660 more total, 
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferWidth = 1280;
-            graphics.PreferredBackBufferHeight = 727;
+            //graphics.PreferredBackBufferWidth = 1280;
+            //graphics.PreferredBackBufferHeight = 727;
 
             //graphics.PreferredBackBufferHeight = 500;
 
-            //graphics.PreferredBackBufferWidth = 1920;
-            //graphics.PreferredBackBufferHeight = 1080;
+            graphics.PreferredBackBufferWidth = 1920;
+            graphics.PreferredBackBufferHeight = 1080;
             //graphics.IsFullScreen = true;
             graphics.ApplyChanges();
 
@@ -133,9 +133,9 @@ namespace RaginRovers
             factory.AddCreator((int)GameObjectTypes.PLANE, SpriteCreators.CreatePlane);
             factory.AddCreator((int)GameObjectTypes.CATSPLODE, SpriteCreators.CreateCatsplode);
             factory.AddCreator((int)GameObjectTypes.DUSTSPLODE, SpriteCreators.CreateDustsplode);
-            factory.AddCreator((int)GameObjectTypes.EAHSCSLOGO, SpriteCreators.CreateEAHSCSLogo);
+            //factory.AddCreator((int)GameObjectTypes.EAHSCSLOGO, SpriteCreators.CreateEAHSCSLogo);
 
-            mapEditor = new MapEditor(Window, client, cannonManager, cannonGroups);
+            mapEditor = new MapEditor(Window, client, cannonManager, cannonGroups, ScreenConfiguration);
 
             base.Initialize();
         }
@@ -346,8 +346,25 @@ namespace RaginRovers
             //cannonggroups[0] is right and 1 is left
             Vector2 stringdimesionsleft = spriteFont.MeasureString("Score: " + ScoreKeeper.Instance.PlayerLeftScore.ToString());
             Vector2 stringdimesionsright = spriteFont.MeasureString("Score: " + ScoreKeeper.Instance.PlayerLeftScore.ToString());
-            spriteBatch.DrawString(spriteFont, "Score: " + ScoreKeeper.Instance.PlayerLeftScore.ToString(), factory.Objects[cannonGroups[1].cannonKey].sprite.Center + new Vector2(-stringdimesionsleft.X / 2, -1750) , Color.Black);
-            spriteBatch.DrawString(spriteFont, "Score: " + ScoreKeeper.Instance.PlayerRightScore.ToString(), factory.Objects[cannonGroups[0].cannonKey].sprite.Center + new Vector2(-stringdimesionsright.X / 2, -1750), Color.Black);
+            spriteBatch.DrawString(spriteFont, "Score: " + ScoreKeeper.Instance.PlayerLeftScore.ToString(), factory.Objects[cannonGroups[1].cannonKey].sprite.Center + new Vector2(-stringdimesionsleft.X / 2, -1250) , Color.Black);
+            spriteBatch.DrawString(spriteFont, "Score: " + ScoreKeeper.Instance.PlayerRightScore.ToString(), factory.Objects[cannonGroups[0].cannonKey].sprite.Center + new Vector2(-stringdimesionsright.X / 2, -1250), Color.Black);
+            if (ScreenConfiguration == 1)
+            {
+                //spriteBatch.Draw(textureManager.Texture("eahs_cs_logo"), new Rectangle(-1080, -1210, textureManager.Texture("eahs_cs_logo").Bounds.Width, textureManager.Texture("eahs_cs_logo").Bounds.Height), Color.White);
+                spriteBatch.Draw(textureManager.Texture("eahs_cs_logo"), new Vector2(-1080, -1210), new Rectangle(0, 0, textureManager.Texture("eahs_cs_logo").Bounds.Width, textureManager.Texture("eahs_cs_logo").Bounds.Height), Color.White, 0f, Vector2.Zero, .5f, SpriteEffects.None, 1);
+            }
+            if (ScreenConfiguration == 2)
+            {
+                //spriteBatch.Draw(textureManager.Texture("eahs_cs_logo"), new Rectangle((GameWorld.WorldWidth / 2) - (textureManager.Texture("eahs_cs_logo").Bounds.Width / 2), -1210, textureManager.Texture("eahs_cs_logo").Bounds.Width, textureManager.Texture("eahs_cs_logo").Bounds.Height), Color.White);
+                spriteBatch.Draw(textureManager.Texture("eahs_cs_logo"), new Vector2((GameWorld.WorldWidth / 2) - (textureManager.Texture("eahs_cs_logo").Bounds.Width / 4), -1210), new Rectangle(0, 0, textureManager.Texture("eahs_cs_logo").Bounds.Width, textureManager.Texture("eahs_cs_logo").Bounds.Height), Color.White, 0f, Vector2.Zero, .5f, SpriteEffects.None, 1);
+            }
+            if (ScreenConfiguration == 3)
+            {
+                //spriteBatch.Draw(textureManager.Texture("eahs_cs_logo"), new Rectangle(GameWorld.WorldWidth + 1080 - textureManager.Texture("eahs_cs_logo").Bounds.Width, -1210, textureManager.Texture("eahs_cs_logo").Bounds.Width, textureManager.Texture("eahs_cs_logo").Bounds.Height), Color.White);
+                spriteBatch.Draw(textureManager.Texture("eahs_cs_logo"), new Vector2(GameWorld.WorldWidth + 1080 - textureManager.Texture("eahs_cs_logo").Bounds.Width / 2, -1210), new Rectangle(0, 0, textureManager.Texture("eahs_cs_logo").Bounds.Width, textureManager.Texture("eahs_cs_logo").Bounds.Height), Color.White, 0f, Vector2.Zero, .5f, SpriteEffects.None, 1);
+ 
+            }
+
 
             //spriteBatch.Draw(textureManager.Texture("eahs_cs_logo"), new Rectangle((GameWorld.WorldWidth / 2) - (textureManager.Texture("eahs_cs_logo").Bounds.Width / 2), -1210, textureManager.Texture("eahs_cs_logo").Bounds.Width, textureManager.Texture("eahs_cs_logo").Bounds.Height), Color.White);// textureManager.Texture("eahs_cs_logo").Bounds
 
@@ -381,9 +398,9 @@ namespace RaginRovers
             factory.Objects[dino].saveable = false;
 
             //create logo
-            int logo = factory.Create((int)GameObjectTypes.EAHSCSLOGO, new Vector2((GameWorld.WorldWidth / 2) - (textureManager.Texture("eahs_cs_logo").Bounds.Width / 2), -1210), "eahs_cs_logo", Vector2.Zero, 0f, 0f, 0f);
-            factory.Objects[logo].saveable = false;
-            factory.Objects[logo].sprite.Scale = .5f;
+            //int logo = factory.Create((int)GameObjectTypes.EAHSCSLOGO, new Vector2((GameWorld.WorldWidth / 2) - (textureManager.Texture("eahs_cs_logo").Bounds.Width / 2), -1210), "eahs_cs_logo", Vector2.Zero, 0f, 0f, 0f);
+            //factory.Objects[logo].saveable = false;
+            //factory.Objects[logo].sprite.Scale = .5f;
 
             // Sun
             SunManager.Instance.Mood = SunMood.GRIN;
@@ -492,8 +509,13 @@ namespace RaginRovers
             {
                 factory.Objects.Remove(NotSaveable[i]);
             }
-
             MapLoaded = false;
+
+            mapEditor.LoadMap();
+
         }
+
+        
+
     }
 }

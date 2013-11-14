@@ -23,8 +23,9 @@ namespace RaginRovers
         GameObjectFactory factory;
         CannonManager cannonManager;
         List<CannonGroups> cannonGroups;
+        int screenconfiguration = 0;
 
-        public MapEditor(GameWindow window, ClientNetworking client, CannonManager cannonManager, List<CannonGroups> cannonGroups)
+        public MapEditor(GameWindow window, ClientNetworking client, CannonManager cannonManager, List<CannonGroups> cannonGroups, int screenconfiguration)
         {
             
             factory = GameObjectFactory.Instance;
@@ -33,6 +34,7 @@ namespace RaginRovers
             this.client = client;
             this.cannonManager = cannonManager;
             this.cannonGroups = cannonGroups;
+            this.screenconfiguration = screenconfiguration;
             
         }
 
@@ -78,28 +80,37 @@ namespace RaginRovers
                         ////////////////////////////////////////////////////
                         case Keys.Space:
                             if (!EditMode)
-                            {
-                                cannonManager.ChangeCannonState(cannonGroups[0]);
-                                
-                                if (cannonGroups[0].cannonState == CannonState.WAITING)
+                            { 
+                                //probably will get annoying when working on project and testing bugs
+                                if (screenconfiguration == 1)
                                 {
-                                    client.SendMessage("action=shoot;cannonGroup=0;rotation=" + cannonGroups[0].Rotation + ";power=" + cannonGroups[0].Power + ";Screen=" + Game1.ScreenConfiguration);
-                                    SunManager.Instance.Mood = SunMood.OPENSMILE;
-                                  
+                                    cannonManager.ChangeCannonState(cannonGroups[1]);
+
+                                    if (cannonGroups[1].cannonState == CannonState.WAITING)
+                                    {
+                                        client.SendMessage("action=shoot;cannonGroup=1;rotation=" + cannonGroups[1].Rotation + ";power=" + cannonGroups[1].Power + ";Screen=" + Game1.ScreenConfiguration);
+                                        SunManager.Instance.Mood = SunMood.OPENSMILE;
+                                    }
                                 }
+                                if (screenconfiguration == 3)
+                                {
+                                    cannonManager.ChangeCannonState(cannonGroups[0]);
+
+                                    if (cannonGroups[0].cannonState == CannonState.WAITING)
+                                    {
+                                        client.SendMessage("action=shoot;cannonGroup=0;rotation=" + cannonGroups[0].Rotation + ";power=" + cannonGroups[0].Power + ";Screen=" + Game1.ScreenConfiguration);
+                                        SunManager.Instance.Mood = SunMood.OPENSMILE;
+
+                                    }
+                                }
+                                
                             }
                             break;
 
                         case Keys.N:
                             if (!EditMode)
                             {
-                                cannonManager.ChangeCannonState(cannonGroups[1]);
-
-                                if (cannonGroups[1].cannonState == CannonState.WAITING)
-                                {
-                                    client.SendMessage("action=shoot;cannonGroup=1;rotation=" + cannonGroups[1].Rotation + ";power=" + cannonGroups[1].Power + ";Screen=" + Game1.ScreenConfiguration);
-                                    SunManager.Instance.Mood = SunMood.OPENSMILE;
-                                }
+                                
                             }
                             break;
 
@@ -280,36 +291,7 @@ namespace RaginRovers
                                 client.SendMessage("action=createother;gotype=" + (int)(RaginRovers.GameObjectTypes.CLOUD1 + rand.Next(0, 4)) + ";textureassetname=clouds;location.x=" + v.X + ";location.y=" + v.Y + ";rotation=0;upperBounds=0;lowerBounds=0;velocity.x=" + velocity.X + ";velocity.y=" + velocity.Y);
                             }
 
-                            using (StreamReader infile = new StreamReader("map.txt"))
-                            {
-                                string objs = infile.ReadToEnd();
-                                string[] lines = objs.Split('\n');
-
-                                for (int i = 0; i < lines.Length; i++)
-                                {
-                                    if (lines[i].Length > 0)
-                                    {
-                                        string[] fields = lines[i].Split('\t');
-
-                                        double vx = (float)Convert.ToDouble(fields[2]);
-                                        double vy = (float)Convert.ToDouble(fields[3]);
-
-                                        Tuple<double, double> v = GameWorld.VectorToScreen(vx, vy);
-
-                                        client.SendMessage("action=create;gotype=" + Convert.ToInt32(fields[1]) + ";textureassetname=" + fields[4] + ";location.x=" + v.Item1 + ";location.y=" + v.Item2 + ";rotation=" + (float)Convert.ToDouble(fields[5]) + ";upperBounds=" + 0f + ";lowerBounds=" + 0f);
-
-                                        /*
-                                        factory.Create(Convert.ToInt32(fields[1]),
-                                                       new Vector2((float)Convert.ToDouble(fields[2]), (float)Convert.ToDouble(fields[3])),
-                                                       fields[4],
-                                                       Vector2.Zero,
-                                                       (float)Convert.ToDouble(fields[5]),
-                                                       0f,
-                                                       0f);
-                                        */
-                                    }
-                                }
-                            }
+                            LoadMap();
 
                             break;
 
@@ -376,6 +358,40 @@ namespace RaginRovers
             {
                 Key = key;
                 KeyDown = true;
+            }
+        }
+
+        public void LoadMap()
+        {
+            using (StreamReader infile = new StreamReader("map.txt"))
+            {
+                string objs = infile.ReadToEnd();
+                string[] lines = objs.Split('\n');
+
+                for (int i = 0; i < lines.Length; i++)
+                {
+                    if (lines[i].Length > 0)
+                    {
+                        string[] fields = lines[i].Split('\t');
+
+                        double vx = (float)Convert.ToDouble(fields[2]);
+                        double vy = (float)Convert.ToDouble(fields[3]);
+
+                        Tuple<double, double> v = GameWorld.VectorToScreen(vx, vy);
+
+                        client.SendMessage("action=create;gotype=" + Convert.ToInt32(fields[1]) + ";textureassetname=" + fields[4] + ";location.x=" + v.Item1 + ";location.y=" + v.Item2 + ";rotation=" + (float)Convert.ToDouble(fields[5]) + ";upperBounds=" + 0f + ";lowerBounds=" + 0f);
+
+                        /*
+                        factory.Create(Convert.ToInt32(fields[1]),
+                                       new Vector2((float)Convert.ToDouble(fields[2]), (float)Convert.ToDouble(fields[3])),
+                                       fields[4],
+                                       Vector2.Zero,
+                                       (float)Convert.ToDouble(fields[5]),
+                                       0f,
+                                       0f);
+                        */
+                    }
+                }
             }
         }
     }

@@ -61,15 +61,25 @@ namespace RaginRovers
         {
             get
             {
-                return ((factory.Objects[tabKey].sprite.Location.X - factory.Objects[barKey].sprite.Location.X) / factory.Objects[barKey].sprite.BoundingBoxRect.Width) + 1;
+                if (!isFlipped)
+                    return ((factory.Objects[tabKey].sprite.Location.X - factory.Objects[barKey].sprite.Location.X) / factory.Objects[barKey].sprite.BoundingBoxRect.Width) + 1;
+                else
+                    return (-((factory.Objects[tabKey].sprite.Location.X + factory.Objects[tabKey].sprite.BoundingBoxRect.Width) - (factory.Objects[barKey].sprite.Location.X + factory.Objects[barKey].sprite.BoundingBoxRect.Width)) / factory.Objects[barKey].sprite.BoundingBoxRect.Width) + 1;
             }
             set
             {
-                factory.Objects[tabKey].sprite.Location = new Vector2(
-                    factory.Objects[barKey].sprite.Location.X +
-                    (value-1) * factory.Objects[barKey].sprite.BoundingBoxRect.Width,
-                    factory.Objects[tabKey].sprite.Location.Y
-                    );
+                if (!isFlipped)
+                    factory.Objects[tabKey].sprite.Location = new Vector2(
+                        factory.Objects[barKey].sprite.Location.X +
+                        (value-1) * factory.Objects[barKey].sprite.BoundingBoxRect.Width,
+                        factory.Objects[tabKey].sprite.Location.Y
+                        );
+                else //dont worry how i got this, i algebra'd
+                    factory.Objects[tabKey].sprite.Location = new Vector2(
+                        -((value -1) * factory.Objects[barKey].sprite.BoundingBoxRect.Width) + factory.Objects[barKey].sprite.BoundingBoxRect.Width
+                        + factory.Objects[barKey].sprite.Location.X - factory.Objects[tabKey].sprite.BoundingBoxRect.Width,
+                        factory.Objects[tabKey].sprite.Location.Y
+                        );
             }
         }
     }

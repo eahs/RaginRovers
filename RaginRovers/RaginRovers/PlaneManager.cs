@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Audio;
 using FarseerPhysics.Dynamics;
+using FarseerPhysics.Factories;
 
 namespace RaginRovers
 {
@@ -56,6 +57,8 @@ namespace RaginRovers
                 0f);
             factory.Objects[plane].sprite.Location = new Vector2(-LengthAddedfromZoom - factory.Objects[plane].sprite.BoundingBoxRect.Width, -650);
             factory.Objects[plane].sprite.Scale = 2;
+            factory.Objects[plane].sprite.PhysicsBodyFixture = FixtureFactory.AttachRectangle(ConvertUnits.ToSimUnits(factory.Objects[plane].sprite.BoundingBoxRect.Width), ConvertUnits.ToSimUnits(factory.Objects[plane].sprite.BoundingBoxRect.Height), 1, ConvertUnits.ToSimUnits(new Vector2(0, 0)), factory.Objects[plane].sprite.PhysicsBody);
+            factory.Objects[plane].sprite.PhysicsBodyFixture.OnCollision += new OnCollisionEventHandler(factory.Objects[plane].sprite.HandleCollision);
             factory.Objects[plane].saveable = false;
 
             soundBuzz = AudioManager.Instance.GetSoundEffectLooped("airplane");
@@ -105,7 +108,7 @@ namespace RaginRovers
                         0f,
                         0f,
                         0f);
-                    factory.Objects[dog].sprite.Location = new Vector2(factory.Objects[plane].sprite.Location.X + factory.Objects[plane].sprite.BoundingBoxRect.Width - factory.Objects[dog].sprite.BoundingBoxRect.Width, factory.Objects[plane].sprite.Location.Y);
+                    factory.Objects[dog].sprite.Location = new Vector2(factory.Objects[plane].sprite.Location.X + factory.Objects[plane].sprite.BoundingBoxRect.Width - factory.Objects[dog].sprite.BoundingBoxRect.Width, factory.Objects[plane].sprite.Location.Y + factory.Objects[plane].sprite.BoundingBoxRect.Height);
 
                     factory.Objects[dog].sprite.OnCollision += new OnCollisionEventHandler(CollisionEvents.dog_OnCollision);
                     timeElapsed = 0f;

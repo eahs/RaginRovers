@@ -29,6 +29,9 @@ namespace RaginRoversLibrary
 
         //9420+720 = 10140
 
+        //buffers on sides due to zoom = 1080
+        //buffer on top due to stuff = 1217
+
         public static void Initialize(int worldmin, int worldmax, int screen_width, int screen_height, Vector2 gravity)
         {
             GameWorld.worldmin = worldmin;
