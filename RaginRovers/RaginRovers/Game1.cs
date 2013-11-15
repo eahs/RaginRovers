@@ -168,6 +168,7 @@ namespace RaginRovers
             textureManager.LoadTexture("catsplode");
             textureManager.LoadTexture("dustsplode");
             textureManager.LoadTexture("eahs_cs_logo");
+            textureManager.LoadTexture("wood-sign-hi");
 
             spriteFont = Content.Load<SpriteFont>("spriteFont");
 
@@ -338,6 +339,9 @@ namespace RaginRovers
                 spriteBatch.Draw(textureManager.Texture("background"), new Rectangle(x * this.Window.ClientBounds.Width, 0, this.Window.ClientBounds.Width, this.Window.ClientBounds.Height), new Rectangle(0, 0, textureManager.Texture("background").Width, textureManager.Texture("background").Height), Color.White);
             }
 
+            
+            factory.UpdateSortedObjectList();
+
             foreach (int key in factory.SortedObjectsList)
             {
                 factory.Objects[key].sprite.Draw(spriteBatch);
@@ -348,21 +352,20 @@ namespace RaginRovers
             Vector2 stringdimesionsright = spriteFont.MeasureString("Score: " + ScoreKeeper.Instance.PlayerLeftScore.ToString());
             spriteBatch.DrawString(spriteFont, "Score: " + ScoreKeeper.Instance.PlayerLeftScore.ToString(), factory.Objects[cannonGroups[1].cannonKey].sprite.Center + new Vector2(-stringdimesionsleft.X / 2, -1250) , Color.Black);
             spriteBatch.DrawString(spriteFont, "Score: " + ScoreKeeper.Instance.PlayerRightScore.ToString(), factory.Objects[cannonGroups[0].cannonKey].sprite.Center + new Vector2(-stringdimesionsright.X / 2, -1250), Color.Black);
-            if (ScreenConfiguration == 1)
+            switch (ScreenConfiguration)
             {
-                //spriteBatch.Draw(textureManager.Texture("eahs_cs_logo"), new Rectangle(-1080, -1210, textureManager.Texture("eahs_cs_logo").Bounds.Width, textureManager.Texture("eahs_cs_logo").Bounds.Height), Color.White);
-                spriteBatch.Draw(textureManager.Texture("eahs_cs_logo"), new Vector2(-1080, -1210), new Rectangle(0, 0, textureManager.Texture("eahs_cs_logo").Bounds.Width, textureManager.Texture("eahs_cs_logo").Bounds.Height), Color.White, 0f, Vector2.Zero, .5f, SpriteEffects.None, 1);
-            }
-            if (ScreenConfiguration == 2)
-            {
-                //spriteBatch.Draw(textureManager.Texture("eahs_cs_logo"), new Rectangle((GameWorld.WorldWidth / 2) - (textureManager.Texture("eahs_cs_logo").Bounds.Width / 2), -1210, textureManager.Texture("eahs_cs_logo").Bounds.Width, textureManager.Texture("eahs_cs_logo").Bounds.Height), Color.White);
-                spriteBatch.Draw(textureManager.Texture("eahs_cs_logo"), new Vector2((GameWorld.WorldWidth / 2) - (textureManager.Texture("eahs_cs_logo").Bounds.Width / 4), -1210), new Rectangle(0, 0, textureManager.Texture("eahs_cs_logo").Bounds.Width, textureManager.Texture("eahs_cs_logo").Bounds.Height), Color.White, 0f, Vector2.Zero, .5f, SpriteEffects.None, 1);
-            }
-            if (ScreenConfiguration == 3)
-            {
-                //spriteBatch.Draw(textureManager.Texture("eahs_cs_logo"), new Rectangle(GameWorld.WorldWidth + 1080 - textureManager.Texture("eahs_cs_logo").Bounds.Width, -1210, textureManager.Texture("eahs_cs_logo").Bounds.Width, textureManager.Texture("eahs_cs_logo").Bounds.Height), Color.White);
-                spriteBatch.Draw(textureManager.Texture("eahs_cs_logo"), new Vector2(GameWorld.WorldWidth + 1080 - textureManager.Texture("eahs_cs_logo").Bounds.Width / 2, -1210), new Rectangle(0, 0, textureManager.Texture("eahs_cs_logo").Bounds.Width, textureManager.Texture("eahs_cs_logo").Bounds.Height), Color.White, 0f, Vector2.Zero, .5f, SpriteEffects.None, 1);
- 
+                case 1:
+                    spriteBatch.Draw(textureManager.Texture("eahs_cs_logo"), new Vector2(-1080, -1210), new Rectangle(0, 0, textureManager.Texture("eahs_cs_logo").Bounds.Width, textureManager.Texture("eahs_cs_logo").Bounds.Height), Color.White, 0f, Vector2.Zero, .5f, SpriteEffects.None, 1);
+                    break;
+                case 2:
+                    spriteBatch.Draw(textureManager.Texture("eahs_cs_logo"), new Vector2((GameWorld.WorldWidth / 2) - (textureManager.Texture("eahs_cs_logo").Bounds.Width / 4), -1210), new Rectangle(0, 0, textureManager.Texture("eahs_cs_logo").Bounds.Width, textureManager.Texture("eahs_cs_logo").Bounds.Height), Color.White, 0f, Vector2.Zero, .5f, SpriteEffects.None, 1);
+                    spriteBatch.Draw(textureManager.Texture("wood-sign-hi"), new Rectangle((GameWorld.WorldWidth / 2) - (textureManager.Texture("wood-sign-hi").Bounds.Width / 2) + (3500 / 2), GameWorld.HeightofGround - 50 - textureManager.Texture("wood-sign-hi").Bounds.Height, textureManager.Texture("wood-sign-hi").Bounds.Width, textureManager.Texture("wood-sign-hi").Bounds.Height), Color.White);
+                    spriteBatch.Draw(textureManager.Texture("wood-sign-hi"), new Rectangle((GameWorld.WorldWidth / 2) - (textureManager.Texture("wood-sign-hi").Bounds.Width / 2) - (3500 / 2), GameWorld.HeightofGround - 50 - textureManager.Texture("wood-sign-hi").Bounds.Height, textureManager.Texture("wood-sign-hi").Bounds.Width, textureManager.Texture("wood-sign-hi").Bounds.Height), Color.White);
+
+                    break;
+                case 3:
+                    spriteBatch.Draw(textureManager.Texture("eahs_cs_logo"), new Vector2(GameWorld.WorldWidth + 1080 - textureManager.Texture("eahs_cs_logo").Bounds.Width / 2, -1210), new Rectangle(0, 0, textureManager.Texture("eahs_cs_logo").Bounds.Width, textureManager.Texture("eahs_cs_logo").Bounds.Height), Color.White, 0f, Vector2.Zero, .5f, SpriteEffects.None, 1);
+                    break;
             }
 
 
@@ -497,25 +500,9 @@ namespace RaginRovers
 
         public void HandleReset(object incoming, EventArgs args)
         {
-            List<int> NotSaveable = new List<int>();
-            for (int i = 0; i < factory.Objects.Keys.Count; i++)
-            {
-                if (factory.Objects[i].saveable)
-                {
-                    NotSaveable.Add(i);
-                }
-            }
-            for (int i = 0; i < NotSaveable.Count; i++)
-            {
-                factory.Objects.Remove(NotSaveable[i]);
-            }
+            Random rand = new Random();
+            mapEditor.LoadMap(rand.Next(1,5));
             MapLoaded = false;
-
-            mapEditor.LoadMap();
-
         }
-
-        
-
     }
 }

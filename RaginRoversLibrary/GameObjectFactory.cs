@@ -163,18 +163,52 @@ namespace RaginRoversLibrary
             return lastid;
         }
 
+        public void UpdateSortedObjectList()
+        {
+            sortedobjects.Clear();
+            foreach (int key in objects.Keys)
+            {
+                bool inserted = false;
+                for (int i = 0; i < this.sortedobjects.Count; i++)
+                {
+                    if (objects[key].depth > this.objects[this.sortedobjects[i]].depth)
+                    {
+                        this.sortedobjects.Insert(i, key);
+                        inserted = true;
+                        break;
+                    }
+                }
+
+                if (!inserted)
+                    this.sortedobjects.Add(key);
+            }
+
+            
+
+        }
+
         public void Remove(int objectid)
         {
             if (this.objects.ContainsKey(objectid))
             {
                 if (objects[objectid].sprite != null)
                 {
+                    /*List<Fixture> FixtureList = new List<Fixture>();
+                    foreach (Fixture fixture in objects[objectid].sprite.PhysicsBody.FixtureList)
+                        FixtureList.Add(fixture);
+                    for (int i = 0; i < FixtureList.Count; i++)
+                        objects[objectid].sprite.PhysicsBody.DestroyFixture(FixtureList[i]);*/
+                    //objects[objectid].sprite.PhysicsBody.DestroyFixture(objects[objectid].sprite.PhysicsBodyFixture);
+
+                    GameWorld.world.RemoveBody(objects[objectid].sprite.PhysicsBody); //isn't destroying the body we want
+                    objects[objectid].sprite.PhysicsBody.Dispose();
                     objects[objectid].sprite.Destroy();
                     objects[objectid].sprite = null;
                     objects[objectid] = null;
                 }
 
                 this.objects.Remove(objectid);
+
 
                 this.sortedobjects.Remove(objectid);
                 

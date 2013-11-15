@@ -82,7 +82,7 @@ namespace RaginRovers
                             if (!EditMode)
                             { 
                                 //probably will get annoying when working on project and testing bugs
-                                if (screenconfiguration == 1)
+                                if (screenconfiguration == 1 || screenconfiguration == 2) //get rid of =2 part after testing
                                 {
                                     cannonManager.ChangeCannonState(cannonGroups[1]);
 
@@ -115,7 +115,8 @@ namespace RaginRovers
                             break;
 
                         case Keys.OemTilde:
-                            EditMode = !EditMode;
+                            //if (screenconfiguration == 2)
+                                EditMode = !EditMode;
                             //camera.Zoom = 1f;
                             
                             window.Title = "Ragin Rovers " + (EditMode ? " | EDITING MODE" : "");
@@ -132,103 +133,123 @@ namespace RaginRovers
                             }
 
                             break;
-
+                        
                         case Keys.D1:
 
-                            if (EditMode)
+                            if (screenconfiguration != 2 && EditMode)
                             {
                                 int dog = factory.Create((int)GameObjectTypes.DOG, new Vector2((int)ms.X /*+ camera.Position.X*/ - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0, 0f, 0f);
                                 factory.Objects[dog].sprite.PhysicsBody.Mass = 30;
                                 factory.Objects[dog].sprite.PhysicsBody.Restitution = 0.4f;
                             }
+                            if (screenconfiguration == 2)
+                                LoadMap(1);
 
                             break;
 
                         case Keys.D2:
 
-                            if (EditMode)
+                            if (screenconfiguration != 2 && EditMode)
                             {
                                 int cat = factory.Create((int)GameObjectTypes.CAT, new Vector2((int)ms.X /*+ camera.Position.X*/ - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0, 0f, 0f);
                                 factory.Objects[cat].sprite.PhysicsBody.Mass = 30;
                                 factory.Objects[cat].sprite.PhysicsBody.Restitution = 0.8f;
                             }
+                            if (screenconfiguration == 2)
+                                LoadMap(2);
 
                             break;
 
                         case Keys.D3:
 
-                            if (EditMode)
+                            if (screenconfiguration != 2 && EditMode)
                             {
                                 int board = factory.Create((int)GameObjectTypes.WOOD1, new Vector2((int)ms.X /*+ camera.Position.X*/ - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0, 0f, 0f);
 
                                 factory.Objects[board].sprite.OnCollision += new OnCollisionEventHandler(CollisionEvents.wood_OnCollision);
                             }
+                            if (screenconfiguration == 2)
+                                LoadMap(3);
 
                             break;
 
                         case Keys.D4:
 
-                            if (EditMode)
+                            if (screenconfiguration != 2 && EditMode)
                             {
                                 int board = factory.Create((int)GameObjectTypes.WOOD2, new Vector2((int)ms.X /*+ camera.Position.X*/ - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0, 0f, 0f);
                                 factory.Objects[board].sprite.OnCollision += new OnCollisionEventHandler(CollisionEvents.wood_OnCollision);
                             }
+                            if (screenconfiguration == 2)
+                                LoadMap(4);
 
                             break;
 
                         case Keys.D5:
 
-                            if (EditMode)
+                            if (screenconfiguration != 2 && EditMode)
                             {
                                 int board = factory.Create((int)GameObjectTypes.WOOD3, new Vector2((int)ms.X /*+ camera.Position.X*/ - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0, 0f, 0f);
                                 factory.Objects[board].sprite.OnCollision += new OnCollisionEventHandler(CollisionEvents.wood_OnCollision);
                             }
+                            if (screenconfiguration == 2)
+                                LoadMap(5);
 
                             break;
 
                         case Keys.D6:
 
-                            if (EditMode)
+                            if (screenconfiguration != 2 && EditMode)
                             {
                                 int board = factory.Create((int)GameObjectTypes.WOOD4, new Vector2((int)ms.X /*+ camera.Position.X*/ - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0, 0f, 0f);
                                 factory.Objects[board].sprite.OnCollision += new OnCollisionEventHandler(CollisionEvents.wood_OnCollision);
                             }
+                            if (screenconfiguration == 2)
+                                LoadMap(1);
 
                             break;
 
                         case Keys.D7:
 
-                            if (EditMode)
+                            if (screenconfiguration != 2 && EditMode)
                             {
                                 factory.Create((int)GameObjectTypes.PLATFORM_LEFT, new Vector2((int)ms.X /*+ camera.Position.X*/ - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0, 0f, 0f);
                             }
+                            if (screenconfiguration == 2)
+                                LoadMap(1);
 
                             break;
 
                         case Keys.D8:
 
-                            if (EditMode)
+                            if (screenconfiguration != 2 && EditMode)
                             {
                                 factory.Create((int)GameObjectTypes.PLATFORM_MIDDLE, new Vector2((int)ms.X /*+ camera.Position.X*/ - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0, 0f, 0f);
                             }
+                            if (screenconfiguration == 2)
+                                LoadMap(1);
 
                             break;
 
                         case Keys.D9:
 
-                            if (EditMode)
+                            if (screenconfiguration != 2 && EditMode)
                             {
                                 factory.Create((int)GameObjectTypes.PLATFORM_RIGHT, new Vector2((int)ms.X /*+ camera.Position.X*/ - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0, 0f, 0f);
                             }
+                            if (screenconfiguration == 2)
+                                LoadMap(1);
 
                             break;
                         case Keys.D0:
 
-                            if (EditMode)
+                            if (screenconfiguration != 2 && EditMode)
                             {
                                 factory = cannonManager.CreateCannonStuff(factory, new Vector2(ms.X /*+ camera.Position.X*/ - 95, ms.Y - 80), camera, false, ref cannonGroups);
 
                             }
+                            if (screenconfiguration == 2)
+                                LoadMap(1);
 
                             break;
 
@@ -277,21 +298,22 @@ namespace RaginRovers
                             break;
 
                         case Keys.L:
-
-                            // Plane
-                            client.SendMessage("action=plane;monkeys=awesome"); // lol
-
-                            // Clouds
-                            Random rand = new Random();
-                            for (int i = 0; i < 15; i++)
+                            if (screenconfiguration == 2)
                             {
-                                Vector2 v = new Vector2(rand.Next(-1024, GameWorld.WorldWidth + 1024), rand.Next(-800, 0));
-                                Vector2 velocity = new Vector2(5 + rand.Next(0, 15), 0);
+                                // Plane
+                                client.SendMessage("action=plane;monkeys=awesome"); // lol
 
-                                client.SendMessage("action=createother;gotype=" + (int)(RaginRovers.GameObjectTypes.CLOUD1 + rand.Next(0, 4)) + ";textureassetname=clouds;location.x=" + v.X + ";location.y=" + v.Y + ";rotation=0;upperBounds=0;lowerBounds=0;velocity.x=" + velocity.X + ";velocity.y=" + velocity.Y);
+                                // Clouds
+                                Random rand = new Random();
+                                for (int i = 0; i < 15; i++)
+                                {
+                                    Vector2 v = new Vector2(rand.Next(-1024, GameWorld.WorldWidth + 1024), rand.Next(-800, 0));
+                                    Vector2 velocity = new Vector2(5 + rand.Next(0, 15), 0);
+
+                                    client.SendMessage("action=createother;gotype=" + (int)(RaginRovers.GameObjectTypes.CLOUD1 + rand.Next(0, 4)) + ";textureassetname=clouds;location.x=" + v.X + ";location.y=" + v.Y + ";rotation=0;upperBounds=0;lowerBounds=0;velocity.x=" + velocity.X + ";velocity.y=" + velocity.Y);
+                                }
+
                             }
-
-                            LoadMap();
 
                             break;
 
@@ -361,9 +383,26 @@ namespace RaginRovers
             }
         }
 
-        public void LoadMap()
+        public void LoadMap(int MapNumber)
         {
-            using (StreamReader infile = new StreamReader("map.txt"))
+            //clear list of objects
+            List<int> NotSaveable = new List<int>();
+            foreach (int keys in factory.Objects.Keys)
+            {
+                if (factory.Objects[keys].saveable)
+                {
+                    NotSaveable.Add(keys);
+                }
+            }
+            for (int i = 0; i < NotSaveable.Count; i++)
+            {
+                factory.Objects.Remove(NotSaveable[i]);
+            }
+
+            //load in map
+            StreamReader infile = new StreamReader("map" + MapNumber + ".txt") ;
+            
+            using (infile)
             {
                 string objs = infile.ReadToEnd();
                 string[] lines = objs.Split('\n');
