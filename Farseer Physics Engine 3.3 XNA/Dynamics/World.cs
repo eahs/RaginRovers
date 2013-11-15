@@ -372,8 +372,8 @@ namespace FarseerPhysics.Dynamics
         /// <param name="body">The body.</param>
         public void RemoveBody(Body body)
         {
-            Debug.Assert(!_bodyRemoveList.Contains(body),
-                         "The body is already marked for removal. You are removing the body more than once.");
+            //Debug.Assert(!_bodyRemoveList.Contains(body),
+            //             "The body is already marked for removal. You are removing the body more than once.");
 
             if (!_bodyRemoveList.Contains(body))
                 _bodyRemoveList.Add(body);

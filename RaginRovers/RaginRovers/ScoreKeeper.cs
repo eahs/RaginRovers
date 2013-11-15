@@ -23,7 +23,7 @@ namespace RaginRovers
         public const int HittingWood = 1;
         public const int HittingCat = 6;
         public const int HittingPlane = 2;
-        public const int Missing = 1;
+        public const int Missing = 0;
 
 
         public int PlayerLeftScore
