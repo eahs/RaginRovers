@@ -53,13 +53,13 @@ namespace RaginRovers
         {
             //with .5 zoom, 830 more on each side, 1660 more total, 
             graphics = new GraphicsDeviceManager(this);
-            //graphics.PreferredBackBufferWidth = 1280;
-            //graphics.PreferredBackBufferHeight = 727;
+            graphics.PreferredBackBufferWidth = 1280;
+            graphics.PreferredBackBufferHeight = 727;
 
             //graphics.PreferredBackBufferHeight = 500;
 
-            graphics.PreferredBackBufferWidth = 1920;
-            graphics.PreferredBackBufferHeight = 1080;
+            //graphics.PreferredBackBufferWidth = 1920;
+            //graphics.PreferredBackBufferHeight = 1080;
             //graphics.IsFullScreen = true;
             graphics.ApplyChanges();
 
@@ -133,6 +133,12 @@ namespace RaginRovers
             factory.AddCreator((int)GameObjectTypes.PLANE, SpriteCreators.CreatePlane);
             factory.AddCreator((int)GameObjectTypes.CATSPLODE, SpriteCreators.CreateCatsplode);
             factory.AddCreator((int)GameObjectTypes.DUSTSPLODE, SpriteCreators.CreateDustsplode);
+            factory.AddCreator((int)GameObjectTypes.YOULOSE, SpriteCreators.CreateYouLose);
+            factory.AddCreator((int)GameObjectTypes.YOUWIN, SpriteCreators.CreateYouWin);
+            factory.AddCreator((int)GameObjectTypes.SCOREPLUS50, SpriteCreators.CreatePlus50);
+            factory.AddCreator((int)GameObjectTypes.SCOREPLUS100, SpriteCreators.CreatePlus100);
+            factory.AddCreator((int)GameObjectTypes.SCOREPLUS250, SpriteCreators.CreatePlus250);
+
             //factory.AddCreator((int)GameObjectTypes.EAHSCSLOGO, SpriteCreators.CreateEAHSCSLogo);
 
             mapEditor = new MapEditor(Window, client, cannonManager, cannonGroups, ScreenConfiguration);
@@ -169,6 +175,7 @@ namespace RaginRovers
             textureManager.LoadTexture("dustsplode");
             textureManager.LoadTexture("eahs_cs_logo");
             textureManager.LoadTexture("wood-sign-hi");
+            textureManager.LoadTexture("scoresheet");
 
             spriteFont = Content.Load<SpriteFont>("spriteFont");
 
@@ -332,7 +339,7 @@ namespace RaginRovers
             GraphicsDevice.Clear(Color.FromNonPremultiplied(104, 179, 255, 255));
 
             // TODO: Add your drawing code here
-            spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, camera.GetViewMatrix(Vector2.One));
+            spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, null, null, null, null, camera.GetViewMatrix(Vector2.One));
 
             for (int x = -6; x < (GameWorld.WorldWidth / this.Window.ClientBounds.Width)+6; x++)
             {
@@ -350,8 +357,11 @@ namespace RaginRovers
             //cannonggroups[0] is right and 1 is left
             Vector2 stringdimesionsleft = spriteFont.MeasureString("Score: " + ScoreKeeper.Instance.PlayerLeftScore.ToString());
             Vector2 stringdimesionsright = spriteFont.MeasureString("Score: " + ScoreKeeper.Instance.PlayerLeftScore.ToString());
-            spriteBatch.DrawString(spriteFont, "Score: " + ScoreKeeper.Instance.PlayerLeftScore.ToString(), factory.Objects[cannonGroups[1].cannonKey].sprite.Center + new Vector2(-stringdimesionsleft.X / 2, -1250) , Color.Black);
-            spriteBatch.DrawString(spriteFont, "Score: " + ScoreKeeper.Instance.PlayerRightScore.ToString(), factory.Objects[cannonGroups[0].cannonKey].sprite.Center + new Vector2(-stringdimesionsright.X / 2, -1250), Color.Black);
+            ScoreKeeper.Instance.DrawScore(spriteBatch, textureManager, factory.Objects[cannonGroups[1].cannonKey].sprite.Center + new Vector2(-stringdimesionsleft.X / 2, -1250), factory.Objects[cannonGroups[0].cannonKey].sprite.Center + new Vector2(-stringdimesionsleft.X / 2, -1250));
+
+            //spriteBatch.DrawString(spriteFont, "Score: " + ScoreKeeper.Instance.PlayerLeftScore.ToString(), factory.Objects[cannonGroups[1].cannonKey].sprite.Center + new Vector2(-stringdimesionsleft.X / 2, -1250) , Color.Black);
+            //spriteBatch.DrawString(spriteFont, "Score: " + ScoreKeeper.Instance.PlayerRightScore.ToString(), factory.Objects[cannonGroups[0].cannonKey].sprite.Center + new Vector2(-stringdimesionsright.X / 2, -1250), Color.Black);
+
             switch (ScreenConfiguration)
             {
                 case 1:

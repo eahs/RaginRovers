@@ -116,6 +116,7 @@ namespace RaginRoversLibrary
             //            box.AngularVelocity = 0.1f;
             body.Inertia = 25.5f;
             */
+            this.Fade = false;
             this.Location = location;
             //            body.Position = ConvertUnits.ToSimUnits(this.Location);
             body.IgnoreGravity = false;
@@ -161,6 +162,8 @@ namespace RaginRoversLibrary
 
             return true;
         }
+
+        public bool Fade { get; set; }
 
         public Body PhysicsBody
         {
@@ -339,6 +342,14 @@ namespace RaginRoversLibrary
                 {
                     currentFrame = (currentFrame + 1) % (frames.Count);
                     timeForCurrentFrame = 0.0f;
+
+                    if (this.Fade)
+                    {
+                        tintColor.A = (byte)Math.Max(0, tintColor.A - 1);
+                        tintColor.R = tintColor.A;
+                        tintColor.G = tintColor.A;
+                        tintColor.B = tintColor.A;
+                    }
                 }
             }
             if (flipType == FlipType.NONE)

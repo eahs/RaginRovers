@@ -396,7 +396,7 @@ namespace RaginRovers
             }
             for (int i = 0; i < NotSaveable.Count; i++)
             {
-                factory.Objects.Remove(NotSaveable[i]);
+                factory.Remove(NotSaveable[i]);
             }
 
             //load in map

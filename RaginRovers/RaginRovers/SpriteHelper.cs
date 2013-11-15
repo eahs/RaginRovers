@@ -37,6 +37,22 @@ namespace RaginRovers
             factory = GameObjectFactory.Instance;
         }
 
+        public void TriggerFadeUp(GameObjectTypes type, Vector2 location, string textureassetname)
+        {
+            int key = factory.Create((int)type, location, textureassetname, new Vector2(0, -100), 0f, 0f, 0f, 32);
+
+            factory.Objects[key].sprite.FrameTime = 0.1f;
+            factory.Objects[key].sprite.Fade = true;
+
+            items.Add(new TimedItem(
+            delegate()
+            {
+                GameObjectFactory.Instance.Remove(key);
+            },
+            1000));
+
+        }
+
         public void TriggerAnimation(GameObjectTypes type, Vector2 location, string textureassetname)
         {
             TriggerAnimation(type, location, textureassetname, 64);

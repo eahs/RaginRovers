@@ -121,6 +121,7 @@ namespace RaginRovers
                     if (dog.sprite.PlayerNumber == 1)
                     {
                         ScoreKeeper.Instance.PlayerLeftScore += ScoreKeeper.HittingCat;
+                        SpriteHelper.Instance.TriggerFadeUp(GameObjectTypes.SCOREPLUS100, collidePoint + new Vector2(0, -30), "scoresheet");
                     }
                     if (dog.sprite.PlayerNumber == 2)
                     {

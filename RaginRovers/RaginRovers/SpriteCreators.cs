@@ -47,6 +47,11 @@ namespace RaginRovers
         CATSPLODE,
         DUSTSPLODE,
         EAHSCSLOGO,
+        YOUWIN,
+        YOULOSE,
+        SCOREPLUS50,
+        SCOREPLUS100,
+        SCOREPLUS250,
         GROUND = 3000 // PLACEHOLDER - NOT A CREATEABLE TYPE
     }
 
@@ -606,6 +611,51 @@ namespace RaginRovers
             sprite.Rotation = rotation;
 
             return sprite;
+        }
+
+        public static Sprite GenericCreator(Rectangle source, Vector2 location,
+                                                     Texture2D texture,
+                                                     Vector2 velocity,
+                                                     float rotation)
+        {
+            Sprite sprite = new Sprite("sprite",
+                                   location,
+                                   texture,
+                                   source,
+                                   velocity,
+                                   BodyType.Dynamic,
+                                   true);
+
+            sprite.PhysicsBody.IgnoreGravity = true;
+            sprite.PhysicsBody.CollidesWith = Category.None;
+            sprite.Rotation = rotation;
+
+            return sprite;
+        }
+
+        public static Sprite CreateYouWin(Vector2 location, Texture2D texture, Vector2 velocity, float rotation)
+        {
+            return GenericCreator(SpriteCreators.spriteSourceRectangles["score_Winner"], location, texture, velocity, rotation);
+        }
+
+        public static Sprite CreateYouLose(Vector2 location,Texture2D texture,Vector2 velocity,float rotation)
+        {
+            return GenericCreator(SpriteCreators.spriteSourceRectangles["score_YouLose"], location, texture, velocity, rotation);
+        }
+
+        public static Sprite CreatePlus50(Vector2 location, Texture2D texture, Vector2 velocity, float rotation)
+        {
+            return GenericCreator(SpriteCreators.spriteSourceRectangles["score_50points"], location, texture, velocity, rotation);
+        }
+
+        public static Sprite CreatePlus100(Vector2 location, Texture2D texture, Vector2 velocity, float rotation)
+        {
+            return GenericCreator(SpriteCreators.spriteSourceRectangles["score_100points"], location, texture, velocity, rotation);
+        }
+
+        public static Sprite CreatePlus250(Vector2 location, Texture2D texture, Vector2 velocity, float rotation)
+        {
+            return GenericCreator(SpriteCreators.spriteSourceRectangles["score_250points"], location, texture, velocity, rotation);
         }
 
         public static Sprite CreateCloud1(Vector2 location, Texture2D texture, Vector2 velocity, float rotation)
