@@ -53,13 +53,13 @@ namespace RaginRovers
         {
             //with .5 zoom, 830 more on each side, 1660 more total, 
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferWidth = 1280;
-            graphics.PreferredBackBufferHeight = 727;
+            //graphics.PreferredBackBufferWidth = 1280;
+            //graphics.PreferredBackBufferHeight = 727;
 
             //graphics.PreferredBackBufferHeight = 500;
 
-            //graphics.PreferredBackBufferWidth = 1920;
-            //graphics.PreferredBackBufferHeight = 1080;
+            graphics.PreferredBackBufferWidth = 1920;
+            graphics.PreferredBackBufferHeight = 1080;
             //graphics.IsFullScreen = true;
             graphics.ApplyChanges();
 
@@ -317,7 +317,8 @@ namespace RaginRovers
                 }
                 if (cats == 0)
                 {
-                    client.SendMessage("action=reset");
+                    Random rand = new Random();
+                    client.SendMessage("action=reset;map=" + rand.Next(1,5));
                 }
             }
             base.Update(gameTime);
@@ -510,16 +511,8 @@ namespace RaginRovers
 
         public void HandleReset(object incoming, EventArgs args)
         {
-            /*if (args == null)
-            {*/
-                Random rand = new Random();
-                mapEditor.LoadMap(rand.Next(1, 5));
-            /*}
-            else
-            {
-                Dictionary<string, string> data = (Dictionary<string, string>)incoming;
-                mapEditor.LoadMap(data[");
-            }*/
+            Dictionary<string, string> data = (Dictionary<string, string>)incoming;
+            mapEditor.LoadMap(Convert.ToInt32(data["map"]));
             MapLoaded = false;
         }
     }

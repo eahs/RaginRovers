@@ -143,7 +143,8 @@ namespace RaginRovers
                                 factory.Objects[dog].sprite.PhysicsBody.Restitution = 0.4f;
                             }
                             if (screenconfiguration == 2)
-                                LoadMap(1);
+
+                                client.SendMessage("action=reset;map=" + 1);
 
                             break;
 
@@ -156,7 +157,7 @@ namespace RaginRovers
                                 factory.Objects[cat].sprite.PhysicsBody.Restitution = 0.8f;
                             }
                             if (screenconfiguration == 2)
-                                LoadMap(2);
+                                client.SendMessage("action=reset;map=" + 2);
 
                             break;
 
@@ -169,7 +170,7 @@ namespace RaginRovers
                                 factory.Objects[board].sprite.OnCollision += new OnCollisionEventHandler(CollisionEvents.wood_OnCollision);
                             }
                             if (screenconfiguration == 2)
-                                LoadMap(3);
+                                client.SendMessage("action=reset;map=" + 3);
 
                             break;
 
@@ -181,7 +182,7 @@ namespace RaginRovers
                                 factory.Objects[board].sprite.OnCollision += new OnCollisionEventHandler(CollisionEvents.wood_OnCollision);
                             }
                             if (screenconfiguration == 2)
-                                LoadMap(4);
+                                client.SendMessage("action=reset;map=" + 4);
 
                             break;
 
@@ -193,7 +194,7 @@ namespace RaginRovers
                                 factory.Objects[board].sprite.OnCollision += new OnCollisionEventHandler(CollisionEvents.wood_OnCollision);
                             }
                             if (screenconfiguration == 2)
-                                LoadMap(5);
+                                client.SendMessage("action=reset;map=" + 5);
 
                             break;
 
@@ -205,7 +206,7 @@ namespace RaginRovers
                                 factory.Objects[board].sprite.OnCollision += new OnCollisionEventHandler(CollisionEvents.wood_OnCollision);
                             }
                             if (screenconfiguration == 2)
-                                LoadMap(1);
+                                client.SendMessage("action=reset;map=" + 0);
 
                             break;
 
@@ -216,7 +217,7 @@ namespace RaginRovers
                                 factory.Create((int)GameObjectTypes.PLATFORM_LEFT, new Vector2((int)ms.X /*+ camera.Position.X*/ - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0, 0f, 0f);
                             }
                             if (screenconfiguration == 2)
-                                LoadMap(1);
+                                client.SendMessage("action=reset;map=" + 0);
 
                             break;
 
@@ -227,7 +228,7 @@ namespace RaginRovers
                                 factory.Create((int)GameObjectTypes.PLATFORM_MIDDLE, new Vector2((int)ms.X /*+ camera.Position.X*/ - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0, 0f, 0f);
                             }
                             if (screenconfiguration == 2)
-                                LoadMap(1);
+                                client.SendMessage("action=reset;map=" + 0);
 
                             break;
 
@@ -238,7 +239,7 @@ namespace RaginRovers
                                 factory.Create((int)GameObjectTypes.PLATFORM_RIGHT, new Vector2((int)ms.X /*+ camera.Position.X*/ - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0, 0f, 0f);
                             }
                             if (screenconfiguration == 2)
-                                LoadMap(1);
+                                client.SendMessage("action=reset;map=" + 0);
 
                             break;
                         case Keys.D0:
@@ -249,7 +250,7 @@ namespace RaginRovers
 
                             }
                             if (screenconfiguration == 2)
-                                LoadMap(1);
+                                client.SendMessage("action=reset;map=" + 0);
 
                             break;
 
