@@ -510,8 +510,16 @@ namespace RaginRovers
 
         public void HandleReset(object incoming, EventArgs args)
         {
-            Random rand = new Random();
-            mapEditor.LoadMap(rand.Next(1,5));
+            /*if (args == null)
+            {*/
+                Random rand = new Random();
+                mapEditor.LoadMap(rand.Next(1, 5));
+            /*}
+            else
+            {
+                Dictionary<string, string> data = (Dictionary<string, string>)incoming;
+                mapEditor.LoadMap(data[");
+            }*/
             MapLoaded = false;
         }
     }

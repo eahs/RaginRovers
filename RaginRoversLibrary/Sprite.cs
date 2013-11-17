@@ -345,10 +345,11 @@ namespace RaginRoversLibrary
 
                     if (this.Fade)
                     {
-                        tintColor.A = (byte)Math.Max(0, tintColor.A - 1);
-                        tintColor.R = tintColor.A;
-                        tintColor.G = tintColor.A;
-                        tintColor.B = tintColor.A;
+                        tintColor *= .80f;
+                        //tintColor.A = (byte)Math.Max(0, tintColor.A - 1);
+                        //tintColor.R = tintColor.A;
+                        //tintColor.G = tintColor.A;
+                        //tintColor.B = tintColor.A;
                     }
                 }
             }

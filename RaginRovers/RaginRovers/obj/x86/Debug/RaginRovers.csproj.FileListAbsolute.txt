@@ -181,3 +181,4 @@ H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\eahs_cs_logo
 H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\wood-sign-hi.xnb
 H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\spriteFont.xnb
 H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\scoresheet.xnb
+C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\scoresheet.xnb
