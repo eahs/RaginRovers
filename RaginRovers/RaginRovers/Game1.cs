@@ -103,6 +103,7 @@ namespace RaginRovers
             client.ActionHandler["plane"] = new EventHandler(this.HandleNetworkPlane);
             client.ActionHandler["createother"] = new EventHandler(this.HandleNetworkCreateOtherStuff);
             client.ActionHandler["reset"] = new EventHandler(this.HandleReset);
+            client.ActionHandler["endgame"] = new EventHandler(this.HandleEndGame);
 
             // Add a few sprite creators
             factory.AddCreator((int)GameObjectTypes.CAT, SpriteCreators.CreateCat);
@@ -177,6 +178,8 @@ namespace RaginRovers
             textureManager.LoadTexture("wood-sign-hi");
             textureManager.LoadTexture("scoresheet");
 
+            song = Content.Load<Song>("Audio/Drum_Line");
+
             spriteFont = Content.Load<SpriteFont>("spriteFont");
 
             AudioManager.Instance.LoadSoundEffect("airplane");
@@ -228,6 +231,9 @@ namespace RaginRovers
             Fixture ground = FixtureFactory.AttachRectangle(ConvertUnits.ToSimUnits(GameWorld.WorldWidth)*10, ConvertUnits.ToSimUnits(10), 10, Vector2.Zero, body, "ground");
             ground.Restitution = 0f;
 
+            MediaPlayer.Play(song);
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Volume /= 20;
             //AudioManager.Instance.SoundEffect("Drum_Line").Play(); ;
             
             SetupLevel();
@@ -318,7 +324,7 @@ namespace RaginRovers
                 if (cats == 0)
                 {
                     Random rand = new Random();
-                    client.SendMessage("action=reset;map=" + rand.Next(1,5));
+                    client.SendMessage("action=endgame;map=" + rand.Next(1,5));
                 }
             }
             base.Update(gameTime);
@@ -509,6 +515,12 @@ namespace RaginRovers
             PlaneManager.Instance.CreatePlane();
         }
 
+        public void HandleEndGame(object incoming, EventArgs args)
+        {
+            Dictionary<string, string> data = (Dictionary<string, string>)incoming;
+            SpriteHelper.Instance.TriggerEndRound(mapEditor, Convert.ToInt32(data["map"]));
+            MapLoaded = false;
+        }
         public void HandleReset(object incoming, EventArgs args)
         {
             Dictionary<string, string> data = (Dictionary<string, string>)incoming;

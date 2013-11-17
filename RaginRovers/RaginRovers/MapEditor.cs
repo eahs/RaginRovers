@@ -400,6 +400,11 @@ namespace RaginRovers
                 factory.Remove(NotSaveable[i]);
             }
 
+            //reset scores
+
+            ScoreKeeper.Instance.PlayerLeftScore = 0;
+            ScoreKeeper.Instance.PlayerRightScore = 0;
+
             //load in map
             StreamReader infile = new StreamReader("map" + MapNumber + ".txt") ;
             

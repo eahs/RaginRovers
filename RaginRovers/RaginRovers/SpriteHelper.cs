@@ -68,6 +68,40 @@ namespace RaginRovers
             
         }
 
+        public void TriggerEndRound(MapEditor mapEditor, int mapNumber)
+        {
+            ScoreKeeper.Instance.CalculateWinner();
+
+            int LeftSide = 0;
+            int RightSide = 0;
+
+            if (ScoreKeeper.Instance.winningSituation == ScoreKeeper.WinningSituations.LeftWins)
+            {
+                LeftSide = (int)GameObjectTypes.YOUWIN;
+                RightSide = (int)GameObjectTypes.YOULOSE;
+            }
+            if (ScoreKeeper.Instance.winningSituation == ScoreKeeper.WinningSituations.RightWins)
+            {
+                LeftSide = (int)GameObjectTypes.YOULOSE;
+                RightSide = (int)GameObjectTypes.YOUWIN;
+            }
+            if (ScoreKeeper.Instance.winningSituation == ScoreKeeper.WinningSituations.Tie)
+            {
+                LeftSide = (int)GameObjectTypes.YOUWIN;
+                RightSide = (int)GameObjectTypes.YOUWIN;
+            }
+
+            //left
+            int key = factory.Create(LeftSide, Vector2.Zero, "scoresheet", Vector2.Zero, 0f, 0f, 0f, 64);
+            factory.Objects[key].sprite.Location = new Vector2(-1080 + ((12234 / 3) / 2) - (factory.Objects[key].sprite.BoundingBoxRect.Width / 2), -1217 + (2700 / 2)/*should be height of screen*/ - (factory.Objects[key].sprite.BoundingBoxRect.Height / 2));
+            RemoveAfterGameEnding(key, 10000, mapEditor, mapNumber);
+            
+            //right
+            int key2 = factory.Create(RightSide, Vector2.Zero, "scoresheet", Vector2.Zero, 0f, 0f, 0f, 64);
+            factory.Objects[key2].sprite.Location = new Vector2(-1080 + (2 * 12234 / 3) + ((12234 / 3) / 2) - (factory.Objects[key2].sprite.BoundingBoxRect.Width / 2), -1217 + (2400 / 2)/*should be height of screen*/ - (factory.Objects[key2].sprite.BoundingBoxRect.Height / 2));
+            RemoveAfter(key2, 10000);
+        }
+
         public void TriggerAfter(Callback cb, float TriggerTime)
         {
             items.Add(new TimedItem(cb, TriggerTime));
@@ -79,6 +113,16 @@ namespace RaginRovers
                         delegate() 
                         {
                             GameObjectFactory.Instance.Remove(SpriteKey); 
+                        }, 
+                        RemoveTime));
+        }
+        public void RemoveAfterGameEnding(int SpriteKey, float RemoveTime, MapEditor mapEditor, int mapNumber)
+        {
+            items.Add(new TimedItem(
+                        delegate() 
+                        {
+                            GameObjectFactory.Instance.Remove(SpriteKey);
+                            mapEditor.LoadMap(mapNumber);
                         }, 
                         RemoveTime));
         }

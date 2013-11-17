@@ -388,6 +388,16 @@
       <Output>C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\dog_oof.xnb</Output>
       <Time>2013-11-17T11:05:45.1551704-05:00</Time>
     </Item>
+    <Item>
+      <Source>Audio\Drum_Line.mp3</Source>
+      <Name>Audio\Drum_Line</Name>
+      <Importer>Mp3Importer</Importer>
+      <Processor>SongProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\Drum_Line.xnb</Output>
+      <Extra>C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\Drum_Line.wma</Extra>
+      <Time>2013-11-17T14:58:41.6137756-05:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>

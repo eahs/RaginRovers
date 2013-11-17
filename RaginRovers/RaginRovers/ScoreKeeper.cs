@@ -10,10 +10,18 @@ namespace RaginRovers
 {
     class ScoreKeeper
     {
+        public enum WinningSituations
+        {
+            LeftWins,
+            RightWins,
+            Tie
+        }
 
         private static ScoreKeeper instance;
         private int playerLeftScore = 0;
         private int playerRightScore = 0;
+
+        public WinningSituations winningSituation;
 
         //scorey scoring
         /*public const int HittingWood = 100;
@@ -23,9 +31,9 @@ namespace RaginRovers
         //etc.
 
         //football scoring
-        public const int HittingWood = 1;
-        public const int HittingCat = 6;
-        public const int HittingPlane = 2;
+        public const int HittingWood = 50;
+        public const int HittingCat = 250;
+        public const int HittingPlane = 100;
         public const int Missing = 0;
 
 
@@ -74,6 +82,22 @@ namespace RaginRovers
             spriteBatch.Draw(textureManager.Texture("scoresheet"), position2, SpriteCreators.spriteSourceRectangles["score_SCORE"], Color.White);
             DrawNumber(spriteBatch, textureManager, position2 + new Vector2((float)SpriteCreators.spriteSourceRectangles["score_SCORE"].Width + 30f, 0), playerRightScore);
 
+        }
+
+        public void CalculateWinner()
+        {
+            if (playerLeftScore > playerRightScore)
+            {
+                winningSituation = WinningSituations.LeftWins;
+            }
+            if (playerLeftScore < playerRightScore)
+            {
+                winningSituation = WinningSituations.RightWins;
+            }
+            if (playerLeftScore == playerRightScore)
+            {
+                winningSituation = WinningSituations.Tie;
+            }
         }
 
         // Guarantee only one instance

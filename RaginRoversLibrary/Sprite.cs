@@ -123,8 +123,8 @@ namespace RaginRoversLibrary
 
             if (AddFixture)
             {
-                bodyfixture = FixtureFactory.AttachRectangle(ConvertUnits.ToSimUnits(initialFrame.Width), ConvertUnits.ToSimUnits(initialFrame.Height), 5, Vector2.Zero, body);
-                bodyfixture.Restitution = 1;
+                bodyfixture = FixtureFactory.AttachRectangle(ConvertUnits.ToSimUnits(initialFrame.Width), ConvertUnits.ToSimUnits(initialFrame.Height), 10, Vector2.Zero, body);
+                bodyfixture.Restitution = .5f;
                 bodyfixture.Friction = 1;
 
                 bodyfixture.OnCollision += new OnCollisionEventHandler(HandleCollision);

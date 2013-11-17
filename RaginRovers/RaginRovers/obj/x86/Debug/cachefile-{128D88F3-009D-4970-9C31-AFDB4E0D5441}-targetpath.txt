@@ -41,4 +41,6 @@ Content\Audio\dog_bark.xnb
 Content\Audio\dog_impact.xnb
 Content\Audio\dog_launch.xnb
 Content\Audio\dog_oof.xnb
+Content\Audio\Drum_Line.xnb
+Content\Audio\Drum_Line.wma
 Content\spritesheet.txt
