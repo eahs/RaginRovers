@@ -21,21 +21,24 @@ namespace RaginRovers
 
             if (otherObject.typeid == (int)GameObjectTypes.DOG)
             {
-                if (cat.collisioncount < 2)
-                {
-                    AudioManager.Instance.SoundEffect("cat_aagh").Play();
-                    //AudioManager.Instance.SoundEffect("cat1").Play();
-                }
 
-                cat.sprite.HitPoints -= (int)otherObject.sprite.PhysicsBody.LinearVelocity.Length();
-
+                //cat.sprite.HitPoints -= (int)otherObject.sprite.PhysicsBody.LinearVelocity.Length();
+                cat.sprite.HitPoints = 0;
+                AudioManager.Instance.SoundEffect("cat1").Play();
             }
             if (otherObject.typeid == (int)GameObjectTypes.WOOD1 || otherObject.typeid == (int)GameObjectTypes.WOOD2 || otherObject.typeid == (int)GameObjectTypes.WOOD3 || otherObject.typeid == (int)GameObjectTypes.WOOD4)
             {
                 if (otherObject.sprite.PhysicsBody.LinearVelocity.Length() > 2)
                 {
                     cat.sprite.HitPoints = 0;
+                    AudioManager.Instance.SoundEffect("cat_moan").Play();
                 }
+            }
+            //might have to do negatives
+            if (cat.sprite.PhysicsBody.LinearVelocity.X >= 5 || cat.sprite.PhysicsBody.LinearVelocity.Y >= 5)
+            {
+                cat.sprite.HitPoints = 0;
+                AudioManager.Instance.SoundEffect("cat_aaagh").Play();
             }
 
             if (cat.sprite.HitPoints <= 0)
@@ -51,9 +54,7 @@ namespace RaginRovers
                     }, 100);
                 }, 100);
 
-                AudioManager.Instance.SoundEffect("dog_oof").Play();
-
-                return true;
+                //AudioManager.Instance.SoundEffect("dog_oof").Play();
             }
 
            return true;
@@ -77,7 +78,7 @@ namespace RaginRovers
                 if (dog.collisioncount == 1)
                 {
                     SunManager.Instance.Mood = SunMood.MAD;
-                    //AudioManager.Instance.SoundEffect("dog_oof").Play(0.5f, 0, 0);
+                    AudioManager.Instance.SoundEffect("dog_oof").Play(0.5f, 0, 0);
                     if (dog.sprite.PlayerNumber == 1)
                     {
                         ScoreKeeper.Instance.PlayerLeftScore -= ScoreKeeper.Missing;
@@ -121,7 +122,7 @@ namespace RaginRovers
                     if (dog.sprite.PlayerNumber == 1)
                     {
                         ScoreKeeper.Instance.PlayerLeftScore += ScoreKeeper.HittingCat;
-                        SpriteHelper.Instance.TriggerFadeUp(GameObjectTypes.SCOREPLUS100, collidePoint + new Vector2(0, -30), "scoresheet");
+                        SpriteHelper.Instance.TriggerFadeUp(GameObjectTypes.SCOREPLUS250, collidePoint, "scoresheet");
                     }
                     if (dog.sprite.PlayerNumber == 2)
                     {
@@ -166,6 +167,8 @@ namespace RaginRovers
 
                     AudioManager.Instance.SoundEffect("dog_impact").Play();
 
+                    SpriteHelper.Instance.TriggerFadeUp(GameObjectTypes.SCOREPLUS50, collidePoint, "scoresheet");
+
                     if (dog.sprite.PlayerNumber == 1)
                     {
                         ScoreKeeper.Instance.PlayerLeftScore += ScoreKeeper.HittingWood;
@@ -182,7 +185,7 @@ namespace RaginRovers
                 if (dog.collisioncount < 2)
                 {
                     SpriteHelper.Instance.TriggerAnimation(GameObjectTypes.EXPLOSION1, collidePoint - new Vector2(175, 197), "explosion1", 15);
-                    AudioManager.Instance.SoundEffect("dog_impact").Play(0.5f, 0, 0);
+                    //AudioManager.Instance.SoundEffect("dog_impact").Play(0.5f, 0, 0);
                 }
             }
             else if (otherObject.typeid == (int)GameObjectTypes.PLANE)
@@ -197,6 +200,8 @@ namespace RaginRovers
                 {
                     ScoreKeeper.Instance.PlayerRightScore += ScoreKeeper.HittingPlane;
                 }
+
+                SpriteHelper.Instance.TriggerFadeUp(GameObjectTypes.SCOREPLUS100, collidePoint, "scoresheet");
 
                 AudioManager.Instance.SoundEffect("dog_bark").Play(0.5f, 0, 0);
             }

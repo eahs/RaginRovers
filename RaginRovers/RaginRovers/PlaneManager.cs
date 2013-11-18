@@ -108,7 +108,15 @@ namespace RaginRovers
                         0f,
                         0f,
                         0f);
-                    factory.Objects[dog].sprite.Location = new Vector2(factory.Objects[plane].sprite.Location.X + factory.Objects[plane].sprite.BoundingBoxRect.Width - factory.Objects[dog].sprite.BoundingBoxRect.Width, factory.Objects[plane].sprite.Location.Y + factory.Objects[plane].sprite.BoundingBoxRect.Height);
+                    if (direction == 1)
+                    {
+                        factory.Objects[dog].sprite.Location = new Vector2(factory.Objects[plane].sprite.Location.X + factory.Objects[plane].sprite.BoundingBoxRect.Width - factory.Objects[dog].sprite.BoundingBoxRect.Width, factory.Objects[plane].sprite.Location.Y + factory.Objects[plane].sprite.BoundingBoxRect.Height);
+                    }
+                    if (direction == -1)
+                    {
+                        factory.Objects[dog].sprite.Location = new Vector2(factory.Objects[plane].sprite.Location.X, factory.Objects[plane].sprite.Location.Y + factory.Objects[plane].sprite.BoundingBoxRect.Height);
+                        factory.Objects[dog].sprite.flipType = Sprite.FlipType.HORIZONTAL;
+                    }
 
                     factory.Objects[dog].sprite.OnCollision += new OnCollisionEventHandler(CollisionEvents.dog_OnCollision);
                     timeElapsed = 0f;

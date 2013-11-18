@@ -211,6 +211,7 @@ namespace RaginRovers
                                    BodyType.Dynamic,
                                    false);
 
+
             //FarseerPhysics.Common.Vertices verts = new FarseerPhysics.Common.Vertices();
 
             SpriteCreators.AddFrames(sprite, "rover", 12);
@@ -645,17 +646,23 @@ namespace RaginRovers
 
         public static Sprite CreatePlus50(Vector2 location, Texture2D texture, Vector2 velocity, float rotation)
         {
-            return GenericCreator(SpriteCreators.spriteSourceRectangles["score_50points"], location, texture, velocity, rotation);
+            Sprite sprite = GenericCreator(SpriteCreators.spriteSourceRectangles["score_50points"], location, texture, velocity, rotation);
+            sprite.Location -= new Vector2(sprite.BoundingBoxRect.Width / 2, sprite.BoundingBoxRect.Height);
+            return sprite;
         }
 
         public static Sprite CreatePlus100(Vector2 location, Texture2D texture, Vector2 velocity, float rotation)
         {
-            return GenericCreator(SpriteCreators.spriteSourceRectangles["score_100points"], location, texture, velocity, rotation);
+            Sprite sprite = GenericCreator(SpriteCreators.spriteSourceRectangles["score_100points"], location, texture, velocity, rotation);
+            sprite.Location -= new Vector2(sprite.BoundingBoxRect.Width / 2, sprite.BoundingBoxRect.Height);
+            return sprite;
         }
 
         public static Sprite CreatePlus250(Vector2 location, Texture2D texture, Vector2 velocity, float rotation)
         {
-            return GenericCreator(SpriteCreators.spriteSourceRectangles["score_250points"], location, texture, velocity, rotation);
+            Sprite sprite = GenericCreator(SpriteCreators.spriteSourceRectangles["score_250points"], location, texture, velocity, rotation);
+            sprite.Location -= new Vector2(sprite.BoundingBoxRect.Width / 2, sprite.BoundingBoxRect.Height);
+            return sprite;
         }
 
         public static Sprite CreateCloud1(Vector2 location, Texture2D texture, Vector2 velocity, float rotation)
