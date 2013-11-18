@@ -114,11 +114,6 @@
       <Importer>Mp3Importer</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
-    <Compile Include="Audio\wood_hit_wood_heavy_1.mp3">
-      <Name>wood_hit_wood_heavy_1</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="explosion1.png">
@@ -188,11 +183,6 @@
     </Compile>
     <Compile Include="Audio\meat_hit.mp3">
       <Name>meat_hit</Name>
-      <Importer>Mp3Importer</Importer>
-      <Processor>SoundEffectProcessor</Processor>
-    </Compile>
-    <Compile Include="Audio\wood_hitting.mp3">
-      <Name>wood_hitting</Name>
       <Importer>Mp3Importer</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>

@@ -405,38 +405,47 @@ namespace RaginRovers
             ScoreKeeper.Instance.PlayerLeftScore = 0;
             ScoreKeeper.Instance.PlayerRightScore = 0;
 
-            //load in map
-            StreamReader infile = new StreamReader("map" + MapNumber + ".txt") ;
-            
-            using (infile)
+            if (screenconfiguration != 2) return;
+
+            try
             {
-                string objs = infile.ReadToEnd();
-                string[] lines = objs.Split('\n');
+                //load in map
+                StreamReader infile = new StreamReader("map" + MapNumber + ".txt");
 
-                for (int i = 0; i < lines.Length; i++)
+                using (infile)
                 {
-                    if (lines[i].Length > 0)
+                    string objs = infile.ReadToEnd();
+                    string[] lines = objs.Split('\n');
+
+                    for (int i = 0; i < lines.Length; i++)
                     {
-                        string[] fields = lines[i].Split('\t');
+                        if (lines[i].Length > 0)
+                        {
+                            string[] fields = lines[i].Split('\t');
 
-                        double vx = (float)Convert.ToDouble(fields[2]);
-                        double vy = (float)Convert.ToDouble(fields[3]);
+                            double vx = (float)Convert.ToDouble(fields[2]);
+                            double vy = (float)Convert.ToDouble(fields[3]);
 
-                        Tuple<double, double> v = GameWorld.VectorToScreen(vx, vy);
+                            Tuple<double, double> v = GameWorld.VectorToScreen(vx, vy);
 
-                        client.SendMessage("action=create;gotype=" + Convert.ToInt32(fields[1]) + ";textureassetname=" + fields[4] + ";location.x=" + v.Item1 + ";location.y=" + v.Item2 + ";rotation=" + (float)Convert.ToDouble(fields[5]) + ";upperBounds=" + 0f + ";lowerBounds=" + 0f);
+                            client.SendMessage("action=create;gotype=" + Convert.ToInt32(fields[1]) + ";textureassetname=" + fields[4] + ";location.x=" + v.Item1 + ";location.y=" + v.Item2 + ";rotation=" + (float)Convert.ToDouble(fields[5]) + ";upperBounds=" + 0f + ";lowerBounds=" + 0f);
 
-                        /*
-                        factory.Create(Convert.ToInt32(fields[1]),
-                                       new Vector2((float)Convert.ToDouble(fields[2]), (float)Convert.ToDouble(fields[3])),
-                                       fields[4],
-                                       Vector2.Zero,
-                                       (float)Convert.ToDouble(fields[5]),
-                                       0f,
-                                       0f);
-                        */
+                            /*
+                            factory.Create(Convert.ToInt32(fields[1]),
+                                           new Vector2((float)Convert.ToDouble(fields[2]), (float)Convert.ToDouble(fields[3])),
+                                           fields[4],
+                                           Vector2.Zero,
+                                           (float)Convert.ToDouble(fields[5]),
+                                           0f,
+                                           0f);
+                            */
+                        }
                     }
                 }
+            }
+            catch (Exception e)
+            {
+                return;
             }
         }
     }

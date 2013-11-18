@@ -19,6 +19,12 @@ namespace RaginRovers
 
             cat.collisioncount++;
 
+            Vector2 normal;
+            FixedArray2<Vector2> points;
+
+            contact.GetWorldManifold(out normal, out points);
+            Vector2 collidePoint = ConvertUnits.ToDisplayUnits(points[0]);
+
             if (otherObject.typeid == (int)GameObjectTypes.DOG)
             {
 
@@ -32,6 +38,32 @@ namespace RaginRovers
                 {
                     cat.sprite.HitPoints = 0;
                     AudioManager.Instance.SoundEffect("cat_moan").Play();
+
+                    if (otherObject.sprite.PlayerNumber == 1)
+                    {
+                        ScoreKeeper.Instance.PlayerLeftScore += ScoreKeeper.HittingCat;
+                        SpriteHelper.Instance.TriggerFadeUp(GameObjectTypes.SCOREPLUS250, collidePoint, "scoresheet");
+                    }
+                    else if (otherObject.sprite.PlayerNumber == 2)
+                    {
+                        ScoreKeeper.Instance.PlayerRightScore += ScoreKeeper.HittingCat;
+                        SpriteHelper.Instance.TriggerFadeUp(GameObjectTypes.SCOREPLUS250, collidePoint, "scoresheet");
+                    }
+                    
+                }
+                else
+                {
+                    if (otherObject.sprite.PlayerNumber == 1)
+                    {
+                        ScoreKeeper.Instance.PlayerLeftScore += ScoreKeeper.HittingWood;
+                        SpriteHelper.Instance.TriggerFadeUp(GameObjectTypes.SCOREPLUS50, collidePoint, "scoresheet");
+                    }
+                    else if (otherObject.sprite.PlayerNumber == 2)
+                    {
+                        ScoreKeeper.Instance.PlayerRightScore += ScoreKeeper.HittingWood;
+                        SpriteHelper.Instance.TriggerFadeUp(GameObjectTypes.SCOREPLUS50, collidePoint, "scoresheet");
+                    }
+                    otherObject.sprite.PlayerNumber = 0;
                 }
             }
             //might have to do negatives
@@ -100,12 +132,16 @@ namespace RaginRovers
                 {
                     dog.alive = false;
 
-                    Vector2 dogCenter = dog.sprite.Center;
+                    
 
                     SpriteHelper.Instance.TriggerAfter(delegate()
                         {
-                            
-                            SpriteHelper.Instance.TriggerAnimation(GameObjectTypes.PUFF, dogCenter-new Vector2(128,128), "spritesheet", 15);
+                            if (dog.sprite != null)
+                            {
+                                Vector2 dogCenter = dog.sprite.Center;
+                                SpriteHelper.Instance.TriggerAnimation(GameObjectTypes.PUFF, dogCenter - new Vector2(128, 128), "spritesheet", 15);
+                            }
+
                             SpriteHelper.Instance.TriggerAfter(delegate()
                             {
                                 GameObjectFactory.Instance.Remove(dog.id);
@@ -127,15 +163,20 @@ namespace RaginRovers
                     if (dog.sprite.PlayerNumber == 2)
                     {
                         ScoreKeeper.Instance.PlayerRightScore += ScoreKeeper.HittingCat;
+                        SpriteHelper.Instance.TriggerFadeUp(GameObjectTypes.SCOREPLUS250, collidePoint, "scoresheet");
                     }
                 }
             }
             else if (otherObject.typeid == (int)GameObjectTypes.DOG)
             {
-                Vector2 otherCenter = otherObject.sprite.Center;
+                
                 SpriteHelper.Instance.TriggerAfter(delegate()
                 {
-                    SpriteHelper.Instance.TriggerAnimation(GameObjectTypes.PUFF, otherCenter - new Vector2(128, 128), "spritesheet", 15);
+                    if (otherObject.sprite != null)
+                    {
+                        Vector2 otherCenter = otherObject.sprite.Center;
+                        SpriteHelper.Instance.TriggerAnimation(GameObjectTypes.PUFF, otherCenter - new Vector2(128, 128), "spritesheet", 15);
+                    }
                     SpriteHelper.Instance.TriggerAfter(delegate()
                     {
                         GameObjectFactory.Instance.Remove(otherObject.id);
@@ -155,6 +196,8 @@ namespace RaginRovers
                     )
             {
                 SunManager.Instance.Mood = SunMood.TOOTHYSMILE;
+                otherObject.collisiontime = System.Environment.TickCount;
+                otherObject.sprite.PlayerNumber = dog.sprite.PlayerNumber;
 
                 if (dog.collisioncount == 1)
                 {
@@ -218,7 +261,11 @@ namespace RaginRovers
             if (otherObject.typeid == (int)GameObjectTypes.WOOD1 || otherObject.typeid == (int)GameObjectTypes.WOOD2 || otherObject.typeid == (int)GameObjectTypes.WOOD3 || otherObject.typeid == (int)GameObjectTypes.WOOD4)
             {
 
-                AudioManager.Instance.SoundEffect("wood_hitting").Play(0.01f, 0f, 0f);
+                otherObject.sprite.PlayerNumber = wood.sprite.PlayerNumber;
+                otherObject.collisiontime = System.Environment.TickCount;
+
+
+                // AudioManager.Instance.SoundEffect("wood_hitting").Play(0.01f, 0f, 0f);
             }
             return true;
         }

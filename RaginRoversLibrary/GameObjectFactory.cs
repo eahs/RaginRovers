@@ -18,12 +18,15 @@ namespace RaginRoversLibrary
     {
         public int id;
         public int typeid;
+
         public int depth;  // default depth is 64
         public string textureassetname;  // Asset name for the texture this object uses
         public Sprite sprite;  // You may never ever ever ever ever store a reference to this sprite directly
                                // if you want to reference this GameObject do it by id #
         public bool saveable;
         public int collisioncount;
+        public int collisiontime; // Time of the last collision
+
         public bool alive;
 
         public GameObject()
@@ -32,6 +35,7 @@ namespace RaginRoversLibrary
             depth = 64;
             alive = true;
             collisioncount = 0;
+            collisiontime = 0;
         }
 
         public GameObject(int id, int typeid)

@@ -189,7 +189,6 @@ namespace RaginRovers
             AudioManager.Instance.LoadSoundEffect("cat4");
             AudioManager.Instance.LoadSoundEffect("dog1");
             AudioManager.Instance.LoadSoundEffect("meat_hit");
-            AudioManager.Instance.LoadSoundEffect("wood_hitting");
             AudioManager.Instance.LoadSoundEffect("cat_aaagh");
             AudioManager.Instance.LoadSoundEffect("cat_gibberish");
             AudioManager.Instance.LoadSoundEffect("cat_moan");
