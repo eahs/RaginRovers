@@ -96,7 +96,6 @@ H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\cat_me
 H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\cat_meow_human_voice_3.xnb
 H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\human_face_punch.xnb
 H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\Sound Effects.xnb
-H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\wood_hit_wood_heavy_1.xnb
 H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\explosion1.xnb
 H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\sun.xnb
 H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\explosion2.xnb
@@ -135,7 +134,6 @@ H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\cat3.x
 H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\cat4.xnb
 H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\dog1.xnb
 H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\meat_hit.xnb
-H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\wood_hitting.xnb
 C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\plane_with_banner.xnb
 C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\clouds.xnb
 C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\airplane.xnb
@@ -184,3 +182,5 @@ H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\scoresheet.x
 C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\scoresheet.xnb
 C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\Drum_Line.xnb
 C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\Drum_Line.wma
+H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\Drum_Line.xnb
+H:\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\Drum_Line.wma
