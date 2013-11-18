@@ -21,21 +21,24 @@ namespace RaginRovers
 
             if (otherObject.typeid == (int)GameObjectTypes.DOG)
             {
-                if (cat.collisioncount < 2)
-                {
-                    AudioManager.Instance.SoundEffect("cat_aagh").Play();
-                    //AudioManager.Instance.SoundEffect("cat1").Play();
-                }
 
                 //cat.sprite.HitPoints -= (int)otherObject.sprite.PhysicsBody.LinearVelocity.Length();
                 cat.sprite.HitPoints = 0;
+                AudioManager.Instance.SoundEffect("cat1").Play();
             }
             if (otherObject.typeid == (int)GameObjectTypes.WOOD1 || otherObject.typeid == (int)GameObjectTypes.WOOD2 || otherObject.typeid == (int)GameObjectTypes.WOOD3 || otherObject.typeid == (int)GameObjectTypes.WOOD4)
             {
                 if (otherObject.sprite.PhysicsBody.LinearVelocity.Length() > 2)
                 {
                     cat.sprite.HitPoints = 0;
+                    AudioManager.Instance.SoundEffect("cat_moan").Play();
                 }
+            }
+            //might have to do negatives
+            if (cat.sprite.PhysicsBody.LinearVelocity.X >= 5 || cat.sprite.PhysicsBody.LinearVelocity.Y >= 5)
+            {
+                cat.sprite.HitPoints = 0;
+                AudioManager.Instance.SoundEffect("cat_aaagh").Play();
             }
 
             if (cat.sprite.HitPoints <= 0)
@@ -52,8 +55,6 @@ namespace RaginRovers
                 }, 100);
 
                 //AudioManager.Instance.SoundEffect("dog_oof").Play();
-
-                return true;
             }
 
            return true;
