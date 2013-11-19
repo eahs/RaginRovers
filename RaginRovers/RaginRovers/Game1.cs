@@ -178,7 +178,8 @@ namespace RaginRovers
             textureManager.LoadTexture("wood-sign-hi");
             textureManager.LoadTexture("scoresheet");
 
-            song = Content.Load<Song>("Audio/Drum_Line");
+            if (ScreenConfiguration == 2)
+                song = Content.Load<Song>("Audio/Drum_Line");
 
             spriteFont = Content.Load<SpriteFont>("spriteFont");
 
@@ -230,9 +231,12 @@ namespace RaginRovers
             Fixture ground = FixtureFactory.AttachRectangle(ConvertUnits.ToSimUnits(GameWorld.WorldWidth)*10, ConvertUnits.ToSimUnits(10), 10, Vector2.Zero, body, "ground");
             ground.Restitution = 0f;
 
-            MediaPlayer.Play(song);
-            MediaPlayer.IsRepeating = true;
-            MediaPlayer.Volume /= 20;
+            if (ScreenConfiguration == 2)
+            {
+                MediaPlayer.Play(song);
+                MediaPlayer.IsRepeating = true;
+                MediaPlayer.Volume /= 5;
+            }
             //AudioManager.Instance.SoundEffect("Drum_Line").Play(); ;
             
             SetupLevel();
@@ -310,20 +314,23 @@ namespace RaginRovers
             client.Update(gameTime);
             camera.Update(gameTime);
             //funky
-            if (MapLoaded)
+            if (ScreenConfiguration == 2)
             {
-                int cats = 0;
-                foreach (int key in factory.Objects.Keys)
+                if (MapLoaded)
                 {
-                    if (factory.Objects[key].typeid == (int)GameObjectTypes.CAT)
+                    int cats = 0;
+                    foreach (int key in factory.Objects.Keys)
                     {
-                        cats++;
+                        if (factory.Objects[key].typeid == (int)GameObjectTypes.CAT)
+                        {
+                            cats++;
+                        }
                     }
-                }
-                if (cats == 0)
-                {
-                    Random rand = new Random();
-                    client.SendMessage("action=endgame;map=" + rand.Next(1,5));
+                    if (cats == 0)
+                    {
+                        Random rand = new Random();
+                        client.SendMessage("action=endgame;map=" + rand.Next(1, 5));
+                    }
                 }
             }
             base.Update(gameTime);
