@@ -31,6 +31,7 @@ namespace RaginRovers
         public int LengthAddedfromZoom = 1080;
         private float timeElapsed = 0f;
         private int DogsDropped = 0;
+        public int playerWhoBombed = 0;
 
         private SoundEffectInstance soundBuzz;
 
@@ -55,7 +56,7 @@ namespace RaginRovers
                 0f,
                 0f,
                 0f);
-            factory.Objects[plane].sprite.Location = new Vector2(-LengthAddedfromZoom - factory.Objects[plane].sprite.BoundingBoxRect.Width, -650);
+            factory.Objects[plane].sprite.Location = new Vector2(-LengthAddedfromZoom - factory.Objects[plane].sprite.BoundingBoxRect.Width, -550); //moved plane up 100 pixels so won't collide with that one map
             factory.Objects[plane].sprite.Scale = 2;
             factory.Objects[plane].sprite.PhysicsBodyFixture = FixtureFactory.AttachRectangle(ConvertUnits.ToSimUnits(factory.Objects[plane].sprite.BoundingBoxRect.Width), ConvertUnits.ToSimUnits(factory.Objects[plane].sprite.BoundingBoxRect.Height), 1, ConvertUnits.ToSimUnits(new Vector2(0, 0)), factory.Objects[plane].sprite.PhysicsBody);
             factory.Objects[plane].sprite.PhysicsBodyFixture.OnCollision += new OnCollisionEventHandler(factory.Objects[plane].sprite.HandleCollision);
@@ -119,6 +120,7 @@ namespace RaginRovers
                     }
 
                     factory.Objects[dog].sprite.OnCollision += new OnCollisionEventHandler(CollisionEvents.dog_OnCollision);
+                    factory.Objects[dog].sprite.PlayerNumber = playerWhoBombed;
                     timeElapsed = 0f;
                     DogsDropped++;
                 }
@@ -129,6 +131,12 @@ namespace RaginRovers
                 }
             }
         }
+        public void Bomb(int playerWhoHit)
+        {
+            planeState = PlaneState.BOMB;
+            playerWhoBombed = playerWhoHit;
+        }
+
         public static PlaneManager Instance
         {
             get

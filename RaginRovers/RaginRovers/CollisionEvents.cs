@@ -10,8 +10,12 @@ using Microsoft.Xna.Framework;
 
 namespace RaginRovers
 {
-    public static class CollisionEvents
+    public class CollisionEvents
     {
+        private static CollisionEvents instance;
+        public int NewestCollision = 0;
+
+
         public static bool cat_OnCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)
         {
             GameObject cat = (GameObject)fixtureA.Body.UserData;
@@ -39,16 +43,6 @@ namespace RaginRovers
                     cat.sprite.HitPoints = 0;
                     AudioManager.Instance.SoundEffect("cat_moan").Play();
 
-                    if (otherObject.sprite.PlayerNumber == 1)
-                    {
-                        ScoreKeeper.Instance.PlayerLeftScore += ScoreKeeper.HittingCat;
-                        SpriteHelper.Instance.TriggerFadeUp(GameObjectTypes.SCOREPLUS250, collidePoint, "scoresheet");
-                    }
-                    else if (otherObject.sprite.PlayerNumber == 2)
-                    {
-                        ScoreKeeper.Instance.PlayerRightScore += ScoreKeeper.HittingCat;
-                        SpriteHelper.Instance.TriggerFadeUp(GameObjectTypes.SCOREPLUS250, collidePoint, "scoresheet");
-                    }
                     
                 }
                 else
@@ -75,6 +69,20 @@ namespace RaginRovers
 
             if (cat.sprite.HitPoints <= 0)
             {
+                //if cat dies, points awarded to person to last hit tower
+                if (Instance.NewestCollision == 1 && !cat.sprite.AlreadyGavePoints)
+                {
+                    ScoreKeeper.Instance.PlayerLeftScore += ScoreKeeper.HittingCat;
+                    SpriteHelper.Instance.TriggerFadeUp(GameObjectTypes.SCOREPLUS250, collidePoint, "scoresheet");
+                    cat.sprite.AlreadyGavePoints = true;
+                }
+                if (Instance.NewestCollision == 2 && !cat.sprite.AlreadyGavePoints)
+                {
+                    ScoreKeeper.Instance.PlayerRightScore += ScoreKeeper.HittingCat;
+                    SpriteHelper.Instance.TriggerFadeUp(GameObjectTypes.SCOREPLUS250, collidePoint, "scoresheet");
+                    cat.sprite.AlreadyGavePoints = true;
+                }
+
                 Vector2 catCenter = cat.sprite.Center;
 
                 SpriteHelper.Instance.TriggerAfter(delegate()
@@ -132,7 +140,6 @@ namespace RaginRovers
                 {
                     dog.alive = false;
 
-                    
 
                     SpriteHelper.Instance.TriggerAfter(delegate()
                         {
@@ -155,16 +162,9 @@ namespace RaginRovers
             {
                 if (dog.collisioncount == 1)
                 {
-                    if (dog.sprite.PlayerNumber == 1)
-                    {
-                        ScoreKeeper.Instance.PlayerLeftScore += ScoreKeeper.HittingCat;
-                        SpriteHelper.Instance.TriggerFadeUp(GameObjectTypes.SCOREPLUS250, collidePoint, "scoresheet");
-                    }
-                    if (dog.sprite.PlayerNumber == 2)
-                    {
-                        ScoreKeeper.Instance.PlayerRightScore += ScoreKeeper.HittingCat;
-                        SpriteHelper.Instance.TriggerFadeUp(GameObjectTypes.SCOREPLUS250, collidePoint, "scoresheet");
-                    }
+                    Instance.NewestCollision = dog.sprite.PlayerNumber;
+
+                    
                 }
             }
             else if (otherObject.typeid == (int)GameObjectTypes.DOG)
@@ -196,11 +196,16 @@ namespace RaginRovers
                     )
             {
                 SunManager.Instance.Mood = SunMood.TOOTHYSMILE;
-                otherObject.collisiontime = System.Environment.TickCount;
-                otherObject.sprite.PlayerNumber = dog.sprite.PlayerNumber;
+                
+                //otherObject.collisiontime = System.Environment.TickCount;
+                //otherObject.sprite.PlayerNumber = dog.sprite.PlayerNumber;
+
 
                 if (dog.collisioncount == 1)
                 {
+
+                    Instance.NewestCollision = dog.sprite.PlayerNumber;
+                    //Instance.SpreadVirus();
 
                     SpriteHelper.Instance.TriggerAnimation(GameObjectTypes.DUSTSPLODE, otherObject.sprite.Center - new Vector2(180, 180), "dustsplode", 15);
                     SpriteHelper.Instance.TriggerAfter(delegate()
@@ -212,11 +217,13 @@ namespace RaginRovers
 
                     SpriteHelper.Instance.TriggerFadeUp(GameObjectTypes.SCOREPLUS50, collidePoint, "scoresheet");
 
-                    if (dog.sprite.PlayerNumber == 1)
+
+
+                    if (Instance.NewestCollision == 1)
                     {
                         ScoreKeeper.Instance.PlayerLeftScore += ScoreKeeper.HittingWood;
                     }
-                    if (dog.sprite.PlayerNumber == 2)
+                    if (Instance.NewestCollision == 2)
                     {
                         ScoreKeeper.Instance.PlayerRightScore += ScoreKeeper.HittingWood;
                     }
@@ -233,20 +240,24 @@ namespace RaginRovers
             }
             else if (otherObject.typeid == (int)GameObjectTypes.PLANE)
             {
-                PlaneManager.Instance.planeState = PlaneState.BOMB;
-                //do some bombing
-                if (dog.sprite.PlayerNumber == 1)
+                if (dog.collisioncount == 1)
                 {
-                    ScoreKeeper.Instance.PlayerLeftScore += ScoreKeeper.HittingPlane;
-                }
-                if (dog.sprite.PlayerNumber == 2)
-                {
-                    ScoreKeeper.Instance.PlayerRightScore += ScoreKeeper.HittingPlane;
-                }
+                    //PlaneManager.Instance.planeState = PlaneState.BOMB;
+                    PlaneManager.Instance.Bomb(dog.sprite.PlayerNumber);
+                    //do some bombing
+                    if (dog.sprite.PlayerNumber == 1)
+                    {
+                        ScoreKeeper.Instance.PlayerLeftScore += ScoreKeeper.HittingPlane;
+                    }
+                    if (dog.sprite.PlayerNumber == 2)
+                    {
+                        ScoreKeeper.Instance.PlayerRightScore += ScoreKeeper.HittingPlane;
+                    }
 
-                SpriteHelper.Instance.TriggerFadeUp(GameObjectTypes.SCOREPLUS100, collidePoint, "scoresheet");
+                    SpriteHelper.Instance.TriggerFadeUp(GameObjectTypes.SCOREPLUS100, collidePoint, "scoresheet");
 
-                AudioManager.Instance.SoundEffect("dog_bark").Play(0.5f, 0, 0);
+                    AudioManager.Instance.SoundEffect("dog_bark").Play(0.5f, 0, 0);
+                }
             }
 
 
@@ -261,14 +272,125 @@ namespace RaginRovers
             if (otherObject.typeid == (int)GameObjectTypes.WOOD1 || otherObject.typeid == (int)GameObjectTypes.WOOD2 || otherObject.typeid == (int)GameObjectTypes.WOOD3 || otherObject.typeid == (int)GameObjectTypes.WOOD4)
             {
 
-                otherObject.sprite.PlayerNumber = wood.sprite.PlayerNumber;
-                otherObject.collisiontime = System.Environment.TickCount;
+                //otherObject.sprite.PlayerNumber = wood.sprite.PlayerNumber;
+                //otherObject.collisiontime = System.Environment.TickCount;
+                //Instance.SpreadVirus();
 
 
                 // AudioManager.Instance.SoundEffect("wood_hitting").Play(0.01f, 0f, 0f);
             }
             return true;
         }
+
+        #region Failed Spread Code
+        //WHAT A MESS, but it thoroughly spreads virus through all touching blocks
+        /*public void SpreadVirus()
+        {
+            //goes through the list until everything that can be infected, is
+            int count = 0;
+            List<Contact> NeitherInfected = new List<Contact>();
+            List<Contact> AlreadyCalculatedObjects = new List<Contact>();
+            for (;;)
+                {
+                    foreach (Contact contacts in GameWorld.world.ContactList)
+                    {
+                        //trying to save some processing? but maybe it won't
+                        bool AlreadyDid = false;
+                        foreach (Contact contacts2 in AlreadyCalculatedObjects)
+                        {
+                            if (contacts == contacts2)
+                            {
+                                AlreadyDid = true;
+                                break;
+                            }
+                        }
+                        if (!AlreadyDid)
+                        {
+                            GameObject Object1 = (GameObject)contacts.FixtureA.Body.UserData;
+                            GameObject Object2 = (GameObject)contacts.FixtureB.Body.UserData;
+                            //1st null, second exists
+                            if (!Object1.sprite.PlayerNumber.Equals(Object1.sprite.PlayerNumber) && Object2.sprite.PlayerNumber.Equals(Object2.sprite.PlayerNumber))
+                            {
+                                Object1.sprite.PlayerNumber = Object2.sprite.PlayerNumber;
+                                AlreadyCalculatedObjects.Add(contacts);
+                            }
+                            //2st exists, second doesn't
+                            else if (Object1.sprite.PlayerNumber.Equals(Object1.sprite.PlayerNumber) && !Object2.sprite.PlayerNumber.Equals(Object2.sprite.PlayerNumber))
+                            {
+                                Object1.sprite.PlayerNumber = Object2.sprite.PlayerNumber;
+                                AlreadyCalculatedObjects.Add(contacts);
+                            }
+
+                            //garbage code below, I can't think of what to do
+
+                            if (Instance.NewestCollision == 1)
+                            {
+                                Object1.sprite.PlayerNumber = 1;
+                                Object2.sprite.PlayerNumber = 1;
+                                AlreadyCalculatedObjects.Add(contacts);
+                            }
+                            else if (Instance.NewestCollision == 2)
+                            {
+                                Object1.sprite.PlayerNumber = 2;
+                                Object2.sprite.PlayerNumber = 2;
+                                AlreadyCalculatedObjects.Add(contacts);
+                            }
+                            else
+                            {
+                                //don't think will work
+                                bool GoodtoGo = true;
+                                foreach (Contact notinfected in NeitherInfected)
+                                {
+                                    if (notinfected == contacts)
+                                    {
+                                        GoodtoGo = false;
+                                        break;
+                                    }
+                                }
+                                if (GoodtoGo)
+                                {
+                                    NeitherInfected.Add(contacts);
+                                    count++;
+                                }
+                            }
+                            //end garbage
+                        }
+                    }
+                    if (count == 0)
+                    {
+                        break;
+                    }
+                }
+        }
+
+
+        //simple spread
+        public void SpreadVirus()
+        {
+            foreach (Contact contact in GameWorld.world.ContactList)
+            {
+                GameObject Object1 = (GameObject)contact.FixtureA.Body.UserData;
+                GameObject Object2 = (GameObject)contact.FixtureB.Body.UserData;
+                //won't work
+                //why can you access playernumber without it being null in the above stuff but i can't down here :(
+                //Object2.sprite.PlayerNumber = Object1.sprite.PlayerNumber;
+            }
+        }*/
+
+        #endregion
+
+        public static CollisionEvents Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = new CollisionEvents();
+                }
+                return instance;
+            }
+        }
+
 
     }
 }

@@ -47,6 +47,8 @@ namespace RaginRoversLibrary
         public bool ReSpawn = true;
         public int HitPoints = 20;
 
+        public bool AlreadyGavePoints = false;
+
         //cannonspecifics
 
         public int rotationDirection = 1;
