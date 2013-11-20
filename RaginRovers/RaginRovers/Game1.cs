@@ -53,13 +53,13 @@ namespace RaginRovers
         {
             //with .5 zoom, 830 more on each side, 1660 more total, 
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferWidth = 1280;
-            graphics.PreferredBackBufferHeight = 727;
+            //graphics.PreferredBackBufferWidth = 1280;
+            //graphics.PreferredBackBufferHeight = 727;
 
             //graphics.PreferredBackBufferHeight = 500;
 
-            //graphics.PreferredBackBufferWidth = 1920;
-            //graphics.PreferredBackBufferHeight = 1080;
+            graphics.PreferredBackBufferWidth = 1920;
+            graphics.PreferredBackBufferHeight = 1080;
             //graphics.IsFullScreen = true;
             graphics.ApplyChanges();
 
@@ -267,7 +267,7 @@ namespace RaginRovers
                 GameWorld.Update(gameTime);
 
             KeyboardState kb = Keyboard.GetState();
-            if (kb.IsKeyDown(Keys.Right))
+            /*if (kb.IsKeyDown(Keys.Right))
             {
                 if (camera.Position.X < GameWorld.WorldWidth - this.Window.ClientBounds.Width)
                 {
@@ -296,6 +296,7 @@ namespace RaginRovers
             }
             if (kb.IsKeyDown(Keys.P))
                 camera.Zoom = .5f;
+             * */
 
             foreach (int key in factory.Objects.Keys)
             {
@@ -462,7 +463,7 @@ namespace RaginRovers
         public void HandleNetworkCreate(object incoming, EventArgs args)
         {
             Dictionary<string, string> data = (Dictionary<string, string>)incoming;
-            int XOffsetduetoScreenSizeChange = 0;
+            //int XOffsetduetoScreenSizeChange = 0;
             if (graphics.PreferredBackBufferWidth == 1920)
                 XOffsetduetoScreenSizeChange = 700;
             int item = factory.Create(Convert.ToInt32(data["gotype"]),

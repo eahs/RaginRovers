@@ -82,7 +82,7 @@ namespace RaginRovers
                             if (!EditMode)
                             { 
                                 //probably will get annoying when working on project and testing bugs
-                                if (screenconfiguration == 1 || screenconfiguration == 2) //get rid of =2 part after testing
+                                if (screenconfiguration == 1) // put in "|| screenconfiguration == 2" to test stuff
                                 {
                                     cannonManager.ChangeCannonState(cannonGroups[1]);
 
@@ -107,24 +107,18 @@ namespace RaginRovers
                             }
                             break;
 
-                        case Keys.N:
-                            if (!EditMode)
-                            {
-                                
-                            }
-                            break;
 
                         case Keys.OemTilde:
-                            //if (screenconfiguration == 2)
+                            if (screenconfiguration == 2)
                                 EditMode = !EditMode;
                             //camera.Zoom = 1f;
                             
-                            window.Title = "Ragin Rovers " + (EditMode ? " | EDITING MODE" : "");
+                            //window.Title = "Ragin Rovers " + (EditMode ? " | EDITING MODE" : "");
                             break;
 
                         case Keys.Q:
 
-                            if (EditMode)
+                            if (EditMode && screenconfiguration == 2)
                             {
                                 int puff = factory.Create((int)GameObjectTypes.PUFF, new Vector2((int)ms.X /*+ camera.Position.X*/ - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0, 0f, 0f);
                                 factory.Objects[puff].sprite.PhysicsBody.Mass = 30;
@@ -206,7 +200,7 @@ namespace RaginRovers
                                 factory.Objects[board].sprite.OnCollision += new OnCollisionEventHandler(CollisionEvents.wood_OnCollision);
                             }
                             if (screenconfiguration == 2)
-                                client.SendMessage("action=reset;map=" + 0);
+                                client.SendMessage("action=reset;map=" + 6);
 
                             break;
 
@@ -217,7 +211,7 @@ namespace RaginRovers
                                 factory.Create((int)GameObjectTypes.PLATFORM_LEFT, new Vector2((int)ms.X /*+ camera.Position.X*/ - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0, 0f, 0f);
                             }
                             if (screenconfiguration == 2)
-                                client.SendMessage("action=reset;map=" + 0);
+                                client.SendMessage("action=reset;map=" + 7);
 
                             break;
 
@@ -228,7 +222,7 @@ namespace RaginRovers
                                 factory.Create((int)GameObjectTypes.PLATFORM_MIDDLE, new Vector2((int)ms.X /*+ camera.Position.X*/ - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0, 0f, 0f);
                             }
                             if (screenconfiguration == 2)
-                                client.SendMessage("action=reset;map=" + 0);
+                                client.SendMessage("action=reset;map=" + 8);
 
                             break;
 
@@ -239,7 +233,7 @@ namespace RaginRovers
                                 factory.Create((int)GameObjectTypes.PLATFORM_RIGHT, new Vector2((int)ms.X /*+ camera.Position.X*/ - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0, 0f, 0f);
                             }
                             if (screenconfiguration == 2)
-                                client.SendMessage("action=reset;map=" + 0);
+                                client.SendMessage("action=reset;map=" + 9);
 
                             break;
                         case Keys.D0:
@@ -255,9 +249,9 @@ namespace RaginRovers
                             break;
 
 
-                        case Keys.P:
+                        /*case Keys.P:
 
-                            if (EditMode)
+                            if (EditMode && screenconfiguration == 2)
                             {
                                 factory = cannonManager.CreateCannonStuff(factory, new Vector2(ms.X, ms.Y), camera, true, ref cannonGroups);
 
@@ -265,14 +259,15 @@ namespace RaginRovers
 
                             break;
                         case Keys.J:
-
-                            cannonManager.CreateCannonStuff(factory, new Vector2(0, 500), camera, true, ref cannonGroups); //need how to figure out location
-                            cannonManager.CreateCannonStuff(factory, new Vector2(500, 500), camera, false, ref cannonGroups); //need how to figure out location
+                            if (screenconfiguration == 2)
+                            {
+                                cannonManager.CreateCannonStuff(factory, new Vector2(0, 500), camera, true, ref cannonGroups); //need how to figure out location
+                                cannonManager.CreateCannonStuff(factory, new Vector2(500, 500), camera, false, ref cannonGroups); //need how to figure out location
+                            }
                             break;
 
                         case Keys.B:
-
-                            int boom = factory.Create((int)GameObjectTypes.BOOM, new Vector2((int)ms.X + camera.Position.X - 95, (int)ms.Y - 80), "boom", new Vector2(0, 0), 0, 0f, 0f);
+                                int boom = factory.Create((int)GameObjectTypes.BOOM, new Vector2((int)ms.X + camera.Position.X - 95, (int)ms.Y - 80), "boom", new Vector2(0, 0), 0, 0f, 0f);
 
                             break;
 
@@ -297,7 +292,7 @@ namespace RaginRovers
                             }
 
                             break;
-
+                            */
                         case Keys.L:
                             if (screenconfiguration == 2)
                             {
@@ -318,7 +313,9 @@ namespace RaginRovers
 
                             break;
 
-                        case Keys.M:
+
+                            //done with saving maps for now
+                        /*case Keys.M:
 
                             string objlist = factory.Serialize();
 
@@ -327,7 +324,7 @@ namespace RaginRovers
                                 outfile.Write(objlist);
                             }
 
-                            break;
+                            break;*/
                     }
 
                     KeyDown = false;

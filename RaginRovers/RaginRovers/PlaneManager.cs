@@ -56,7 +56,7 @@ namespace RaginRovers
                 0f,
                 0f,
                 0f);
-            factory.Objects[plane].sprite.Location = new Vector2(-LengthAddedfromZoom - factory.Objects[plane].sprite.BoundingBoxRect.Width, -550); //moved plane up 100 pixels so won't collide with that one map
+            factory.Objects[plane].sprite.Location = new Vector2(-LengthAddedfromZoom - factory.Objects[plane].sprite.BoundingBoxRect.Width, -850); //moved plane up 100 pixels so won't collide with that one map
             factory.Objects[plane].sprite.Scale = 2;
             factory.Objects[plane].sprite.PhysicsBodyFixture = FixtureFactory.AttachRectangle(ConvertUnits.ToSimUnits(factory.Objects[plane].sprite.BoundingBoxRect.Width), ConvertUnits.ToSimUnits(factory.Objects[plane].sprite.BoundingBoxRect.Height), 1, ConvertUnits.ToSimUnits(new Vector2(0, 0)), factory.Objects[plane].sprite.PhysicsBody);
             factory.Objects[plane].sprite.PhysicsBodyFixture.OnCollision += new OnCollisionEventHandler(factory.Objects[plane].sprite.HandleCollision);
