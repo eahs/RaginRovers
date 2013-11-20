@@ -98,7 +98,7 @@ namespace RaginRovers
             
             //right
             int key2 = factory.Create(RightSide, Vector2.Zero, "scoresheet", Vector2.Zero, 0f, 0f, 0f, 64);
-            factory.Objects[key2].sprite.Location = new Vector2(-1080 + (2 * 12234 / 3) + ((12234 / 3) / 2) - (factory.Objects[key2].sprite.BoundingBoxRect.Width / 2), -1217 + (2400 / 2)/*should be height of screen*/ - (factory.Objects[key2].sprite.BoundingBoxRect.Height / 2));
+            factory.Objects[key2].sprite.Location = new Vector2(-1080 + (2 * 12234 / 3) + ((12234 / 3) / 2) - (factory.Objects[key2].sprite.BoundingBoxRect.Width / 2), -1217 + (2700 / 2)/*should be height of screen*/ - (factory.Objects[key2].sprite.BoundingBoxRect.Height / 2));
             RemoveAfter(key2, 10000);
         }
 

@@ -380,6 +380,16 @@
       <Output>C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\dog_oof.xnb</Output>
       <Time>2013-11-18T17:57:14.5990397-05:00</Time>
     </Item>
+    <Item>
+      <Source>Audio\funnymusic.wav</Source>
+      <Name>Audio\funnymusic</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SongProcessor</Processor>
+      <Options>None</Options>
+      <Output>C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\funnymusic.xnb</Output>
+      <Extra>C:\Users\SlowBen\Documents\GitHub\RaginRovers\RaginRovers\RaginRovers\bin\x86\Debug\Content\Audio\funnymusic.wma</Extra>
+      <Time>2013-11-20T17:51:02.9524692-05:00</Time>
+    </Item>
     <BuildSuccessful>true</BuildSuccessful>
     <Settings>
       <TargetPlatform>Windows</TargetPlatform>

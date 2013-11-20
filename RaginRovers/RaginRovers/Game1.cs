@@ -37,7 +37,8 @@ namespace RaginRovers
         ClientNetworking client;
         SpriteFont spriteFont;
 
-        Song song;
+        Song funnymusic;
+        Song drumline;
 
         public bool MapLoaded;
 
@@ -88,6 +89,8 @@ namespace RaginRovers
             //Create the audio manager
             AudioManager.Instance.Initialize(Content);
 
+            CollisionEvents.Instance.TransferClientInfo(client);
+
             // Now load the sprite creator factory helper
             factory = GameObjectFactory.Instance;
             factory.Initialize(textureManager);
@@ -104,6 +107,7 @@ namespace RaginRovers
             client.ActionHandler["createother"] = new EventHandler(this.HandleNetworkCreateOtherStuff);
             client.ActionHandler["reset"] = new EventHandler(this.HandleReset);
             client.ActionHandler["endgame"] = new EventHandler(this.HandleEndGame);
+            client.ActionHandler["sendpoints"] = new EventHandler(this.HandleSendPoints);
 
             // Add a few sprite creators
             factory.AddCreator((int)GameObjectTypes.CAT, SpriteCreators.CreateCat);
@@ -179,7 +183,11 @@ namespace RaginRovers
             textureManager.LoadTexture("scoresheet");
 
             if (ScreenConfiguration == 2)
-                song = Content.Load<Song>("Audio/Drum_Line");
+            {
+                drumline = Content.Load<Song>("Audio/Drum_Line");
+                funnymusic = Content.Load<Song>("Audio/funnymusic");
+            }
+
 
             spriteFont = Content.Load<SpriteFont>("spriteFont");
 
@@ -233,7 +241,7 @@ namespace RaginRovers
 
             if (ScreenConfiguration == 2)
             {
-                MediaPlayer.Play(song);
+                MediaPlayer.Play(funnymusic);
                 MediaPlayer.IsRepeating = true;
                 MediaPlayer.Volume /= 5;
             }
@@ -464,8 +472,8 @@ namespace RaginRovers
         {
             Dictionary<string, string> data = (Dictionary<string, string>)incoming;
             //int XOffsetduetoScreenSizeChange = 0;
-            if (graphics.PreferredBackBufferWidth == 1920)
-                XOffsetduetoScreenSizeChange = 700;
+            //if (graphics.PreferredBackBufferWidth == 1920)
+                //XOffsetduetoScreenSizeChange = 700;
             int item = factory.Create(Convert.ToInt32(data["gotype"]),
                             new Vector2((float)Convert.ToDouble(data["location.x"])/* + XOffsetduetoScreenSizeChange*/, (float)Convert.ToDouble(data["location.y"])),
                             data["textureassetname"],
@@ -533,6 +541,18 @@ namespace RaginRovers
             Dictionary<string, string> data = (Dictionary<string, string>)incoming;
             mapEditor.LoadMap(Convert.ToInt32(data["map"]));
             MapLoaded = false;
+        }
+        public void HandleSendPoints(object incoming, EventArgs args)
+        {
+            Dictionary<string, string> data = (Dictionary<string, string>)incoming;
+            if (Convert.ToInt32(data["playernumber"]) == 1)
+            {
+                ScoreKeeper.Instance.PlayerLeftScore += Convert.ToInt32(data["score"]);
+            }
+            if (Convert.ToInt32(data["playernumber"]) == 3)
+            {
+                ScoreKeeper.Instance.PlayerLeftScore += Convert.ToInt32(data["score"]);
+            }
         }
     }
 }

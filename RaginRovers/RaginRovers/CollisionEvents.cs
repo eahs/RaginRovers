@@ -14,6 +14,12 @@ namespace RaginRovers
     {
         private static CollisionEvents instance;
         public int NewestCollision = 0;
+        private ClientNetworking client;
+
+        public void TransferClientInfo(ClientNetworking client)
+        {
+            this.client = client;
+        }
 
 
         public static bool cat_OnCollision(Fixture fixtureA, Fixture fixtureB, Contact contact)
@@ -45,7 +51,8 @@ namespace RaginRovers
 
                     
                 }
-                else
+                //dont know what that is
+                /*else
                 {
                     if (otherObject.sprite.PlayerNumber == 1)
                     {
@@ -58,7 +65,7 @@ namespace RaginRovers
                         SpriteHelper.Instance.TriggerFadeUp(GameObjectTypes.SCOREPLUS50, collidePoint, "scoresheet");
                     }
                     otherObject.sprite.PlayerNumber = 0;
-                }
+                }*/
             }
             //might have to do negatives
             if (cat.sprite.PhysicsBody.LinearVelocity.X >= 5 || cat.sprite.PhysicsBody.LinearVelocity.Y >= 5)
@@ -70,17 +77,22 @@ namespace RaginRovers
             if (cat.sprite.HitPoints <= 0)
             {
                 //if cat dies, points awarded to person to last hit tower
-                if (Instance.NewestCollision == 1 && !cat.sprite.AlreadyGavePoints)
+                if (Game1.ScreenConfiguration == 2)
                 {
-                    ScoreKeeper.Instance.PlayerLeftScore += ScoreKeeper.HittingCat;
-                    SpriteHelper.Instance.TriggerFadeUp(GameObjectTypes.SCOREPLUS250, collidePoint, "scoresheet");
-                    cat.sprite.AlreadyGavePoints = true;
-                }
-                if (Instance.NewestCollision == 2 && !cat.sprite.AlreadyGavePoints)
-                {
-                    ScoreKeeper.Instance.PlayerRightScore += ScoreKeeper.HittingCat;
-                    SpriteHelper.Instance.TriggerFadeUp(GameObjectTypes.SCOREPLUS250, collidePoint, "scoresheet");
-                    cat.sprite.AlreadyGavePoints = true;
+                    if (Instance.NewestCollision == 1 && !cat.sprite.AlreadyGavePoints)
+                    {
+                        ScoreKeeper.Instance.PlayerLeftScore += ScoreKeeper.HittingCat;
+                        SpriteHelper.Instance.TriggerFadeUp(GameObjectTypes.SCOREPLUS250, collidePoint, "scoresheet");
+                        cat.sprite.AlreadyGavePoints = true;
+                        Instance.client.SendMessage("action=sendpoints;playernumber=" + Instance.NewestCollision + ";score=" + 250);
+                    }
+                    if (Instance.NewestCollision == 2 && !cat.sprite.AlreadyGavePoints)
+                    {
+                        ScoreKeeper.Instance.PlayerRightScore += ScoreKeeper.HittingCat;
+                        SpriteHelper.Instance.TriggerFadeUp(GameObjectTypes.SCOREPLUS250, collidePoint, "scoresheet");
+                        cat.sprite.AlreadyGavePoints = true;
+                        Instance.client.SendMessage("action=sendpoints;playernumber=" + Instance.NewestCollision + ";score=" + 250);
+                    }
                 }
 
                 Vector2 catCenter = cat.sprite.Center;
@@ -167,6 +179,7 @@ namespace RaginRovers
                     
                 }
             }
+            //something here giving 50 points
             else if (otherObject.typeid == (int)GameObjectTypes.DOG)
             {
                 
@@ -218,14 +231,19 @@ namespace RaginRovers
                     SpriteHelper.Instance.TriggerFadeUp(GameObjectTypes.SCOREPLUS50, collidePoint, "scoresheet");
 
 
-
-                    if (Instance.NewestCollision == 1)
+                    if (Game1.ScreenConfiguration == 2)
                     {
-                        ScoreKeeper.Instance.PlayerLeftScore += ScoreKeeper.HittingWood;
-                    }
-                    if (Instance.NewestCollision == 2)
-                    {
-                        ScoreKeeper.Instance.PlayerRightScore += ScoreKeeper.HittingWood;
+                        if (Instance.NewestCollision == 1)
+                        {
+                            ScoreKeeper.Instance.PlayerLeftScore += ScoreKeeper.HittingWood;
+                            Instance.client.SendMessage("action=sendpoints;playernumber=" + Instance.NewestCollision + ";score=" + 50);
+                        }
+                        if (Instance.NewestCollision == 2)
+                        {
+                            ScoreKeeper.Instance.PlayerRightScore += ScoreKeeper.HittingWood;
+                            Instance.client.SendMessage("action=sendpoints;playernumber=" + Instance.NewestCollision + ";score=" + 50);
+                        }
+                        
                     }
 
 
@@ -245,13 +263,18 @@ namespace RaginRovers
                     //PlaneManager.Instance.planeState = PlaneState.BOMB;
                     PlaneManager.Instance.Bomb(dog.sprite.PlayerNumber);
                     //do some bombing
-                    if (dog.sprite.PlayerNumber == 1)
+                    if (Game1.ScreenConfiguration == 2)
                     {
-                        ScoreKeeper.Instance.PlayerLeftScore += ScoreKeeper.HittingPlane;
-                    }
-                    if (dog.sprite.PlayerNumber == 2)
-                    {
-                        ScoreKeeper.Instance.PlayerRightScore += ScoreKeeper.HittingPlane;
+                        if (dog.sprite.PlayerNumber == 1)
+                        {
+                            ScoreKeeper.Instance.PlayerLeftScore += ScoreKeeper.HittingPlane;
+                            Instance.client.SendMessage("action=sendpoints;playernumber=" + Instance.NewestCollision + ";score=" + 100);
+                        }
+                        if (dog.sprite.PlayerNumber == 2)
+                        {
+                            ScoreKeeper.Instance.PlayerRightScore += ScoreKeeper.HittingPlane;
+                            Instance.client.SendMessage("action=sendpoints;playernumber=" + Instance.NewestCollision + ";score=" + 100);
+                        }
                     }
 
                     SpriteHelper.Instance.TriggerFadeUp(GameObjectTypes.SCOREPLUS100, collidePoint, "scoresheet");

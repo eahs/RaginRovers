@@ -1,13 +1,9 @@
-
-- ressetting that I made crashes the game most of the time (once you press L and reload the map)
-		-breaks in HandleReset method in Game1 from deleting objects and then trying to call the deleted objects
-- need nice font for score
-- need a better placement for score
-- need better point system
-		- scorey score-  cat 300, plane 200, board 100, missing -50
-		- football score- cat 6 (touchdown), plane 2 (2 point conversion), board 1 (field goal), missing +-1 (either lose one or give the other person one)
-
-- make it more Easton v. Pburg themed
-- put in more soundeffects and wackiness
-- need background music
-		-found drum line on youtube and converted it but it is too long or something and breaks visual studios
+-do stuff tanczos said
+	-load plane and clouds when load first map
+-fix spawning twice
+-move "you lose" up
+-fix unreliable networking
+	-maps aren't always synced
+		-could do all score calcs at 2 and transfer them to clients
+-remove the +50 for hitting dog
+-fix the dog being stopped by ground so abruptly
