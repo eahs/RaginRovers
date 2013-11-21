@@ -121,7 +121,7 @@ namespace RaginRovers
 
                             if (EditMode && screenconfiguration == 2)
                             {
-                                int puff = factory.Create((int)GameObjectTypes.PUFF, new Vector2((int)ms.X /*+ camera.Position.X*/ - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0, 0f, 0f);
+                                int puff = factory.Create((int)GameObjectTypes.PUFF, new Vector2((int)ms.X /*+ camera.Position.X*/// - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0, 0f, 0f);
                               /*  factory.Objects[puff].sprite.PhysicsBody.Mass = 30;
                                 factory.Objects[puff].sprite.PhysicsBody.Restitution = 0.4f;
                                 factory.Objects[puff].saveable = false;
