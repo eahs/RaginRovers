@@ -1,9 +1,3 @@
--do stuff tanczos said
-	-load plane and clouds when load first map
--fix spawning twice
--move "you lose" up
--fix unreliable networking
-	-maps aren't always synced
-		-could do all score calcs at 2 and transfer them to clients
--remove the +50 for hitting dog
+-fix spawning twice (may have just been fluke)
 -fix the dog being stopped by ground so abruptly
+-translate shake better

@@ -89,7 +89,6 @@ namespace RaginRovers
             //Create the audio manager
             AudioManager.Instance.Initialize(Content);
 
-            CollisionEvents.Instance.TransferClientInfo(client);
 
             // Now load the sprite creator factory helper
             factory = GameObjectFactory.Instance;
@@ -184,7 +183,7 @@ namespace RaginRovers
 
             if (ScreenConfiguration == 2)
             {
-                drumline = Content.Load<Song>("Audio/Drum_Line");
+                drumline = Content.Load<Song>("Audio/drumline");
                 funnymusic = Content.Load<Song>("Audio/funnymusic");
             }
 
@@ -233,11 +232,11 @@ namespace RaginRovers
             body.Position = ConvertUnits.ToSimUnits(new Vector2(0, GameWorld.HeightofGround)); //hardcode workaround, can't figure out what to multiply the proportion by
             // * GameWorld.ProportionGroundtoScreen));
             body.UserData = new GameObject(-1, (int)GameObjectTypes.GROUND);
-            body.Friction = 1f;
 
             //FixtureFactory.AttachRectangle((float)GameWorld.WorldWidth, 10, 1, new Vector2(0, ConvertUnits.ToDisplayUnits(this.Window.ClientBounds.Height-30)), body);
             Fixture ground = FixtureFactory.AttachRectangle(ConvertUnits.ToSimUnits(GameWorld.WorldWidth)*10, ConvertUnits.ToSimUnits(10), 10, Vector2.Zero, body, "ground");
-            ground.Restitution = 0f;
+            ground.Restitution = .1f;
+            ground.Friction = 1f;
 
             if (ScreenConfiguration == 2)
             {
@@ -246,6 +245,10 @@ namespace RaginRovers
                 MediaPlayer.Volume /= 5;
             }
             //AudioManager.Instance.SoundEffect("Drum_Line").Play(); ;
+
+
+            CollisionEvents.Instance.TransferClientInfo(client);
+            SpriteHelper.Instance.InitializeFunnySong(funnymusic);
             
             SetupLevel();
         }
@@ -304,7 +307,7 @@ namespace RaginRovers
             }
             if (kb.IsKeyDown(Keys.P))
                 camera.Zoom = .5f;
-             * */
+        */
 
             foreach (int key in factory.Objects.Keys)
             {
@@ -378,7 +381,7 @@ namespace RaginRovers
 
             //cannonggroups[0] is right and 1 is left
             Vector2 stringdimesionsleft = spriteFont.MeasureString("Score: " + ScoreKeeper.Instance.PlayerLeftScore.ToString());
-            Vector2 stringdimesionsright = spriteFont.MeasureString("Score: " + ScoreKeeper.Instance.PlayerLeftScore.ToString());
+            Vector2 stringdimesionsright = spriteFont.MeasureString("Score: " + ScoreKeeper.Instance.PlayerRightScore.ToString());
             ScoreKeeper.Instance.DrawScore(spriteBatch, textureManager, factory.Objects[cannonGroups[1].cannonKey].sprite.Center + new Vector2(-stringdimesionsleft.X / 2, -1250), factory.Objects[cannonGroups[0].cannonKey].sprite.Center + new Vector2(-stringdimesionsleft.X / 2, -1250));
 
             //spriteBatch.DrawString(spriteFont, "Score: " + ScoreKeeper.Instance.PlayerLeftScore.ToString(), factory.Objects[cannonGroups[1].cannonKey].sprite.Center + new Vector2(-stringdimesionsleft.X / 2, -1250) , Color.Black);
@@ -464,8 +467,8 @@ namespace RaginRovers
 
             AudioManager.Instance.SoundEffect("cannon_boom").Play();
             AudioManager.Instance.SoundEffect("dog_launch").Play(0.5f, 0f, 0f);
-
-            camera.Shake(10, 1);
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////restore if unsatisfactory
+            //camera.Shake(10, 1);
         }
 
         public void HandleNetworkCreate(object incoming, EventArgs args)
@@ -534,6 +537,8 @@ namespace RaginRovers
         {
             Dictionary<string, string> data = (Dictionary<string, string>)incoming;
             SpriteHelper.Instance.TriggerEndRound(mapEditor, Convert.ToInt32(data["map"]));
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////remove if unsatisfactory
+            MediaPlayer.Play(drumline);
             MapLoaded = false;
         }
         public void HandleReset(object incoming, EventArgs args)

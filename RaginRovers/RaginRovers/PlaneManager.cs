@@ -32,6 +32,7 @@ namespace RaginRovers
         private float timeElapsed = 0f;
         private int DogsDropped = 0;
         public int playerWhoBombed = 0;
+        public bool LoadedPlane = false;
 
         private SoundEffectInstance soundBuzz;
 

@@ -81,14 +81,14 @@ namespace RaginRovers
                 {
                     if (Instance.NewestCollision == 1 && !cat.sprite.AlreadyGavePoints)
                     {
-                        ScoreKeeper.Instance.PlayerLeftScore += ScoreKeeper.HittingCat;
+                        //ScoreKeeper.Instance.PlayerLeftScore += ScoreKeeper.HittingCat;
                         SpriteHelper.Instance.TriggerFadeUp(GameObjectTypes.SCOREPLUS250, collidePoint, "scoresheet");
                         cat.sprite.AlreadyGavePoints = true;
                         Instance.client.SendMessage("action=sendpoints;playernumber=" + Instance.NewestCollision + ";score=" + 250);
                     }
                     if (Instance.NewestCollision == 2 && !cat.sprite.AlreadyGavePoints)
                     {
-                        ScoreKeeper.Instance.PlayerRightScore += ScoreKeeper.HittingCat;
+                        //ScoreKeeper.Instance.PlayerRightScore += ScoreKeeper.HittingCat;
                         SpriteHelper.Instance.TriggerFadeUp(GameObjectTypes.SCOREPLUS250, collidePoint, "scoresheet");
                         cat.sprite.AlreadyGavePoints = true;
                         Instance.client.SendMessage("action=sendpoints;playernumber=" + Instance.NewestCollision + ";score=" + 250);
@@ -122,7 +122,6 @@ namespace RaginRovers
 
             contact.GetWorldManifold(out normal, out points);
             Vector2 collidePoint = ConvertUnits.ToDisplayUnits(points[0]);
-
             dog.collisioncount++;
 
             if (otherObject.typeid == (int)GameObjectTypes.GROUND)
@@ -235,12 +234,12 @@ namespace RaginRovers
                     {
                         if (Instance.NewestCollision == 1)
                         {
-                            ScoreKeeper.Instance.PlayerLeftScore += ScoreKeeper.HittingWood;
+                            //ScoreKeeper.Instance.PlayerLeftScore += ScoreKeeper.HittingWood;
                             Instance.client.SendMessage("action=sendpoints;playernumber=" + Instance.NewestCollision + ";score=" + 50);
                         }
                         if (Instance.NewestCollision == 2)
                         {
-                            ScoreKeeper.Instance.PlayerRightScore += ScoreKeeper.HittingWood;
+                            //ScoreKeeper.Instance.PlayerRightScore += ScoreKeeper.HittingWood;
                             Instance.client.SendMessage("action=sendpoints;playernumber=" + Instance.NewestCollision + ";score=" + 50);
                         }
                         
@@ -267,12 +266,12 @@ namespace RaginRovers
                     {
                         if (dog.sprite.PlayerNumber == 1)
                         {
-                            ScoreKeeper.Instance.PlayerLeftScore += ScoreKeeper.HittingPlane;
+                            //ScoreKeeper.Instance.PlayerLeftScore += ScoreKeeper.HittingPlane;
                             Instance.client.SendMessage("action=sendpoints;playernumber=" + Instance.NewestCollision + ";score=" + 100);
                         }
                         if (dog.sprite.PlayerNumber == 2)
                         {
-                            ScoreKeeper.Instance.PlayerRightScore += ScoreKeeper.HittingPlane;
+                            //ScoreKeeper.Instance.PlayerRightScore += ScoreKeeper.HittingPlane;
                             Instance.client.SendMessage("action=sendpoints;playernumber=" + Instance.NewestCollision + ";score=" + 100);
                         }
                     }

@@ -90,6 +90,7 @@ namespace RaginRovers
                                     {
                                         client.SendMessage("action=shoot;cannonGroup=1;rotation=" + cannonGroups[1].Rotation + ";power=" + cannonGroups[1].Power + ";Screen=" + Game1.ScreenConfiguration);
                                         SunManager.Instance.Mood = SunMood.OPENSMILE;
+                                        camera.Shake(10, 1);
                                     }
                                 }
                                 if (screenconfiguration == 3)
@@ -100,14 +101,14 @@ namespace RaginRovers
                                     {
                                         client.SendMessage("action=shoot;cannonGroup=0;rotation=" + cannonGroups[0].Rotation + ";power=" + cannonGroups[0].Power + ";Screen=" + Game1.ScreenConfiguration);
                                         SunManager.Instance.Mood = SunMood.OPENSMILE;
-
+                                        camera.Shake(10, 1);
                                     }
                                 }
                                 
                             }
                             break;
 
-
+                            /*
                         case Keys.OemTilde:
                             if (screenconfiguration == 2)
                                 EditMode = !EditMode;
@@ -121,12 +122,12 @@ namespace RaginRovers
                             if (EditMode && screenconfiguration == 2)
                             {
                                 int puff = factory.Create((int)GameObjectTypes.PUFF, new Vector2((int)ms.X /*+ camera.Position.X*/ - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0, 0f, 0f);
-                                factory.Objects[puff].sprite.PhysicsBody.Mass = 30;
+                              /*  factory.Objects[puff].sprite.PhysicsBody.Mass = 30;
                                 factory.Objects[puff].sprite.PhysicsBody.Restitution = 0.4f;
                                 factory.Objects[puff].saveable = false;
                             }
 
-                            break;
+                            break;*/
                         
                         case Keys.D1:
 
@@ -137,8 +138,10 @@ namespace RaginRovers
                                 factory.Objects[dog].sprite.PhysicsBody.Restitution = 0.4f;
                             }
                             if (screenconfiguration == 2)
-
+                            {
                                 client.SendMessage("action=reset;map=" + 1);
+                                LoadPlanesandClouds();
+                            }
 
                             break;
 
@@ -151,8 +154,11 @@ namespace RaginRovers
                                 factory.Objects[cat].sprite.PhysicsBody.Restitution = 0.8f;
                             }
                             if (screenconfiguration == 2)
+                            {
                                 client.SendMessage("action=reset;map=" + 2);
 
+                                LoadPlanesandClouds();
+                            }
                             break;
 
                         case Keys.D3:
@@ -164,7 +170,11 @@ namespace RaginRovers
                                 factory.Objects[board].sprite.OnCollision += new OnCollisionEventHandler(CollisionEvents.wood_OnCollision);
                             }
                             if (screenconfiguration == 2)
+                            {
                                 client.SendMessage("action=reset;map=" + 3);
+
+                                LoadPlanesandClouds();
+                            }
 
                             break;
 
@@ -176,7 +186,11 @@ namespace RaginRovers
                                 factory.Objects[board].sprite.OnCollision += new OnCollisionEventHandler(CollisionEvents.wood_OnCollision);
                             }
                             if (screenconfiguration == 2)
+                            {
                                 client.SendMessage("action=reset;map=" + 4);
+
+                                LoadPlanesandClouds();
+                            }
 
                             break;
 
@@ -188,7 +202,11 @@ namespace RaginRovers
                                 factory.Objects[board].sprite.OnCollision += new OnCollisionEventHandler(CollisionEvents.wood_OnCollision);
                             }
                             if (screenconfiguration == 2)
+                            {
                                 client.SendMessage("action=reset;map=" + 5);
+
+                                LoadPlanesandClouds();
+                            }
 
                             break;
 
@@ -200,7 +218,11 @@ namespace RaginRovers
                                 factory.Objects[board].sprite.OnCollision += new OnCollisionEventHandler(CollisionEvents.wood_OnCollision);
                             }
                             if (screenconfiguration == 2)
+                            {
                                 client.SendMessage("action=reset;map=" + 6);
+
+                                LoadPlanesandClouds();
+                            }
 
                             break;
 
@@ -211,7 +233,11 @@ namespace RaginRovers
                                 factory.Create((int)GameObjectTypes.PLATFORM_LEFT, new Vector2((int)ms.X /*+ camera.Position.X*/ - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0, 0f, 0f);
                             }
                             if (screenconfiguration == 2)
+                            {
                                 client.SendMessage("action=reset;map=" + 7);
+
+                                LoadPlanesandClouds();
+                            }
 
                             break;
 
@@ -222,7 +248,11 @@ namespace RaginRovers
                                 factory.Create((int)GameObjectTypes.PLATFORM_MIDDLE, new Vector2((int)ms.X /*+ camera.Position.X*/ - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0, 0f, 0f);
                             }
                             if (screenconfiguration == 2)
+                            {
                                 client.SendMessage("action=reset;map=" + 8);
+
+                                LoadPlanesandClouds();
+                            }
 
                             break;
 
@@ -233,7 +263,11 @@ namespace RaginRovers
                                 factory.Create((int)GameObjectTypes.PLATFORM_RIGHT, new Vector2((int)ms.X /*+ camera.Position.X*/ - 95, (int)ms.Y - 80), "spritesheet", new Vector2(0, 0), 0, 0f, 0f);
                             }
                             if (screenconfiguration == 2)
-                                client.SendMessage("action=reset;map=" + 9);
+                            {
+                                client.SendMessage("action=reset;map=" + 0);
+
+                                LoadPlanesandClouds();
+                            }
 
                             break;
                         case Keys.D0:
@@ -244,7 +278,11 @@ namespace RaginRovers
 
                             }
                             if (screenconfiguration == 2)
+                            {
                                 client.SendMessage("action=reset;map=" + 0);
+
+                                LoadPlanesandClouds();
+                            }
 
                             break;
 
@@ -282,7 +320,7 @@ namespace RaginRovers
                             }
 
                             break;
-
+                            
                         case Keys.Delete:
 
                             if (EditMode && MouseDown && DragSprite != -1)
@@ -292,27 +330,15 @@ namespace RaginRovers
                             }
 
                             break;
-                            */
                         case Keys.L:
                             if (screenconfiguration == 2)
                             {
-                                // Plane
-                                client.SendMessage("action=plane;monkeys=awesome"); // lol
-
-                                // Clouds
-                                Random rand = new Random();
-                                for (int i = 0; i < 15; i++)
-                                {
-                                    Vector2 v = new Vector2(rand.Next(-1024, GameWorld.WorldWidth + 1024), rand.Next(-800, 0));
-                                    Vector2 velocity = new Vector2(5 + rand.Next(0, 15), 0);
-
-                                    client.SendMessage("action=createother;gotype=" + (int)(RaginRovers.GameObjectTypes.CLOUD1 + rand.Next(0, 4)) + ";textureassetname=clouds;location.x=" + v.X + ";location.y=" + v.Y + ";rotation=0;upperBounds=0;lowerBounds=0;velocity.x=" + velocity.X + ";velocity.y=" + velocity.Y);
-                                }
+                                
 
                             }
 
                             break;
-
+                            */
 
                             //done with saving maps for now
                         /*case Keys.M:
@@ -378,6 +404,26 @@ namespace RaginRovers
             {
                 Key = key;
                 KeyDown = true;
+            }
+        }
+
+        public void LoadPlanesandClouds()
+        {
+            if (!PlaneManager.Instance.LoadedPlane)
+            {
+                // Plane
+                client.SendMessage("action=plane;monkeys=awesome"); // lol
+
+                // Clouds
+                Random rand = new Random();
+                for (int i = 0; i < 15; i++)
+                {
+                    Vector2 v = new Vector2(rand.Next(-1024, GameWorld.WorldWidth + 1024), rand.Next(-800, 0));
+                    Vector2 velocity = new Vector2(5 + rand.Next(0, 15), 0);
+
+                    client.SendMessage("action=createother;gotype=" + (int)(RaginRovers.GameObjectTypes.CLOUD1 + rand.Next(0, 4)) + ";textureassetname=clouds;location.x=" + v.X + ";location.y=" + v.Y + ";rotation=0;upperBounds=0;lowerBounds=0;velocity.x=" + velocity.X + ";velocity.y=" + velocity.Y);
+                }
+                PlaneManager.Instance.LoadedPlane = true;
             }
         }
 
