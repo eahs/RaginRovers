@@ -37,7 +37,8 @@ namespace RaginRovers
         ClientNetworking client;
         SpriteFont spriteFont;
 
-        Song song;
+        Song funnymusic;
+        Song drumline;
 
         public bool MapLoaded;
 
@@ -53,14 +54,14 @@ namespace RaginRovers
         {
             //with .5 zoom, 830 more on each side, 1660 more total, 
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferWidth = 1280;
-            graphics.PreferredBackBufferHeight = 727;
+            //graphics.PreferredBackBufferWidth = 1280;
+            //graphics.PreferredBackBufferHeight = 727;
 
             //graphics.PreferredBackBufferHeight = 500;
 
-            //graphics.PreferredBackBufferWidth = 1920;
-            //graphics.PreferredBackBufferHeight = 1080;
-            //graphics.IsFullScreen = true;
+            graphics.PreferredBackBufferWidth = 1920;
+            graphics.PreferredBackBufferHeight = 1080;
+            graphics.IsFullScreen = true;
             graphics.ApplyChanges();
 
             Content.RootDirectory = "Content";
@@ -88,6 +89,7 @@ namespace RaginRovers
             //Create the audio manager
             AudioManager.Instance.Initialize(Content);
 
+
             // Now load the sprite creator factory helper
             factory = GameObjectFactory.Instance;
             factory.Initialize(textureManager);
@@ -104,6 +106,7 @@ namespace RaginRovers
             client.ActionHandler["createother"] = new EventHandler(this.HandleNetworkCreateOtherStuff);
             client.ActionHandler["reset"] = new EventHandler(this.HandleReset);
             client.ActionHandler["endgame"] = new EventHandler(this.HandleEndGame);
+            client.ActionHandler["sendpoints"] = new EventHandler(this.HandleSendPoints);
 
             // Add a few sprite creators
             factory.AddCreator((int)GameObjectTypes.CAT, SpriteCreators.CreateCat);
@@ -179,7 +182,11 @@ namespace RaginRovers
             textureManager.LoadTexture("scoresheet");
 
             if (ScreenConfiguration == 2)
-                song = Content.Load<Song>("Audio/Drum_Line");
+            {
+                drumline = Content.Load<Song>("Audio/drumline");
+                funnymusic = Content.Load<Song>("Audio/funnymusic");
+            }
+
 
             spriteFont = Content.Load<SpriteFont>("spriteFont");
 
@@ -225,19 +232,23 @@ namespace RaginRovers
             body.Position = ConvertUnits.ToSimUnits(new Vector2(0, GameWorld.HeightofGround)); //hardcode workaround, can't figure out what to multiply the proportion by
             // * GameWorld.ProportionGroundtoScreen));
             body.UserData = new GameObject(-1, (int)GameObjectTypes.GROUND);
-            body.Friction = 1f;
 
             //FixtureFactory.AttachRectangle((float)GameWorld.WorldWidth, 10, 1, new Vector2(0, ConvertUnits.ToDisplayUnits(this.Window.ClientBounds.Height-30)), body);
             Fixture ground = FixtureFactory.AttachRectangle(ConvertUnits.ToSimUnits(GameWorld.WorldWidth)*10, ConvertUnits.ToSimUnits(10), 10, Vector2.Zero, body, "ground");
-            ground.Restitution = 0f;
+            ground.Restitution = .1f;
+            ground.Friction = 1f;
 
             if (ScreenConfiguration == 2)
             {
-                MediaPlayer.Play(song);
+                MediaPlayer.Play(funnymusic);
                 MediaPlayer.IsRepeating = true;
                 MediaPlayer.Volume /= 5;
             }
             //AudioManager.Instance.SoundEffect("Drum_Line").Play(); ;
+
+
+            CollisionEvents.Instance.TransferClientInfo(client);
+            SpriteHelper.Instance.InitializeFunnySong(funnymusic);
             
             SetupLevel();
         }
@@ -267,7 +278,7 @@ namespace RaginRovers
                 GameWorld.Update(gameTime);
 
             KeyboardState kb = Keyboard.GetState();
-            if (kb.IsKeyDown(Keys.Right))
+            /*if (kb.IsKeyDown(Keys.Right))
             {
                 if (camera.Position.X < GameWorld.WorldWidth - this.Window.ClientBounds.Width)
                 {
@@ -296,6 +307,7 @@ namespace RaginRovers
             }
             if (kb.IsKeyDown(Keys.P))
                 camera.Zoom = .5f;
+        */
 
             foreach (int key in factory.Objects.Keys)
             {
@@ -369,7 +381,7 @@ namespace RaginRovers
 
             //cannonggroups[0] is right and 1 is left
             Vector2 stringdimesionsleft = spriteFont.MeasureString("Score: " + ScoreKeeper.Instance.PlayerLeftScore.ToString());
-            Vector2 stringdimesionsright = spriteFont.MeasureString("Score: " + ScoreKeeper.Instance.PlayerLeftScore.ToString());
+            Vector2 stringdimesionsright = spriteFont.MeasureString("Score: " + ScoreKeeper.Instance.PlayerRightScore.ToString());
             ScoreKeeper.Instance.DrawScore(spriteBatch, textureManager, factory.Objects[cannonGroups[1].cannonKey].sprite.Center + new Vector2(-stringdimesionsleft.X / 2, -1250), factory.Objects[cannonGroups[0].cannonKey].sprite.Center + new Vector2(-stringdimesionsleft.X / 2, -1250));
 
             //spriteBatch.DrawString(spriteFont, "Score: " + ScoreKeeper.Instance.PlayerLeftScore.ToString(), factory.Objects[cannonGroups[1].cannonKey].sprite.Center + new Vector2(-stringdimesionsleft.X / 2, -1250) , Color.Black);
@@ -455,16 +467,16 @@ namespace RaginRovers
 
             AudioManager.Instance.SoundEffect("cannon_boom").Play();
             AudioManager.Instance.SoundEffect("dog_launch").Play(0.5f, 0f, 0f);
-
-            camera.Shake(10, 1);
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////restore if unsatisfactory
+            //camera.Shake(10, 1);
         }
 
         public void HandleNetworkCreate(object incoming, EventArgs args)
         {
             Dictionary<string, string> data = (Dictionary<string, string>)incoming;
-            int XOffsetduetoScreenSizeChange = 0;
-            if (graphics.PreferredBackBufferWidth == 1920)
-                XOffsetduetoScreenSizeChange = 700;
+            //int XOffsetduetoScreenSizeChange = 0;
+            //if (graphics.PreferredBackBufferWidth == 1920)
+                //XOffsetduetoScreenSizeChange = 700;
             int item = factory.Create(Convert.ToInt32(data["gotype"]),
                             new Vector2((float)Convert.ToDouble(data["location.x"])/* + XOffsetduetoScreenSizeChange*/, (float)Convert.ToDouble(data["location.y"])),
                             data["textureassetname"],
@@ -525,6 +537,8 @@ namespace RaginRovers
         {
             Dictionary<string, string> data = (Dictionary<string, string>)incoming;
             SpriteHelper.Instance.TriggerEndRound(mapEditor, Convert.ToInt32(data["map"]));
+            //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////remove if unsatisfactory
+            MediaPlayer.Play(drumline);
             MapLoaded = false;
         }
         public void HandleReset(object incoming, EventArgs args)
@@ -532,6 +546,18 @@ namespace RaginRovers
             Dictionary<string, string> data = (Dictionary<string, string>)incoming;
             mapEditor.LoadMap(Convert.ToInt32(data["map"]));
             MapLoaded = false;
+        }
+        public void HandleSendPoints(object incoming, EventArgs args)
+        {
+            Dictionary<string, string> data = (Dictionary<string, string>)incoming;
+            if (Convert.ToInt32(data["playernumber"]) == 1)
+            {
+                ScoreKeeper.Instance.PlayerLeftScore += Convert.ToInt32(data["score"]);
+            }
+            if (Convert.ToInt32(data["playernumber"]) == 3)
+            {
+                ScoreKeeper.Instance.PlayerLeftScore += Convert.ToInt32(data["score"]);
+            }
         }
     }
 }

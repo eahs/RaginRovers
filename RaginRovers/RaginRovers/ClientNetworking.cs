@@ -8,7 +8,7 @@ using System.Diagnostics;
 
 namespace RaginRovers
 {
-    class ClientNetworking
+    public class ClientNetworking
     {
         public NetClient client;
         public NetPeerConfiguration config;

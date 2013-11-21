@@ -28,8 +28,6 @@ Content\Audio\cat4.xnb
 Content\Audio\dog1.xnb
 Content\Audio\meat_hit.xnb
 Content\Audio\cannon_boom.xnb
-Content\Audio\Drum_Line.xnb
-Content\Audio\Drum_Line.wma
 Content\Audio\cat_aaagh.xnb
 Content\Audio\cat_gibberish.xnb
 Content\Audio\cat_moan.xnb
@@ -41,4 +39,8 @@ Content\Audio\dog_bark.xnb
 Content\Audio\dog_impact.xnb
 Content\Audio\dog_launch.xnb
 Content\Audio\dog_oof.xnb
+Content\Audio\funnymusic.xnb
+Content\Audio\funnymusic.wma
+Content\Audio\drumline.xnb
+Content\Audio\drumline.wma
 Content\spritesheet.txt

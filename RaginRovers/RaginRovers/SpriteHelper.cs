@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using RaginRoversLibrary;
+using Microsoft.Xna.Framework.Media;
 
 namespace RaginRovers
 {
@@ -30,11 +31,17 @@ namespace RaginRovers
         private static SpriteHelper instance;
         private List<TimedItem> items;
         private GameObjectFactory factory;
+        public Song funnymusic;
 
         private SpriteHelper ()
         {
             items = new List<TimedItem>();
             factory = GameObjectFactory.Instance;
+        }
+
+        public void InitializeFunnySong(Song funnysong)
+        {
+            this.funnymusic = funnysong;
         }
 
         public void TriggerFadeUp(GameObjectTypes type, Vector2 location, string textureassetname)
@@ -94,12 +101,12 @@ namespace RaginRovers
             //left
             int key = factory.Create(LeftSide, Vector2.Zero, "scoresheet", Vector2.Zero, 0f, 0f, 0f, 64);
             factory.Objects[key].sprite.Location = new Vector2(-1080 + ((12234 / 3) / 2) - (factory.Objects[key].sprite.BoundingBoxRect.Width / 2), -1217 + (2700 / 2)/*should be height of screen*/ - (factory.Objects[key].sprite.BoundingBoxRect.Height / 2));
-            RemoveAfterGameEnding(key, 10000, mapEditor, mapNumber);
+            RemoveAfterGameEnding(key, 9200, mapEditor, mapNumber);
             
             //right
             int key2 = factory.Create(RightSide, Vector2.Zero, "scoresheet", Vector2.Zero, 0f, 0f, 0f, 64);
-            factory.Objects[key2].sprite.Location = new Vector2(-1080 + (2 * 12234 / 3) + ((12234 / 3) / 2) - (factory.Objects[key2].sprite.BoundingBoxRect.Width / 2), -1217 + (2400 / 2)/*should be height of screen*/ - (factory.Objects[key2].sprite.BoundingBoxRect.Height / 2));
-            RemoveAfter(key2, 10000);
+            factory.Objects[key2].sprite.Location = new Vector2(-1080 + (2 * 12234 / 3) + ((12234 / 3) / 2) - (factory.Objects[key2].sprite.BoundingBoxRect.Width / 2), -1217 + (2700 / 2)/*should be height of screen*/ - (factory.Objects[key2].sprite.BoundingBoxRect.Height / 2));
+            RemoveAfter(key2, 9200);
         }
 
         public void TriggerAfter(Callback cb, float TriggerTime)
@@ -123,6 +130,8 @@ namespace RaginRovers
                         {
                             GameObjectFactory.Instance.Remove(SpriteKey);
                             mapEditor.LoadMap(mapNumber);
+                            /////////////////////////////////////////////////////////////////////////////////////////////////////////////////remove this if not satisfactory
+                            MediaPlayer.Play(funnymusic);
                         }, 
                         RemoveTime));
         }

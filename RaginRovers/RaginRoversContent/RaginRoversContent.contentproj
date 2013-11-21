@@ -283,8 +283,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Audio\Drum_Line.mp3">
-      <Name>Drum_Line</Name>
+    <Compile Include="Audio\funnymusic.wav">
+      <Name>funnymusic</Name>
+      <Importer>WavImporter</Importer>
+      <Processor>SongProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Audio\drumline.mp3">
+      <Name>drumline</Name>
       <Importer>Mp3Importer</Importer>
       <Processor>SongProcessor</Processor>
     </Compile>
